@@ -9,17 +9,30 @@
     </h:head>  
       
     <h:body>  
-      
+    	<h:form>
+        <p:panel id="panel" header="Enter Your login details:">
+        <p:messages id="msgs"/> 
         <p:panelGrid columns="3">
-        	<h:form>
-        	<p>	
-			
-			<input type="hidden" name="from" value="#{param['from']}" />
-        	<p:commandButton id="btn" value="Go home" action="#{user.akcja}" /> 
-        	</p>
-        	</h:form>
+            	<!-- Username Field -->
+            	<h:outputLabel for="username" value="Username: *" />  
+            	<p:inputText id="username" value="#{user.username}" required="true" label="Username">  
+                	<f:validateLength minimum="2" />
+                	<p:ajax update="msgUsername" event="keyup" /> 
+            	</p:inputText>  
+            	<p:message id="msgUsername" for="username" display="icon"/>  
+  				<!-- Password Field -->
+            	<h:outputLabel for="password" value="Password: *" />  
+            	<p:password id="password" value="#{param['password']}" label="Password" required="true">  
+                	<f:validateLength minimum="2" />  
+                	<p:ajax update="msgPassword" event="keyup" />  
+            	</p:password>  
+            	<p:message for="password" id="msgPassword" display="icon"/> 
+            	<!-- Hiden param from if redirected by Filter --> 
+				<input type="hidden" name="from" value="#{param['from']}" />
+				<!-- Action button -->
+        	<p:commandButton id="btn" value="Login" action="#{user.authenticate}" /> 
         </p:panelGrid>
-        
+        </p:panel>
+    	</h:form>
     </h:body>  
-	
 </html>
