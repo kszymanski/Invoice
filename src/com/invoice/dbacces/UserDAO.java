@@ -9,7 +9,7 @@ import com.invoice.beans.UserBean;
 public class UserDAO {
 	public static boolean isValid(UserBean user, String password)
 	{
-		return false;
+		return true;
 		/**try {
 			//prepare statment
 			String query="Select * From User Where idUser=? AND Password = ?";

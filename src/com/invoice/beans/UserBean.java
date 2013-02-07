@@ -91,7 +91,7 @@ public class UserBean implements Serializable{
 		if (UserDAO.isValid(this, password))
 		{
 			// taking session id
-			HttpSession session=(HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+			HttpSession session=(HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(true);
 			sessionId = session.getId();
 			//redirect to requested page after login
 			String from = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("from");
