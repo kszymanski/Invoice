@@ -4,3 +4,11 @@ div
 	margin-right: auto;
 	text-align: center;
 }
+div.headerDiv
+{
+	height: 75px;
+}
+div.menuBar
+{
+	height: 35px;
+}

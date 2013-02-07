@@ -39,7 +39,6 @@ public class AuthFilter implements Filter{
 		}
 		else 
 		{
-			System.out.println("chain");
 			chain.doFilter(req, res);
 		}
 		
