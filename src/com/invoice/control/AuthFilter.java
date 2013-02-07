@@ -10,6 +10,9 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.invoice.beans.UserBean;
 
 public class AuthFilter implements Filter{
 
@@ -22,12 +25,21 @@ public class AuthFilter implements Filter{
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse res,
 			FilterChain chain) throws IOException, ServletException {
-		HttpServletRequest request=(HttpServletRequest)req;
+		/**HttpServletRequest request=(HttpServletRequest)req;
 		HttpServletResponse response=(HttpServletResponse)res;
-		String from=request.getRequestURI() + '?' + request.getQueryString();
-		response.sendRedirect(request.getContextPath()+"/login.xhtml?from="+from);
+		HttpSession session=request.getSession(false);
+		UserBean user= null;
+		if( session != null) user=(UserBean)session.getAttribute("user");
+		if(session != null || user == null || !user.isValid())
+		{
+			String from=request.getRequestURI();
+			if(request.getQueryString()!=null)from += '?' + request.getQueryString();
+			response.sendRedirect(request.getContextPath()+"/login.xhtml?from="+from);
+		}
+		else */
+		chain.doFilter(req, res);
 		
-		//chain.doFilter(req, res);
+		
 	}
 
 	@Override

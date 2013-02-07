@@ -9,7 +9,8 @@ import com.invoice.beans.UserBean;
 public class UserDAO {
 	public static boolean isValid(UserBean user, String password)
 	{
-		try {
+		return false;
+		/**try {
 			//prepare statment
 			String query="Select * From User Where idUser=? AND Password = ?";
 			PreparedStatement stm= DBCon.getConnection().prepareStatement(query);
@@ -32,6 +33,6 @@ public class UserDAO {
 		{
 			e.printStackTrace();
 		}
-		return user.isValid();
+		return user.isValid();**/
 	}
 }

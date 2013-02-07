@@ -7,6 +7,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
 import com.invoice.dbacces.UserDAO;
 
@@ -18,6 +19,7 @@ public class UserBean implements Serializable{
 
 	private boolean isValid=false;
 	private String username;
+	private String password;
 	private String sessionId;
 	private String name;
 	private String surname;
@@ -40,6 +42,16 @@ public class UserBean implements Serializable{
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+
+	public String getPassword() {
+		return password;
+	}
+
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 
@@ -75,9 +87,12 @@ public class UserBean implements Serializable{
 
 	public String authenticate() throws IOException
 	{
-		String password = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("password");
+		
 		if (UserDAO.isValid(this, password))
 		{
+			// taking session id
+			HttpSession session=(HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+			sessionId = session.getId();
 			//redirect to requested page after login
 			String from = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("from");
 			if(from != null && !from.isEmpty())
@@ -89,8 +104,8 @@ public class UserBean implements Serializable{
 		}
 		else
 		{
-			FacesContext.getCurrentInstance().addMessage(null , new FacesMessage(FacesMessage.SEVERITY_ERROR,"Wrong Username or Password","Wrong Username or Password"));
-			return "fail";
+			FacesContext.getCurrentInstance().addMessage(null , new FacesMessage(FacesMessage.SEVERITY_ERROR,"Błędna nazwa użytkownika bądz hasło","Błędna nazwa użytkownika bądz hasło"));
+			return null;
 		}
 	}
 }
