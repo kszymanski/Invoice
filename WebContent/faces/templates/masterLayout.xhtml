@@ -15,5 +15,14 @@
     			<ui:include src="/faces/sections/header.xhtml" />
     		</ui:insert>
     	</div>
+    	<div id="menu">
+    		<ui:insert name="menu">
+    			<ui:include src="/faces/sections/menubar.xhtml" />
+    		</ui:insert>
+    	</div>
+    	<div id="content">
+    		<ui:insert name="content" />
+    	</div>
+    	<ui:debug />
     </h:body>  
 </html>
