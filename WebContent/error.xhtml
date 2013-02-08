@@ -7,7 +7,7 @@
 	<h:head>
 	</h:head>
 	<h:body>
-		<h:form id="form">  
+<h:form id="form">  
   
     <p:panel id="panel" header="New Person">  
   
@@ -15,13 +15,13 @@
   
         <h:panelGrid columns="3">  
             <h:outputLabel for="firstname" value="Firstname: *" />  
-            <p:inputText id="firstname" value="#{personBean.firstname}" required="true" label="Firstname">  
+            <p:inputText id="firstname" value="#{firstname}" required="true" label="Firstname">  
                 <f:validateLength minimum="2" />  
             </p:inputText>  
             <p:message for="firstname" display="icon"/>  
   
             <h:outputLabel for="surname" value="Surname: *" />  
-            <p:inputText id="surname" value="#{personBean.surname}" label="Surname" required="true">  
+            <p:inputText id="surname" value="#{surname}" label="Surname" required="true">  
                 <f:validateLength minimum="2" />  
                 <p:ajax update="msgSurname" event="keyup" />  
             </p:inputText>  
@@ -29,9 +29,9 @@
   
         </h:panelGrid>  
   
-        <p:commandButton id="btn" value="Save" update="panel" actionListener="#{personBean.savePerson}" />  
+        <p:commandButton id="btn" value="Save" update="panel" actionListener="#{savePerson}"/>  
     </p:panel>  
   
-</h:form>  
+</h:form>   
 	</h:body>
 </html>
