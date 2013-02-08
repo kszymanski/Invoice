@@ -108,4 +108,11 @@ public class UserBean implements Serializable{
 			return null;
 		}
 	}
+	public String logout() throws IOException
+	{
+		HttpSession session=(HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		session.invalidate();
+		FacesContext.getCurrentInstance().getExternalContext().redirect("/Invoice");
+		return "null";
+	}
 }
