@@ -67,7 +67,7 @@ public class LoginBean extends UserBean implements Serializable{
 				FacesContext.getCurrentInstance().getExternalContext().redirect(from);
 				return "redirect";
 			}
-			else return "success";
+			else return "goHome";
 		}
 		else
 		{

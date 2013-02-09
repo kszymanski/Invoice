@@ -28,7 +28,7 @@ public class UserList extends HttpServlet {
 	}
 	private void processRequest(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException
 	{
-		response.sendRedirect(request.getContextPath()+"/faces/pages/Users.xhtml");
+		request.getRequestDispatcher("/faces/pages/Users.xhtml").forward(request, response);
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.invoice.beans;
 
+
 public class UserBean {
 	protected String idUser;
 	protected String name;

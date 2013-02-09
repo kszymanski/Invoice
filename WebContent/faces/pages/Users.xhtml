@@ -9,8 +9,32 @@
 		<ui:composition template="/faces/templates/masterLayout.xhtml">
 			<ui:define name="windowTitle">Users</ui:define>
 			<ui:define name="content">
-				<h:outputLabel value="lalala" />
-				<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+				<p:dataTable id="users" var="user" value="#{userList.users}" rowKey="#{user.idUser}"  
+                 selection="#{userList.selectedUser}" selectionMode="single">  
+  
+       				<f:facet name="header">  
+            			Lista Użytkowników dostępna w Systemie:  
+        			</f:facet>  
+  
+        			<p:column headerText="Username">  
+            			#{user.idUser}  
+        			</p:column>  
+  
+        			<p:column headerText="Name">  
+            			#{user.name}  
+        			</p:column>  
+  
+        			<p:column headerText="Surname" >  
+            			#{user.surname}  
+        			</p:column>  
+  
+        			<p:column headerText="Role">  
+            			#{user.idRole}  
+        			</p:column>    
+  					<f:facet name="footer">  
+           					<h:outputText value="#{userList.users.size()} wiersze" />  
+        			</f:facet> 
+    			</p:dataTable>
 			</ui:define>
 		</ui:composition>
 	</body>
