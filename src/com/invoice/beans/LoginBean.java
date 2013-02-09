@@ -11,9 +11,9 @@ import javax.servlet.http.HttpSession;
 
 import com.invoice.dbacces.UserDAO;
 
-@ManagedBean(name="user")
+@ManagedBean(name="loginUser")
 @SessionScoped
-public class UserBean implements Serializable{
+public class LoginBean implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 

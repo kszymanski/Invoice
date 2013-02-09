@@ -4,10 +4,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.invoice.beans.UserBean;
+import com.invoice.beans.LoginBean;
 
 public class UserDAO {
-	public static boolean isValid(UserBean user, String password)
+	public static boolean isValid(LoginBean user, String password)
 	{
 		return true;
 		/**try {

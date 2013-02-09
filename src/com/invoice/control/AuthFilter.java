@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.invoice.beans.UserBean;
+import com.invoice.beans.LoginBean;
 
 public class AuthFilter implements Filter{
 
@@ -28,8 +28,8 @@ public class AuthFilter implements Filter{
 		HttpServletRequest request=(HttpServletRequest)req;
 		HttpServletResponse response=(HttpServletResponse)res;
 		HttpSession session=request.getSession(false);
-		UserBean user= null;
-		if( session != null) user=(UserBean)session.getAttribute("user");
+		LoginBean user= null;
+		if( session != null) user=(LoginBean)session.getAttribute("loginUser");
 		if(!request.getRequestURI().contains("/login.xhtml") && (session == null || user == null /**|| !user.isValid()*/))
 		{
 			
