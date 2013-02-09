@@ -9,20 +9,18 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
+import com.invoice.dbacces.RoleDAO;
 import com.invoice.dbacces.UserDAO;
 
 @ManagedBean(name="loginUser")
 @SessionScoped
-public class LoginBean implements Serializable{
+public class LoginBean extends UserBean implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
 	private boolean isValid=false;
-	private String username;
-	private String password;
 	private String sessionId;
-	private String name;
-	private String surname;
+	private RoleBean roles;
 	
 	
 	public boolean isValid() {
@@ -34,27 +32,14 @@ public class LoginBean implements Serializable{
 		this.isValid = isValid;
 	}
 
-
-	public String getUsername() {
-		return username;
+	public RoleBean getRoles() {
+		return roles;
 	}
 
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setRoles(RoleBean roles) {
+		this.roles = roles;
 	}
-
-
-	public String getPassword() {
-		return password;
-	}
-
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-
 	public String getSessionId() {
 		return sessionId;
 	}
@@ -65,31 +50,13 @@ public class LoginBean implements Serializable{
 	}
 
 
-	public String getName() {
-		return name;
-	}
-
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-
-	public String getSurname() {
-		return surname;
-	}
-
-
-	public void setSurname(String surname) {
-		this.surname = surname;
-	}
-
-
 	public String authenticate() throws IOException
 	{
-		
-		if (UserDAO.isValid(this, password))
+		if (UserDAO.isValid((UserBean) this))
 		{
+			isValid=true;
+			//taking user roles
+			setRoles(RoleDAO.getRole(getIdRole()));
 			// taking session id
 			HttpSession session=(HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(true);
 			sessionId = session.getId();

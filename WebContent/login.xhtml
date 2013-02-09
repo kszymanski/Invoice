@@ -18,7 +18,7 @@
         <h:panelGrid columns="3">
             	
             	<h:outputLabel for="username" value="Użytkownik:*" />  
-            	<p:inputText id="username" value="#{loginUser.username}" required="true" label="Użytkownik" requiredMessage="Nazwa użytkownika nie może być pusta" validatorMessage="Nazwa użytkownika musi być dłuższa niż 2">  
+            	<p:inputText id="username" value="#{loginUser.idUser}" required="true" label="Użytkownik" requiredMessage="Nazwa użytkownika nie może być pusta" validatorMessage="Nazwa użytkownika musi być dłuższa niż 2">  
                 	<f:validateLength minimum="2" />
                 	<p:ajax update="msgUsername" event="keyup"/>
             	</p:inputText>  
