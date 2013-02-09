@@ -2,13 +2,28 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
 	<head><title>IGNORED</title></head>
 	<body>
 		<ui:composition>
-			<div class="menuBar">
-				menu bar.
-			</div>
+				<h:form>
+					<p:menubar >  
+        				<p:submenu label="Użytkownicy i Role">  
+           					<p:submenu label="Nowy" icon="ui-icon-contact">  
+                				<p:menuitem value="Użytkownik" url="#" icon="ui-icon-person"/>  
+                				<p:menuitem value="Rola" url="#" icon="ui-icon-flag" />  
+            				</p:submenu>  
+            				<p:submenu label="Lista" icon="ui-icon-note">  
+                				<p:menuitem value="Użytkownicy" url="#" icon="ui-icon-person"/>  
+                				<p:menuitem value="Role" url="#" icon="ui-icon-flag"/>  
+            				</p:submenu> 
+        				</p:submenu>  
+        				<f:facet name="options" >
+            				<p:commandButton action="#{user.logout()}" value="Logout" icon="ui-icon-extlink" style="float: right;"/>  
+        				</f:facet>  
+   					 </p:menubar> 
+				</h:form>
 		</ui:composition>
 	</body>
 </html>

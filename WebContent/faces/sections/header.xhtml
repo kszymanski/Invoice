@@ -7,12 +7,10 @@
 	<head><title>IGNORED</title></head>
 	<body>
 		<ui:composition>
-			<h:form>
 				<h:panelGrid columns="2" styleClass="logoutGrid">
-				<h:outputLabel for="logoutButton" value="Witaj " /> 
-				<p:commandButton id="logoutButton" value="Logout" action="#{user.logout}" styleClass="logoutButton" />
+					<h:outputLabel value="Witaj " />
+					<h:outputText value="#{user.username}"/>				
 				</h:panelGrid>
-			</h:form>
 		</ui:composition>
 	</body>
 </html>

@@ -30,7 +30,7 @@ public class AuthFilter implements Filter{
 		HttpSession session=request.getSession(false);
 		UserBean user= null;
 		if( session != null) user=(UserBean)session.getAttribute("user");
-		if(session == null || user == null /**|| !user.isValid()*/)
+		if(!request.getRequestURI().contains("/login.xhtml") && (session == null || user == null /**|| !user.isValid()*/))
 		{
 			
 			String from=request.getRequestURI();
