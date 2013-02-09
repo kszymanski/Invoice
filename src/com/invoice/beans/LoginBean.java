@@ -79,7 +79,8 @@ public class LoginBean extends UserBean implements Serializable{
 	{
 		HttpSession session=(HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false);
 		session.invalidate();
-		FacesContext.getCurrentInstance().getExternalContext().redirect("/Invoice");
+		String url=FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
+		FacesContext.getCurrentInstance().getExternalContext().redirect(url);
 		return "null";
 	}
 }

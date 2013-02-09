@@ -10,7 +10,7 @@
     </h:head>  
       
     <h:body>  
-    	<div id="header">
+    	<p:panel id="header">
     		<ui:insert name="header">
     			<ui:include src="/faces/sections/header.xhtml" />
     		</ui:insert>
@@ -19,15 +19,15 @@
     				<ui:include src="/faces/sections/menubar.xhtml" />
     			</ui:insert>
     		</div>
-    	</div>
-    	<div id="content">
+    	</p:panel>
+    	<p:panel id="content" style="min-height: 550px;">
     		<ui:insert name="content" />
-    	</div>
-    	<div id="footer">
+    	</p:panel> 
+    	<p:panel id="footer">
     		<ui:insert name="footer">
     			<ui:include src="/faces/sections/footer.xhtml" />
     		</ui:insert>
-    	</div>
+    	</p:panel>
     	<ui:debug />
     </h:body>  
 </html>
