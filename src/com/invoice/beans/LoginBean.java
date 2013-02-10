@@ -9,7 +9,6 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
-import com.invoice.dbacces.RoleDAO;
 import com.invoice.dbacces.UserDAO;
 
 @ManagedBean(name="loginUser")
@@ -20,7 +19,7 @@ public class LoginBean extends UserBean implements Serializable{
 
 	private boolean isValid=false;
 	private String sessionId;
-	private RoleBean roles;
+
 	
 	
 	public boolean isValid() {
@@ -32,14 +31,6 @@ public class LoginBean extends UserBean implements Serializable{
 		this.isValid = isValid;
 	}
 
-	public RoleBean getRoles() {
-		return roles;
-	}
-
-
-	public void setRoles(RoleBean roles) {
-		this.roles = roles;
-	}
 	public String getSessionId() {
 		return sessionId;
 	}
@@ -55,8 +46,7 @@ public class LoginBean extends UserBean implements Serializable{
 		if (UserDAO.isValid((UserBean) this))
 		{
 			isValid=true;
-			//taking user roles
-			setRoles(RoleDAO.getRole(getIdRole()));
+
 			// taking session id
 			HttpSession session=(HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(true);
 			sessionId = session.getId();
