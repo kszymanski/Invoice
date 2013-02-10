@@ -2,7 +2,8 @@ package com.invoice.beans;
 
 import java.io.Serializable;
 
-
+import javax.inject.Named;
+@Named("user")
 public class UserBean implements Serializable{
 	private static final long serialVersionUID = 1L;
 	protected String idUser;

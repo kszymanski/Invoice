@@ -8,7 +8,7 @@ public class RoleBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private int idRole;
 	private String Name;
-	private boolean AddInvoice;
+	private boolean addInvoice;
 	private boolean AddProduct;
 	private boolean AddReciept;
 	private boolean AddBuyInvoice;
@@ -36,11 +36,11 @@ public class RoleBean implements Serializable {
 	public void setName(String name) {
 		Name = name;
 	}
-	public boolean isAddInvoice() {
-		return AddInvoice;
+	public boolean getAddInvoice() {
+		return addInvoice;
 	}
 	public void setAddInvoice(boolean addInvoice) {
-		AddInvoice = addInvoice;
+		this.addInvoice = addInvoice;
 	}
 	public boolean isAddProduct() {
 		return AddProduct;
