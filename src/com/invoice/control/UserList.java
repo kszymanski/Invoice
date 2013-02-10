@@ -1,15 +1,11 @@
 package com.invoice.control;
 
 import java.io.IOException;
-import java.sql.SQLException;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import com.invoice.dbacces.UserDAO;
 
 
 public class UserList extends HttpServlet {
@@ -38,15 +34,10 @@ public class UserList extends HttpServlet {
 		boolean edit =Boolean.parseBoolean(request.getParameter("edit"));
 		if(username != null && username != "")
 		{
-			try {
-				HttpSession session =request.getSession();
-				session.setAttribute("user1", UserDAO.getUser(username));
-				session.setAttribute("edit", edit);
-				nextpage = "/faces/pages/user.xhtml";
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			HttpSession session =request.getSession();
+			session.setAttribute("id",username);
+			session.setAttribute("edit", edit);
+			nextpage = "/faces/pages/user.xhtml";
 		}
 		request.getRequestDispatcher(nextpage).forward(request, response);
 	}

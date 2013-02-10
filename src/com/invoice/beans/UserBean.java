@@ -2,21 +2,18 @@ package com.invoice.beans;
 
 import java.io.Serializable;
 
-import javax.enterprise.context.Conversation;
-import javax.enterprise.context.ConversationScoped;
-import javax.inject.Inject;
-import javax.inject.Named;
-@Named("user")
-@ConversationScoped
+
 public class UserBean implements Serializable{
 	private static final long serialVersionUID = 1L;
-	@Inject Conversation conversation;
 	protected String idUser;
 	protected String name;
 	protected String surname;
 	protected RoleBean role;
 	protected String password;
-	public UserBean(){};
+	public UserBean()
+	{
+		
+	};
 	public String getIdUser() {
 		return idUser;
 	}
@@ -48,7 +45,7 @@ public class UserBean implements Serializable{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
 	public void setUserBean(UserBean user)
 	{
 		this.setIdUser(user.getIdUser());

@@ -32,8 +32,8 @@
   </filter>
 <filter-mapping>
 	<filter-name>AuthFilter</filter-name>
-	<servlet-name>Faces Servlet</servlet-name>
-	<servlet-name>User List</servlet-name>
+	<url-pattern>/error.xhtml</url-pattern>
+	
 </filter-mapping>
 <listener>
 	<listener-class>org.jboss.weld.environment.servlet.Listener</listener-class>

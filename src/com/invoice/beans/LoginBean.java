@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.Serializable;
 
 import javax.enterprise.context.SessionScoped;
+import javax.enterprise.inject.New;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -17,8 +18,8 @@ import com.invoice.dbacces.UserDAO;
 public class LoginBean implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-	
-	@Inject private UserBean user;
+
+	@New @Inject private UserBean user;
 	private boolean isValid=false;
 	private String sessionId;
 
@@ -55,6 +56,7 @@ public class LoginBean implements Serializable{
 
 	public String authenticate() throws IOException
 	{
+		
 		if (UserDAO.isValid(user))
 		{
 			isValid=true;
@@ -79,6 +81,7 @@ public class LoginBean implements Serializable{
 	}
 	public String logout() throws IOException
 	{
+		
 		HttpSession session=(HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false);
 		session.invalidate();
 		String url=FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();

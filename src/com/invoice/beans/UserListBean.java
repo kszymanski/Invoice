@@ -3,31 +3,32 @@ package com.invoice.beans;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Named;
-
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 import com.invoice.dbacces.UserDAO;
-@Named("userList")
-@RequestScoped
+@ManagedBean(name="userList")
+@ViewScoped
 public class UserListBean implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-	private List<UserBean> users;
-	private UserBean selectedUser;
+	private List<ViewUserBean> users;
+	private ViewUserBean selectedUser;
 	public UserListBean()
 	{
-		users=UserDAO.getUserList();
+		users=UserDAO.getViewUserList();
 	}
-	public List<UserBean> getUsers() {
+
+	public List<ViewUserBean> getUsers() {
 		return users;
 	}
-	public void setUsers(List<UserBean> users) {
+	public void setUsers(List<ViewUserBean> users) {
 		this.users = users;
 	}
-	public UserBean getSelectedUser() {
+	public ViewUserBean getSelectedUser() {
 		return selectedUser;
 	}
-	public void setSelectedUser(UserBean selectedUser) {
+	public void setSelectedUser(ViewUserBean selectedUser) {
 		this.selectedUser = selectedUser;
 	}
+	
 }
