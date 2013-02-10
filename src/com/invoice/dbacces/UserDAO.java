@@ -3,36 +3,88 @@ package com.invoice.dbacces;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.invoice.beans.UserBean;
 
 public class UserDAO {
-	public static boolean isValid(UserBean user, String password)
+	
+	public static UserBean getUser(String id) throws SQLException
 	{
-		return true;
-		/**try {
-			//prepare statment
-			String query="Select * From User Where idUser=? AND Password = ?";
+		String query="Select * From User Where idUser=?";
+		PreparedStatement stm= DBCon.getConnection().prepareStatement(query);
+		stm.setString(1, id);
+
+		// execute select SQL stetement
+		ResultSet rs = stm.executeQuery();
+		UserBean user = null;
+		while (rs.next())
+		{
+			user = new UserBean();
+			user.setIdUser(id);
+			user.setPassword(rs.getString("Password"));
+			user.setName(rs.getString("Name"));
+			user.setSurname(rs.getString("Surname"));
+			user.setIdRole(rs.getInt("idRole"));
+		}
+		stm.close();
+		return user;
+		
+	}
+	
+	public static List<UserBean> getUserList()
+	{
+		List<UserBean> list=new ArrayList<UserBean>();
+		String query="Select * From User";
+		try {
 			PreparedStatement stm= DBCon.getConnection().prepareStatement(query);
-			stm.setString(1, user.getUsername());
-			stm.setString(2, password);
+			ResultSet rs = stm.executeQuery();
+			while (rs.next())
+			{
+				UserBean user = new UserBean();
+				user.setIdUser(rs.getString("idUser"));
+				user.setPassword(rs.getString("Password"));
+				user.setName(rs.getString("Name"));
+				user.setSurname(rs.getString("Surname"));
+				user.setIdRole(rs.getInt("idRole"));
+				list.add(user);
+			}
+			return list;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	public static boolean isValid(UserBean user)
+	{
+		boolean isValid=false;
+		//return true;
+		try 
+		{
+			String query="Select * From User Where idUser=? AND Password=?";
+			PreparedStatement stm= DBCon.getConnection().prepareStatement(query);
+			stm.setString(1, user.getIdUser());
+			stm.setString(2, user.getPassword());
 			
 			// execute select SQL stetement
 			ResultSet rs = stm.executeQuery();
-			
 			while (rs.next())
 			{
 				user.setName(rs.getString("Name"));
 				user.setSurname(rs.getString("Surname"));
-				user.setValid(true);
+				user.setIdRole(rs.getInt("idRole"));
+				isValid=true;
 			}
 			stm.close();
-			return user.isValid();
+			return isValid;
 		} 
 		catch (SQLException e)
 		{
 			e.printStackTrace();
 		}
-		return user.isValid();**/
+		return isValid;
 	}
 }

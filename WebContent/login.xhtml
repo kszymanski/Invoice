@@ -18,14 +18,14 @@
         <h:panelGrid columns="3">
             	
             	<h:outputLabel for="username" value="Użytkownik:*" />  
-            	<p:inputText id="username" value="#{user.username}" required="true" label="Użytkownik" requiredMessage="Nazwa użytkownika nie może być pusta" validatorMessage="Nazwa użytkownika musi być dłuższa niż 2">  
+            	<p:inputText id="username" value="#{loginUser.idUser}" required="true" label="Użytkownik" requiredMessage="Nazwa użytkownika nie może być pusta" validatorMessage="Nazwa użytkownika musi być dłuższa niż 2">  
                 	<f:validateLength minimum="2" />
                 	<p:ajax update="msgUsername" event="keyup"/>
             	</p:inputText>  
             	<p:message id="msgUsername" for="username" display="icon"/>  
   				
             	<h:outputLabel for="password" value="Hasło:*" />  
-            	<p:password id="password" value="#{user.password}" label="Hasło" required="true" requiredMessage="Hasło nie może być puste" validatorMessage="Hasło musi być dłuższe niż 2">  
+            	<p:password id="password" value="#{loginUser.password}" label="Hasło" required="true" requiredMessage="Hasło nie może być puste" validatorMessage="Hasło musi być dłuższe niż 2">  
                 	<f:validateLength minimum="2" />  
                 	<p:ajax update="msgPassword" event="keyup"/>
             	</p:password>  
@@ -33,7 +33,7 @@
             	
 				<input type="hidden" name="from" value="#{param['from']}" />
 				<!-- Action button -->
-        	<p:commandButton id="btn" value="Login" update="panel" action="#{user.authenticate()}" styleClass="loginButton"/> 
+        	<p:commandButton id="btn" value="Login" update="panel" action="#{loginUser.authenticate()}" styleClass="loginButton"/> 
         </h:panelGrid>
        <p:growl id="msgs"/>
         </p:panel>

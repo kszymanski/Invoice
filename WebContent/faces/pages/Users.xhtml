@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+	<head><title>IGNORED</title></head>
+	<body>
+		<ui:composition template="/faces/templates/masterLayout.xhtml">
+			<ui:define name="windowTitle">Users</ui:define>
+			<ui:define name="content">
+			<h:form id="form">
+				<p:contextMenu for="users"  >  
+        			<p:menuitem value="View" icon="ui-icon-search" />  
+        			<p:menuitem value="Edit" icon="ui-icon-edit" />  
+    			</p:contextMenu> 
+				<p:dataTable id="users" var="user" value="#{userList.users}" rowKey="#{user.idUser}"  
+                 selection="#{userList.selectedUser}" selectionMode="single" >  
+  
+       				<f:facet name="header">  
+            			Lista Użytkowników dostępna w Systemie:  
+        			</f:facet>  
+  
+        			<p:column headerText="Username">  
+            			#{user.idUser}  
+        			</p:column>  
+  
+        			<p:column headerText="Name">  
+            			#{user.name}  
+        			</p:column>  
+  
+        			<p:column headerText="Surname" >  
+            			#{user.surname}  
+        			</p:column>  
+  
+        			<p:column headerText="Role">  
+            			#{user.idRole}  
+        			</p:column>    
+  					<f:facet name="footer">  
+           					<h:outputText value="#{userList.users.size()} wiersze" />  
+        			</f:facet> 
+    			</p:dataTable>
+    		</h:form>
+			</ui:define>
+		</ui:composition>
+	</body>
+</html>
