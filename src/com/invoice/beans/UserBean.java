@@ -8,7 +8,7 @@ public class UserBean implements Serializable{
 	protected String idUser;
 	protected String name;
 	protected String surname;
-	private int idRole;
+	protected RoleBean role;
 	protected String password;
 	public UserBean(){};
 	public String getIdUser() {
@@ -29,11 +29,12 @@ public class UserBean implements Serializable{
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
-	public int getIdRole() {
-		return idRole;
+
+	public RoleBean getRole() {
+		return role;
 	}
-	public void setIdRole(int idRole) {
-		this.idRole = idRole;
+	public void setRole(RoleBean role) {
+		this.role = role;
 	}
 	public String getPassword() {
 		return password;
@@ -48,6 +49,6 @@ public class UserBean implements Serializable{
 		this.setPassword(user.getPassword());
 		this.setName(user.getName());
 		this.setSurname(user.getSurname());
-		this.setIdRole(user.getIdRole());
+		this.setRole(user.getRole());
 	}
 }

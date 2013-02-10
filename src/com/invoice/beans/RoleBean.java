@@ -1,6 +1,11 @@
 package com.invoice.beans;
 
-public class RoleBean {
+import java.io.Serializable;
+
+import javax.faces.bean.ViewScoped;
+@ViewScoped
+public class RoleBean implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private int idRole;
 	private String Name;
 	private boolean AddInvoice;

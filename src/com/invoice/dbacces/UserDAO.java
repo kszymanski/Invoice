@@ -26,7 +26,7 @@ public class UserDAO {
 			user.setPassword(rs.getString("Password"));
 			user.setName(rs.getString("Name"));
 			user.setSurname(rs.getString("Surname"));
-			user.setIdRole(rs.getInt("idRole"));
+			user.setRole(RoleDAO.getRole(rs.getInt("idRole")));
 		}
 		stm.close();
 		return user;
@@ -47,7 +47,7 @@ public class UserDAO {
 				user.setPassword(rs.getString("Password"));
 				user.setName(rs.getString("Name"));
 				user.setSurname(rs.getString("Surname"));
-				user.setIdRole(rs.getInt("idRole"));
+				user.setRole(RoleDAO.getRole(rs.getInt("idRole")));
 				list.add(user);
 			}
 			return list;
@@ -75,7 +75,7 @@ public class UserDAO {
 			{
 				user.setName(rs.getString("Name"));
 				user.setSurname(rs.getString("Surname"));
-				user.setIdRole(rs.getInt("idRole"));
+				user.setRole(RoleDAO.getRole(rs.getInt("idRole")));
 				isValid=true;
 			}
 			stm.close();
