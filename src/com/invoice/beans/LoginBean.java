@@ -3,25 +3,37 @@ package com.invoice.beans;
 import java.io.IOException;
 import java.io.Serializable;
 
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
+import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 
 import com.invoice.dbacces.UserDAO;
 
-@ManagedBean(name="loginUser")
+@Named("loginUser")
 @SessionScoped
-public class LoginBean extends UserBean implements Serializable{
+public class LoginBean implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-
+	
+	@Inject private UserBean user;
 	private boolean isValid=false;
 	private String sessionId;
 
 	
 	
+	public UserBean getUser() {
+		return user;
+	}
+
+
+	public void setUser(UserBean user) {
+		this.user = user;
+	}
+
+
 	public boolean isValid() {
 		return isValid;
 	}
@@ -43,7 +55,7 @@ public class LoginBean extends UserBean implements Serializable{
 
 	public String authenticate() throws IOException
 	{
-		if (UserDAO.isValid((UserBean) this))
+		if (UserDAO.isValid(user))
 		{
 			isValid=true;
 
@@ -61,7 +73,7 @@ public class LoginBean extends UserBean implements Serializable{
 		}
 		else
 		{
-			FacesContext.getCurrentInstance().addMessage(null , new FacesMessage(FacesMessage.SEVERITY_ERROR,"BÅ‚Ä™dna nazwa uÅ¼ytkownika bÄ…dz hasÅ‚o","BÅ‚Ä™dna nazwa uÅ¼ytkownika bÄ…dz hasÅ‚o"));
+			FacesContext.getCurrentInstance().addMessage(null , new FacesMessage(FacesMessage.SEVERITY_ERROR,"B³êdna nazwa u¿ytkownika lub has³o","B³êdna nazwa u¿ytkownika lub has³o"));
 			return null;
 		}
 	}

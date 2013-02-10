@@ -2,6 +2,7 @@ package com.invoice.control;
 
 import java.io.IOException;
 
+import javax.inject.Inject;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -15,7 +16,7 @@ import javax.servlet.http.HttpSession;
 import com.invoice.beans.LoginBean;
 
 public class AuthFilter implements Filter{
-
+	@Inject private LoginBean user;
 	@Override
 	public void destroy() {
 		// TODO Auto-generated method stub
@@ -32,8 +33,8 @@ public class AuthFilter implements Filter{
 		String uri = request.getRequestURI();
 		String loginUri = request.getContextPath() + "/login.xhtml";
 		int tologin = uri.compareToIgnoreCase(loginUri);
-		LoginBean user= null;
-		if( session != null) user=(LoginBean)session.getAttribute("loginUser");
+		
+		
 		if(((!uri.contains("/javax.faces.resource") && tologin != 0)) && (session == null || user == null || !user.isValid()))
 		{
 			String from=request.getRequestURI();
