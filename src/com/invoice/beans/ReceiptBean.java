@@ -4,11 +4,11 @@ import java.util.Date;
 
 public class ReceiptBean {
 	private int idReceipt;
-	private int idExternalDelivery;
-	private String idUser;
-	private Date Date;
-	private Date PayDate;
-	private Date SellDate;
+	private ExternalDeliveryBean externalDelivery;
+	private UserBean user;
+	private Date date;
+	private Date payDate;
+	private Date sellDate;
 	
 	public void setIdReceipt (int idReceipt){
 		this.idReceipt = idReceipt;
@@ -18,43 +18,44 @@ public class ReceiptBean {
 		return idReceipt;
 	}
 	
-	public void setIdExternalDelivery (int idExternalDelivery){
-		this.idExternalDelivery = idExternalDelivery;
-	}
 	
-	public int getIdExternalDelivery () {
-		return idExternalDelivery;
+	public ExternalDeliveryBean getExternalDelivery() {
+		return externalDelivery;
 	}
-	
-	public void setIdUser (String idUser){
-		this.idUser = idUser;
+
+	public void setExternalDelivery(ExternalDeliveryBean externalDelivery) {
+		this.externalDelivery = externalDelivery;
 	}
-	
-	public String getIdUser(){
-		return idUser;
+
+	public UserBean getUser() {
+		return user;
 	}
-	
+
+	public void setUser(UserBean user) {
+		this.user = user;
+	}
+
 	public void setDate(Date Date){
-		this.Date = Date;
+		this.date = Date;
 	}
 	
 	public Date getDate(){
-		return Date;
+		return date;
 	}
 	
 	public void setPayDate(Date PayDate){
-		this.PayDate = PayDate;
+		this.payDate = PayDate;
 	}
 	
 	public Date getPayDate(){
-		return PayDate;
+		return payDate;
 	}
 	
 	public void setSellDate(Date SellDate){
-		this.SellDate = SellDate;
+		this.sellDate = SellDate;
 	}
 	
 	public Date getSellDate(){
-		return SellDate;
+		return sellDate;
 	}
 }
