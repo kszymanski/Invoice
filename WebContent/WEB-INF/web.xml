@@ -33,6 +33,7 @@
 <filter-mapping>
 	<filter-name>AuthFilter</filter-name>
 	<servlet-name>Faces Servlet</servlet-name>
+	<servlet-name>User List</servlet-name>
 	
 </filter-mapping>
 <listener>
