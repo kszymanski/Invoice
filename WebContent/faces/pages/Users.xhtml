@@ -11,7 +11,7 @@
 			<ui:define name="content">
 			<h:form id="form">
 				<p:contextMenu for="users"  >  
-        			<p:menuitem value="View" icon="ui-icon-search" />  
+        			<p:menuitem value="View" icon="ui-icon-search" url="/UserList?id=#{user.idUser}"/>  
         			<p:menuitem value="Edit" icon="ui-icon-edit" />  
     			</p:contextMenu> 
 				<p:dataTable id="users" var="user" value="#{userList.users}" rowKey="#{user.idUser}"  

@@ -22,7 +22,7 @@ public class ReceiptDAO {
 			{
 				receipt = new ReceiptBean();
 				receipt.setIdReceipt(rs.getInt("idReceipt"));
-				receipt.setExternalDelivery(ExternalDeliveryDAO.getExternalDelivery(rs.getString("idExternalDelivery"));
+				//receipt.setExternalDelivery(ExternalDeliveryDAO.getExternalDelivery(rs.getString("idExternalDelivery"));
 				receipt.setUser(UserDAO.getUser(rs.getString("idUser")));
 				receipt.setDate(rs.getDate("Date"));
 				receipt.setPayDate(rs.getDate("PayDate"));

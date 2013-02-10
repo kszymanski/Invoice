@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+	<head><title>IGNORED</title></head>
+	<body>
+		<ui:composition template="/faces/templates/masterLayout.xhtml">
+			<ui:define name="windowTitle">View User</ui:define>
+			<ui:define name="content">
+				<h:form id="userForm">
+				 	<p:messages id="msgs"/> 
+					<p:menubar>
+						<p:menuitem value="Edytuj" icon="ui-icon-edit" onclick="changeToEdit()"/>
+						<p:menuitem id="btn" value="Zapisz" icon="ui-icon-save" rendered="#{edit}" 
+							update="userForm" actionListener="#"/>
+						<p:menuitem value="Zrezygnuj" icon="ui-icon-cancel" ajax="false" onclick="javascript:location.reload(true)" />
+					</p:menubar>
+					<p:panel header="Dane Uzytkownika: #{user.name} #{user.surname}" style="width: 49%; float: left;" >
+						 <h:panelGrid columns="3">  
+            				<h:outputText value="Nazwa Uzytkownika: " />  
+            				<h:outputText value="#{user.idUser}" rendered="#{!edit}"/>
+            				<p:inputText id="username" value="#{user.idUser}" rendered="#{edit}" label="Użytkownik" required="true" requiredMessage="Nazwa Użytkownika nie może być pusta">
+            					<f:validateLength minimum="2" /> 
+            				</p:inputText>
+            				<p:message for="username" display="icon"/>   
+            				<h:outputText value="Imie: " />  
+            				<h:outputText value="#{user.name}"/>  
+				        </h:panelGrid>
+					</p:panel>
+					<p:panel header="Szczegóły Roli: #{user.role.name}" style="width: 49%; float: right;">
+						  <h:panelGrid columns="2" cellpadding="5">  
+            				<h:outputText value="Nazwa: " />  
+            				<h:outputText value="#{user.role.name}"/>  
+            				<h:outputText value="Dodawanie Faktur: " />  
+            				<h:outputText value="#{user.role.addInvoice?'TAK':'NIE'}"/>  
+				        </h:panelGrid>
+					</p:panel>
+					<p:remoteCommand name="changeToEdit" update="userForm">  
+        			<f:setPropertyActionListener value="#{true}"   
+            			target="#{edit}" />  
+    				</p:remoteCommand>
+				</h:form>
+			</ui:define>
+		</ui:composition>
+	</body>
+</html>
