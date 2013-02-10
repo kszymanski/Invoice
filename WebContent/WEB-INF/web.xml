@@ -30,11 +30,9 @@
     <filter-name>AuthFilter</filter-name>
     <filter-class>com.invoice.control.AuthFilter</filter-class>
   </filter>
-  <filter-mapping>
-    <filter-name>AuthFilter</filter-name>
-    <servlet-name>Faces Servlet</servlet-name>
-    <dispatcher>FORWARD</dispatcher>
-    <dispatcher>REQUEST</dispatcher>
-    <dispatcher>INCLUDE</dispatcher>
-  </filter-mapping>
+<filter-mapping>
+	<filter-name>AuthFilter</filter-name>
+	<servlet-name>Faces Servlet</servlet-name>
+	<servlet-name>User List</servlet-name>
+</filter-mapping>
 </web-app>

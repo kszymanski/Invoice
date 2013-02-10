@@ -1,7 +1,10 @@
 package com.invoice.beans;
 
+import java.io.Serializable;
 
-public class UserBean {
+
+public class UserBean implements Serializable{
+	private static final long serialVersionUID = 1L;
 	protected String idUser;
 	protected String name;
 	protected String surname;
