@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.invoice.beans.UserBean;
-import com.invoice.beans.ViewUserBean;
 
 public class UserDAO {
 	
@@ -33,7 +32,7 @@ public class UserDAO {
 		return user;
 		
 	}
-	public static void getUser(ViewUserBean user) throws SQLException
+	public static void getUser(UserBean user) throws SQLException
 	{
 		String query="Select * From User Where idUser=?";
 		PreparedStatement stm= DBCon.getConnection().prepareStatement(query);
@@ -62,32 +61,6 @@ public class UserDAO {
 			while (rs.next())
 			{
 				UserBean user = new UserBean();
-				user.setIdUser(rs.getString("idUser"));
-				user.setPassword(rs.getString("Password"));
-				user.setName(rs.getString("Name"));
-				user.setSurname(rs.getString("Surname"));
-				user.setRole(RoleDAO.getRole(rs.getInt("idRole")));
-				list.add(user);
-			}
-			return list;
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return list;
-	}
-	
-	public static List<ViewUserBean> getViewUserList()
-	{
-		List<ViewUserBean> list=new ArrayList<ViewUserBean>();
-		String query="Select * From User";
-		try {
-			PreparedStatement stm= DBCon.getConnection().prepareStatement(query);
-			ResultSet rs = stm.executeQuery();
-			while (rs.next())
-			{
-				ViewUserBean user = new ViewUserBean();
-				System.out.println("done");
 				user.setIdUser(rs.getString("idUser"));
 				user.setPassword(rs.getString("Password"));
 				user.setName(rs.getString("Name"));

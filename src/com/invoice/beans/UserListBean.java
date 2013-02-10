@@ -11,23 +11,23 @@ import com.invoice.dbacces.UserDAO;
 public class UserListBean implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-	private List<ViewUserBean> users;
-	private ViewUserBean selectedUser;
+	private List<UserBean> users;
+	private UserBean selectedUser;
 	public UserListBean()
 	{
-		users=UserDAO.getViewUserList();
+		users=UserDAO.getUserList();
 	}
 
-	public List<ViewUserBean> getUsers() {
+	public List<UserBean> getUsers() {
 		return users;
 	}
-	public void setUsers(List<ViewUserBean> users) {
+	public void setUsers(List<UserBean> users) {
 		this.users = users;
 	}
-	public ViewUserBean getSelectedUser() {
+	public UserBean getSelectedUser() {
 		return selectedUser;
 	}
-	public void setSelectedUser(ViewUserBean selectedUser) {
+	public void setSelectedUser(UserBean selectedUser) {
 		this.selectedUser = selectedUser;
 	}
 	

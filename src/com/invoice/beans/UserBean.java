@@ -1,8 +1,18 @@
 package com.invoice.beans;
 
+import java.io.IOException;
 import java.io.Serializable;
+import java.sql.SQLException;
 
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 
+import com.invoice.dbacces.UserDAO;
+
+@ManagedBean(name="user")
+@ViewScoped
 public class UserBean implements Serializable{
 	private static final long serialVersionUID = 1L;
 	protected String idUser;
@@ -46,12 +56,20 @@ public class UserBean implements Serializable{
 		this.password = password;
 	}
 
-	public void setUserBean(UserBean user)
+	public String viewUser() throws IOException
 	{
-		this.setIdUser(user.getIdUser());
-		this.setPassword(user.getPassword());
-		this.setName(user.getName());
-		this.setSurname(user.getSurname());
-		this.setRole(user.getRole());
+		System.out.println("redirect");
+		FacesContext.getCurrentInstance().getExternalContext().redirect("./UserList?id="+idUser);
+		return null;
+	}
+	public void start() throws SQLException
+	{
+		if( idUser==null || idUser == "")
+		{
+		System.out.println("start");
+		HttpServletRequest request=(HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+		idUser =request.getParameter("id");
+		UserDAO.getUser(this);
+		}
 	}
 }
