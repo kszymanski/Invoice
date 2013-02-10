@@ -40,7 +40,7 @@ public class UserList extends HttpServlet {
 		{
 			try {
 				HttpSession session =request.getSession();
-				session.setAttribute("user", UserDAO.getUser(username));
+				session.setAttribute("user1", UserDAO.getUser(username));
 				session.setAttribute("edit", edit);
 				nextpage = "/faces/pages/user.xhtml";
 			} catch (SQLException e) {

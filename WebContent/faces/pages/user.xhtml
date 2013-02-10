@@ -17,11 +17,11 @@
 							update="userForm" actionListener="#"/>
 						<p:menuitem value="Zrezygnuj" icon="ui-icon-cancel" ajax="false" onclick="javascript:location.reload(true)" />
 					</p:menubar>
-					<p:panel header="Dane Uzytkownika: #{user.name} #{user.surname}" style="width: 49%; float: left;" >
+					<p:panel header="Dane Uzytkownika: #{user1.name} #{user1.surname}" style="width: 49%; float: left;" >
 						 <h:panelGrid columns="3">  
             				<h:outputText value="Nazwa Uzytkownika: " />  
             				<h:outputText value="#{user.idUser}" rendered="#{!edit}"/>
-            				<p:inputText id="username" value="#{user.idUser}" rendered="#{edit}" label="Użytkownik" required="true" requiredMessage="Nazwa Użytkownika nie może być pusta">
+            				<p:inputText id="username" value="#{user1.idUser}" rendered="#{edit}" label="Użytkownik" required="true" requiredMessage="Nazwa Użytkownika nie może być pusta">
             					<f:validateLength minimum="2" /> 
             				</p:inputText>
             				<p:message for="username" display="icon"/>   
@@ -29,12 +29,12 @@
             				<h:outputText value="#{user.name}"/>  
 				        </h:panelGrid>
 					</p:panel>
-					<p:panel header="Szczegóły Roli: #{user.role.name}" style="width: 49%; float: right;">
+					<p:panel header="Szczegóły Roli: #{user1.role.name}" style="width: 49%; float: right;">
 						  <h:panelGrid columns="2" cellpadding="5">  
             				<h:outputText value="Nazwa: " />  
-            				<h:outputText value="#{user.role.name}"/>  
+            				<h:outputText value="#{user1.role.name}"/>  
             				<h:outputText value="Dodawanie Faktur: " />  
-            				<h:outputText value="#{user.role.addInvoice?'TAK':'NIE'}"/>  
+            				<h:outputText value="#{user1.role.addInvoice?'TAK':'NIE'}"/>  
 				        </h:panelGrid>
 					</p:panel>
 					<p:remoteCommand name="changeToEdit" update="userForm">  

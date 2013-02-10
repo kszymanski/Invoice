@@ -2,12 +2,13 @@ package com.invoice.beans;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Named;
 
 import com.invoice.dbacces.UserDAO;
-@ManagedBean(name="userList")
-@ViewScoped
+@Named("userList")
+@RequestScoped
 public class UserListBean implements Serializable{
 
 	private static final long serialVersionUID = 1L;

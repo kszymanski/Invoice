@@ -10,11 +10,8 @@
 			<ui:define name="windowTitle">Users</ui:define>
 			<ui:define name="content">
 			<h:form id="form">
-				<p:contextMenu for="users"  >  
-        			<p:menuitem value="View" icon="ui-icon-search" url="/UserList?id=#{user.idUser}"/>  
-        			<p:menuitem value="Edit" icon="ui-icon-edit" />  
-    			</p:contextMenu> 
-				<p:dataTable id="users" var="user" value="#{userList.users}" rowKey="#{user.idUser}"  
+				
+				<p:dataTable id="users" var="user1" value="#{userList.users}" rowKey="#{user1.idUser}"  
                  selection="#{userList.selectedUser}" selectionMode="single" >  
   
        				<f:facet name="header">  
@@ -23,24 +20,28 @@
         			</f:facet>  
   
         			<p:column headerText="Username">  
-            			#{user.idUser}  
+            			#{user1.idUser}  
         			</p:column>  
   
         			<p:column headerText="Name">  
-            			#{user.name}  
+            			#{user1.name}  
         			</p:column>  
   
         			<p:column headerText="Surname" >  
-            			#{user.surname}  
+            			#{user1.surname}  
         			</p:column>  
   
         			<p:column headerText="Role">  
-            			#{user.role.name}  
+            			#{user1.role.name}  
         			</p:column>    
   					<f:facet name="footer">  
            					<h:outputText value="#{userList.users.size()} wiersze" />  
         			</f:facet> 
     			</p:dataTable>
+    			<p:contextMenu for="users"  >  
+        			<p:menuitem value="View" icon="ui-icon-search" url="/UserList?id=#{user1.idUser}"/>  
+        			<p:menuitem value="Edit" icon="ui-icon-edit" />  
+    			</p:contextMenu> 
     		</h:form>
 			</ui:define>
 		</ui:composition>
