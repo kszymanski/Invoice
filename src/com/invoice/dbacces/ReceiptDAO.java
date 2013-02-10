@@ -17,14 +17,13 @@ public class ReceiptDAO {
 
 		// execute select SQL stetement
 		
-		
 			rs = stm.executeQuery();
 			while (rs.next())
 			{
 				receipt = new ReceiptBean();
 				receipt.setIdReceipt(rs.getInt("idReceipt"));
-				receipt.setIdExternalDelivery(rs.getInt("idExternalDelivery"));
-				receipt.setIdUser(rs.getString("idUser"));
+				receipt.setExternalDelivery(ExternalDeliveryDAO.getExternalDelivery(rs.getString("idExternalDelivery"));
+				receipt.setUser(UserDAO.getUser(rs.getString("idUser")));
 				receipt.setDate(rs.getDate("Date"));
 				receipt.setPayDate(rs.getDate("PayDate"));
 				receipt.setSellDate(rs.getDate("SellDate"));
