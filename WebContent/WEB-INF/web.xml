@@ -35,8 +35,5 @@
 	<servlet-name>Faces Servlet</servlet-name>
 	<servlet-name>User List</servlet-name>
 	
-</filter-mapping>
-<listener>
-	<listener-class>org.jboss.weld.environment.servlet.Listener</listener-class>
-</listener> 
+</filter-mapping> 
 </web-app>
