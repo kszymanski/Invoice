@@ -14,38 +14,36 @@
 				<h:form id="userForm">
 				 	<p:growl id="msgs" autoUpdate="true" showDetail="true"  />
 					<p:menubar>
-						<p:menuitem value="Edytuj" icon="ui-icon-edit" actionListener="user1.edit" onclick="changeToEdit()"/>
-						<p:menuitem id="btn" value="Zapisz"  actionListener="#{user.updateUser()}" icon="ui-icon-disk" update="msgs" rendered="#{edit}" onsuccess="changeToView()"/>
-						<p:menuitem value="Zrezygnuj" icon="ui-icon-cancel" onclick="changeToView()" rendered="#{edit}" />
-						
+						<p:menuitem id="btn" value="Zapisz"  actionListener="#{user.updateUser()}" icon="ui-icon-disk" update="msgs"/>
+						<p:menuitem value="Zrezygnuj" icon="ui-icon-cancel" url="/UserList" />
 					</p:menubar>
 					<p:panel header="Dane Uzytkownika: #{user.name} #{user.surname}" style="width: 49%; float: left;" >
 						 <h:panelGrid columns="3" style="margin-left: auto; margin-right: auto;">  
             				<ui:remove><!-- username not for edit --></ui:remove>
             				<h:outputText value="Nazwa Uzytkownika: " />  
-            				<h:outputText value="#{user.idUser}" rendered="true"/>
-            				<!-- something  to put in 3rd column -->
+            				<p:inputText id="username" value="#{user.idUser}" validator="#{user.idValidation()}" label="Nazwa Użytkownika" required="true" requiredMessage="Nazwa Użytkownika nie może być puste">
+            					<f:validateLength minimum="2" /> 
+            				</p:inputText>
+            				<p:message for="username" display="icon"/>
             				<ui:remove><!-- editable field Name --></ui:remove>
             				<h:outputText value="Imie: " />  
-            				<h:outputText value="#{user.name}" rendered='#{!edit}'/>
-            				<p:inputText id="name" value="#{user.name}" rendered='#{edit}' label="Imie" required="true" requiredMessage="Imie Użytkownika nie może być puste">
+            				<p:inputText id="name" value="#{user.name}" label="Imie" required="true" requiredMessage="Imie Użytkownika nie może być puste">
             					<f:validateLength minimum="2" /> 
             				</p:inputText>
             				<p:message for="name" display="icon"/>
             				<ui:remove><!-- editable field Surname --></ui:remove>
             				<h:outputText value="Nazwisko: " />  
-            				<h:outputText value="#{user.surname}" rendered='#{!edit}'/>
-            				<p:inputText id="surname" value="#{user.surname}" rendered='#{edit}' label="Nazwisko" required="true" requiredMessage="Nazwisko Użytkownika nie może być puste">
+            				<p:inputText id="surname" value="#{user.surname}"  label="Nazwisko" required="true" requiredMessage="Nazwisko Użytkownika nie może być puste">
             					<f:validateLength minimum="2" /> 
             				</p:inputText>
             				<p:message for="surname" display="icon"/>
             				<ui:remove><!-- editable field Role --></ui:remove>
             				<h:outputText value="Rola: " />  
-            				<h:outputText value="#{user.role.name}" rendered='#{!edit}'/>
-            				<p:selectOneMenu id="rolelist" value="#{user.role.name}" rendered='#{edit}'>
+            				<p:selectOneMenu id="rolelist" value="#{user.role.name}" style="width: 165px;">
             					<p:ajax process="@this"  update="userForm" listener="#{user.rolechange()}"/>
             					<f:selectItems value="#{rolesList.roles}" var="role" itemValue="#{role.name}" itemLabel="#{role.name}"/>
         					</p:selectOneMenu>
+        					<p:commandButton value="Nowa"/>
 				        </h:panelGrid>
 					</p:panel>
 					<p:panel  header="Szczegóły Roli: #{user.role.name}" style="width: 49%; float: right;">
@@ -89,12 +87,6 @@
             				<h:outputText value="#{user.role.viewDelivery?'TAK':'NIE'}"/>
 				        </h:panelGrid>
 					</p:panel>
-					<p:remoteCommand name="changeToView" update="userForm" action="#{user.reload()}">  
-        				<f:setPropertyActionListener value="#{false}" target="#{edit}"  />
-    				</p:remoteCommand>
-					<p:remoteCommand name="changeToEdit" update="userForm">  
-        				<f:setPropertyActionListener value="#{true}" target="#{edit}" />  
-    				</p:remoteCommand>
 				</h:form>
 				<ui:debug/>
 			</ui:define>

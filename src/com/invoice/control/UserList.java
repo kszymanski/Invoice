@@ -31,13 +31,19 @@ public class UserList extends HttpServlet {
 	{
 		String nextpage = "/faces/pages/Users.xhtml";
 		String username = request.getParameter("id");
+		String action = request.getParameter("action");
+		HttpSession session =request.getSession();
 		boolean edit =Boolean.parseBoolean(request.getParameter("edit"));
 		if(username != null && username != "")
 		{
-			HttpSession session =request.getSession();
 			session.setAttribute("id",username);
 			session.setAttribute("edit", edit);
 			nextpage = "/faces/pages/user.xhtml";
+		}
+		else if (action != null && action != "")
+		{
+			session.setAttribute("action", action);
+			nextpage = "/faces/pages/newuser.xhtml";
 		}
 		request.getRequestDispatcher(nextpage).forward(request, response);
 	}

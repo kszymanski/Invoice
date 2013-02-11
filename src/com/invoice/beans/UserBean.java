@@ -7,7 +7,9 @@ import java.sql.SQLException;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 import javax.servlet.http.HttpServletRequest;
 
 import com.invoice.dbacces.RoleDAO;
@@ -22,7 +24,8 @@ public class UserBean implements Serializable{
 	protected String surname;
 	protected RoleBean role;
 	protected String password;
-	protected int count;
+	protected FacesMessage message;
+	protected boolean error=false;
 	public UserBean()
 	{
 		
@@ -52,12 +55,7 @@ public class UserBean implements Serializable{
 	public void setRole(RoleBean role) {
 		this.role = role;
 	}
-	public int getCount() {
-		return count;
-	}
-	public void setCount(int count) {
-		this.count = count;
-	}
+
 	public String getPassword() {
 		return password;
 	}
@@ -73,23 +71,36 @@ public class UserBean implements Serializable{
 	}
 	public void start() throws SQLException
 	{
-		if( idUser==null || idUser == "")
-		{
 		System.out.println("start");
 		HttpServletRequest request=(HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-		idUser =request.getParameter("id");
-		UserDAO.getUser(this);
+		String id = request.getParameter("id");
+		if(id == null && role == null)
+		{
+			role=RoleDAO.getRole(1);
+			return;
+		}
+		if( idUser==null || idUser == "")
+		{
+			idUser = id;
+			UserDAO.getUser(this);
 		}
 	}
 	public void reload() throws SQLException
 	{
 		System.out.println("reload");
-		UserDAO.getUser(this);
+		if(message != null )
+		{
+			 FacesContext.getCurrentInstance().addMessage(null, message);
+			 
+		}
+		if(!error)UserDAO.getUser(this);
+		error = false;
+		message = null;
 	}
 	public void rolechange()
 	{
 		System.out.println("role change");
-		role=RoleDAO.getRole(role.getName());
+		role = RoleDAO.getRole(role.getName());
 	}
 	private int isEqual(UserBean user)
 	{
@@ -107,14 +118,22 @@ public class UserBean implements Serializable{
 		context.getExternalContext().getFlash().setKeepMessages(true);
 		if(toUpdate == 0)
 		{
-			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Nothing to update.", "Nie by這 zmian"));
+			message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Nothing to update.", "Nie by這 zmian");
 			return;
 		}
-		if(!UserDAO.updateUser(this, toUpdate))
+		if(!UserDAO.updateUser(this))
 			{
-			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "B章d", "Zmiany nie zosta造 zapisane."));
+				message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "B章d", "Zmiany nie zosta造 zapisane.");
 				return;
 			}
-		context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Sukces", "Zmiany zosta造 zapisane."));
+		message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sukces", "Zmiany zosta造 zapisane.");
+	}
+	public void idValidation() throws ValidatorException, SQLException {
+		System.out.println("validation" + idUser);  
+		if(idUser != null && UserDAO.getUser(idUser) != null) 
+		  {
+		    throw new ValidatorException(
+		                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "error: ", "validation failed"));
+		  }
 	}
 }

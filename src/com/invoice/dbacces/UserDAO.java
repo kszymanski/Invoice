@@ -106,7 +106,7 @@ public class UserDAO {
 		}
 		return isValid;
 	}
-	public static boolean updateUser(UserBean user, int toUpdate)
+	public static boolean updateUser(UserBean user)
 	{
 		
 		try 
@@ -124,12 +124,13 @@ public class UserDAO {
 			int rs = stm.executeUpdate();
 			
 			
-			if(rs == toUpdate)
+			if(rs == 1)
 				{
 					con.commit();
 					stm.close();
 					return true;
 				}
+			con.rollback();
 			stm.close();
 		} 
 		catch (SQLException e)
