@@ -72,4 +72,11 @@ public class UserBean implements Serializable{
 		UserDAO.getUser(this);
 		}
 	}
+	public void reload() throws SQLException
+	{
+		System.out.println("reload");
+		
+		UserDAO.getUser(this);
+		
+	}
 }
