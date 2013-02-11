@@ -11,4 +11,11 @@
 			<to-view-id>/faces/pages/home.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
+	<converter>
+    <description>A Converter for RoleBean</description>
+    <converter-id>RoleBeanConverter</converter-id>
+    <converter-class>
+        com.invoice.control.RoleConverter
+    </converter-class>
+</converter>
 </faces-config>

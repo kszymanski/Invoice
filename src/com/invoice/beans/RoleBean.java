@@ -36,7 +36,7 @@ public class RoleBean implements Serializable {
 	public void setName(String name) {
 		Name = name;
 	}
-	public boolean getAddInvoice() {
+	public boolean isAddInvoice() {
 		return addInvoice;
 	}
 	public void setAddInvoice(boolean addInvoice) {

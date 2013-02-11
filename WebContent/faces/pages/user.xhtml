@@ -39,18 +39,18 @@
             					<f:validateLength minimum="2" /> 
             				</p:inputText>
             				<p:message for="surname" display="icon"/>
-            				<ui:remove><!-- editable field Surname --></ui:remove>
+            				<ui:remove><!-- editable field Role --></ui:remove>
             				<h:outputText value="Rola: " />  
             				<h:outputText value="#{user.role.name}" rendered="#{!edit}"/>
-            				<p:inputText id="surname" value="#{user.surname}" rendered="#{edit}" label="Nazwisko" required="true" requiredMessage="Nazwisko Użytkownika nie może być puste">
-            					<f:validateLength minimum="2" /> 
-            				</p:inputText>
-            				<p:message for="surname" display="icon"/>
+            				<p:selectOneMenu id="rolelist" value="#{user.role.name}" >
+            					<p:ajax process="@this"  update="userForm" listener="#{user.rolechange()}"/>
+            					<f:selectItems value="#{rolesList.roles}" var="role" itemValue="#{role.name}" itemLabel="#{role.name}"/>
+        					</p:selectOneMenu>
 				        </h:panelGrid>
 					</p:panel>
-					<p:panel header="Szczegóły Roli: #{user.role.name}" style="width: 49%; float: right;">
-						  <h:panelGrid columns="2" style="margin-left: auto; margin-right: auto;">  
-            				<h:outputText value="Nazwa: " />  
+					<p:panel  header="Szczegóły Roli: #{user.role.name}" style="width: 49%; float: right;">
+						  <h:panelGrid id="rolePanel" columns="2" style="margin-left: auto; margin-right: auto;">  
+            				  
             				<h:outputText value="#{user.role.name}"/>  
             				<h:outputText value="Dodawanie Faktur: " />  
             				<h:outputText value="#{user.role.addInvoice?'TAK':'NIE'}"/>  
@@ -63,7 +63,7 @@
         				<f:setPropertyActionListener value="#{true}" target="#{edit}" />  
     				</p:remoteCommand>
 				</h:form>
-				
+				<ui:debug/>
 			</ui:define>
 		</ui:composition>
 	</body>
