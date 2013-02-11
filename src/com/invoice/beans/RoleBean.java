@@ -9,21 +9,24 @@ public class RoleBean implements Serializable {
 	private int idRole;
 	private String Name;
 	private boolean addInvoice;
-	private boolean AddProduct;
-	private boolean AddReciept;
-	private boolean AddBuyInvoice;
-	private boolean ViewInvoice;
-	private boolean ViewWarehause;
-	private boolean ViewProduct;
-	private boolean ViewBuyInvoice;
-	private boolean ViewDelivery;
-	private boolean AddContractor;
-	private boolean ViewContractor;
-	private boolean AddUser;
-	private boolean ViewUser;
-	private boolean AddRole;
-	private boolean ViewRole;
-	private boolean ViewReciept;
+	private boolean viewInvoice;
+	private boolean addProduct;
+	private boolean viewProduct;
+	private boolean addReciept;
+	private boolean viewReciept;
+	private boolean addBuyInvoice;
+	private boolean viewBuyInvoice;
+	private boolean addRole;
+	private boolean viewRole;
+	private boolean addUser;
+	private boolean viewUser;
+	private boolean addWarehause;
+	private boolean viewWarehause;
+	private boolean addDelivery;
+	private boolean viewDelivery;
+	private boolean addContractor;
+	private boolean viewContractor;
+	
 	public int getIdRole() {
 		return idRole;
 	}
@@ -43,93 +46,105 @@ public class RoleBean implements Serializable {
 		this.addInvoice = addInvoice;
 	}
 	public boolean isAddProduct() {
-		return AddProduct;
+		return addProduct;
 	}
 	public void setAddProduct(boolean addProduct) {
-		AddProduct = addProduct;
+		this.addProduct = addProduct;
 	}
 	public boolean isAddReciept() {
-		return AddReciept;
+		return addReciept;
 	}
 	public void setAddReciept(boolean addReciept) {
-		AddReciept = addReciept;
+		this.addReciept = addReciept;
 	}
 	public boolean isAddBuyInvoice() {
-		return AddBuyInvoice;
+		return addBuyInvoice;
 	}
 	public void setAddBuyInvoice(boolean addBuyInvoice) {
-		AddBuyInvoice = addBuyInvoice;
+		this.addBuyInvoice = addBuyInvoice;
 	}
 	public boolean isViewInvoice() {
-		return ViewInvoice;
+		return viewInvoice;
 	}
 	public void setViewInvoice(boolean viewInvoice) {
-		ViewInvoice = viewInvoice;
+		this.viewInvoice = viewInvoice;
 	}
 	public boolean isViewWarehause() {
-		return ViewWarehause;
+		return viewWarehause;
 	}
 	public void setViewWarehause(boolean viewWarehause) {
-		ViewWarehause = viewWarehause;
+		this.viewWarehause = viewWarehause;
 	}
 	public boolean isViewProduct() {
-		return ViewProduct;
+		return viewProduct;
 	}
 	public void setViewProduct(boolean viewProduct) {
-		ViewProduct = viewProduct;
+		this.viewProduct = viewProduct;
 	}
 	public boolean isViewBuyInvoice() {
-		return ViewBuyInvoice;
+		return viewBuyInvoice;
 	}
 	public void setViewBuyInvoice(boolean viewBuyInvoice) {
-		ViewBuyInvoice = viewBuyInvoice;
+		this.viewBuyInvoice = viewBuyInvoice;
 	}
 	public boolean isViewDelivery() {
-		return ViewDelivery;
+		return viewDelivery;
 	}
 	public void setViewDelivery(boolean viewDelivery) {
-		ViewDelivery = viewDelivery;
+		this.viewDelivery = viewDelivery;
 	}
 	public boolean isAddContractor() {
-		return AddContractor;
+		return addContractor;
 	}
 	public void setAddContractor(boolean addContractor) {
-		AddContractor = addContractor;
+		this.addContractor = addContractor;
 	}
 	public boolean isViewContractor() {
-		return ViewContractor;
+		return viewContractor;
 	}
 	public void setViewContractor(boolean viewContractor) {
-		ViewContractor = viewContractor;
+		this.viewContractor = viewContractor;
 	}
 	public boolean isAddUser() {
-		return AddUser;
+		return addUser;
 	}
 	public void setAddUser(boolean addUser) {
-		AddUser = addUser;
+		this.addUser = addUser;
 	}
 	public boolean isViewUser() {
-		return ViewUser;
+		return viewUser;
 	}
 	public void setViewUser(boolean viewUser) {
-		ViewUser = viewUser;
+		this.viewUser = viewUser;
 	}
 	public boolean isAddRole() {
-		return AddRole;
+		return addRole;
 	}
 	public void setAddRole(boolean addRole) {
-		AddRole = addRole;
+		this.addRole = addRole;
 	}
 	public boolean isViewRole() {
-		return ViewRole;
+		return viewRole;
 	}
 	public void setViewRole(boolean viewRole) {
-		ViewRole = viewRole;
+		this.viewRole = viewRole;
 	}
 	public boolean isViewReciept() {
-		return ViewReciept;
+		return viewReciept;
 	}
 	public void setViewReciept(boolean viewReciept) {
-		ViewReciept = viewReciept;
+		this.viewReciept = viewReciept;
+	}
+	public boolean isAddWarehause() {
+		return addWarehause;
+	}
+	public void setAddWarehause(boolean addWarehause) {
+		this.addWarehause = addWarehause;
+	}
+	public boolean isAddDelivery() {
+		return addDelivery;
+	}
+	public void setAddDelivery(boolean addDelivery) {
+		this.addDelivery = addDelivery;
 	}
 }

@@ -1,5 +1,6 @@
 package com.invoice.dbacces;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -104,5 +105,37 @@ public class UserDAO {
 			e.printStackTrace();
 		}
 		return isValid;
+	}
+	public static boolean updateUser(UserBean user, int toUpdate)
+	{
+		
+		try 
+		{
+			String query="UPDATE user SET Name = ? , Surname = ? , idRole = ? WHERE idUser = ?";
+			Connection con=DBCon.getConnection();
+			con.setAutoCommit(false);
+			PreparedStatement stm= con.prepareStatement(query);
+			stm.setString(1, user.getName());
+			stm.setString(2, user.getSurname());
+			stm.setInt(3, user.getRole().getIdRole());
+			stm.setString(4, user.getIdUser());
+			
+			// execute select SQL stetement
+			int rs = stm.executeUpdate();
+			
+			
+			if(rs == toUpdate)
+				{
+					con.commit();
+					stm.close();
+					return true;
+				}
+			stm.close();
+		} 
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		return false;
 	}
 }

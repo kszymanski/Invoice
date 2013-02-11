@@ -9,6 +9,37 @@ import java.util.List;
 import com.invoice.beans.RoleBean;
 
 public class RoleDAO {
+	private static RoleBean getRs(ResultSet rs) throws SQLException
+	{
+		RoleBean role=null;
+	
+		
+			role = new RoleBean();
+			role.setIdRole(rs.getInt("idRole"));
+			role.setName(rs.getString("Name"));
+			role.setAddInvoice(rs.getBoolean("AddInvoice"));
+			role.setViewInvoice(rs.getBoolean("ViewInvoice"));
+			role.setAddProduct(rs.getBoolean("AddProduct"));
+			role.setViewProduct(rs.getBoolean("ViewProduct"));
+			role.setAddReciept(rs.getBoolean("AddReciept"));
+			role.setViewReciept(rs.getBoolean("ViewReciept"));
+			role.setAddBuyInvoice(rs.getBoolean("AddbuyInvoice"));
+			role.setViewBuyInvoice(rs.getBoolean("ViewBuyInvoice"));
+			role.setAddRole(rs.getBoolean("AddRole"));
+			role.setViewRole(rs.getBoolean("ViewRole"));
+			role.setAddContractor(rs.getBoolean("AddContractor"));
+			role.setViewContractor(rs.getBoolean("ViewContractor"));
+			role.setAddUser(rs.getBoolean("AddUser"));
+			role.setViewUser(rs.getBoolean("ViewUser"));
+			role.setAddWarehause(rs.getBoolean("AddWarehause"));
+			role.setViewWarehause(rs.getBoolean("ViewWarehause"));
+			role.setAddDelivery(rs.getBoolean("AddDelivery"));
+			role.setViewDelivery(rs.getBoolean("ViewDelivery"));
+		
+		return role;
+	}
+	
+	
 	public static RoleBean getRole(int idRole)
 	{
 		ResultSet rs;
@@ -24,10 +55,7 @@ public class RoleDAO {
 			rs = stm.executeQuery();
 			while (rs.next())
 			{
-				role = new RoleBean();
-				role.setName(rs.getString("Name"));
-				role.setAddInvoice(rs.getBoolean("AddInvoice"));
-				role.setAddProduct(rs.getBoolean("AddProduct"));
+				role = getRs(rs);
 			}
 			stm.close();
 			} catch (SQLException e) {
@@ -52,11 +80,7 @@ public class RoleDAO {
 			rs = stm.executeQuery();
 			while (rs.next())
 			{
-				role = new RoleBean();
-				role.setIdRole(rs.getInt("idRole"));
-				role.setName(rs.getString("Name"));
-				role.setAddInvoice(rs.getBoolean("AddInvoice"));
-				role.setAddProduct(rs.getBoolean("AddProduct"));
+				role = getRs(rs);
 			}
 			stm.close();
 			} catch (SQLException e) {
@@ -78,10 +102,7 @@ public class RoleDAO {
 			ResultSet rs = stm.executeQuery();
 			while (rs.next())
 			{
-				RoleBean role = new RoleBean();
-				role.setName(rs.getString("Name"));
-				role.setAddInvoice(rs.getBoolean("AddInvoice"));
-				role.setAddProduct(rs.getBoolean("AddProduct"));
+				RoleBean role = getRs(rs);
 				list.add(role);
 			}
 			stm.close();
