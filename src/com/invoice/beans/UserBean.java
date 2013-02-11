@@ -4,11 +4,13 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.sql.SQLException;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
+import com.invoice.dbacces.RoleDAO;
 import com.invoice.dbacces.UserDAO;
 
 @ManagedBean(name="user")
@@ -20,6 +22,7 @@ public class UserBean implements Serializable{
 	protected String surname;
 	protected RoleBean role;
 	protected String password;
+	protected int count;
 	public UserBean()
 	{
 		
@@ -49,6 +52,12 @@ public class UserBean implements Serializable{
 	public void setRole(RoleBean role) {
 		this.role = role;
 	}
+	public int getCount() {
+		return count;
+	}
+	public void setCount(int count) {
+		this.count = count;
+	}
 	public String getPassword() {
 		return password;
 	}
@@ -71,5 +80,41 @@ public class UserBean implements Serializable{
 		idUser =request.getParameter("id");
 		UserDAO.getUser(this);
 		}
+	}
+	public void reload() throws SQLException
+	{
+		System.out.println("reload");
+		UserDAO.getUser(this);
+	}
+	public void rolechange()
+	{
+		System.out.println("role change");
+		role=RoleDAO.getRole(role.getName());
+	}
+	private int isEqual(UserBean user)
+	{
+		int equal = 0;
+		if(!this.idUser.equalsIgnoreCase(user.getIdUser()))equal ++;
+		if(!this.name.equalsIgnoreCase(user.getName())) equal ++;
+		if(!this.surname.equalsIgnoreCase(user.getSurname()))equal++;
+		if(this.role.getIdRole()!= user.role.getIdRole())equal++;
+		return equal;
+	}
+	public void updateUser() throws SQLException
+	{
+		int toUpdate = isEqual(UserDAO.getUser(idUser));
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.getExternalContext().getFlash().setKeepMessages(true);
+		if(toUpdate == 0)
+		{
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Nothing to update.", "Nie by³o zmian"));
+			return;
+		}
+		if(!UserDAO.updateUser(this, toUpdate))
+			{
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "B³¹d", "Zmiany nie zosta³y zapisane."));
+				return;
+			}
+		context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Sukces", "Zmiany zosta³y zapisane."));
 	}
 }

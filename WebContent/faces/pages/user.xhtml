@@ -11,39 +11,92 @@
 			<ui:define name="content">
 				<f:event type="preRenderView" listener="#{user.start}"/>
 				<h:form id="userForm">
-				 	<p:messages id="msgs"/> 
+				 	
+				 	<p:growl id="msgs" showDetail="true" sticky="true" />
 					<p:menubar>
 						<p:menuitem value="Edytuj" icon="ui-icon-edit" actionListener="user1.edit" onclick="changeToEdit()"/>
-						<p:menuitem id="btn" value="Zapisz" icon="ui-icon-save" rendered="#{edit}" 
-							update="userForm" actionListener="#"/>
-						<p:menuitem value="Zrezygnuj" icon="ui-icon-cancel" ajax="false" onclick="javascript:location.reload(true)" />
+						<p:menuitem id="btn" value="Zapisz"  actionListener="#{user.updateUser()}" icon="ui-icon-disk" update="msgs" rendered="#{edit}" oncomplete="changeToView()"/>
+						<p:menuitem value="Zrezygnuj" icon="ui-icon-cancel" onclick="changeToView()" rendered="#{edit}" />
+						
 					</p:menubar>
 					<p:panel header="Dane Uzytkownika: #{user.name} #{user.surname}" style="width: 49%; float: left;" >
-						 <h:panelGrid columns="3">  
+						 <h:panelGrid columns="3" style="margin-left: auto; margin-right: auto;">  
+            				<ui:remove><!-- username not for edit --></ui:remove>
             				<h:outputText value="Nazwa Uzytkownika: " />  
-            				<h:outputText value="#{user.idUser}" rendered="#{!edit}"/>
-            				<p:inputText id="username" value="#{user.idUser}" rendered="#{edit}" label="Użytkownik" required="true" requiredMessage="Nazwa Użytkownika nie może być pusta">
+            				<h:outputText value="#{user.idUser}" rendered="true"/>
+            				<!-- something  to put in 3rd column -->
+            				<ui:remove><!-- editable field Name --></ui:remove>
+            				<h:outputText value="Imie: " />  
+            				<h:outputText value="#{user.name}" rendered="#{!edit}"/>
+            				<p:inputText id="name" value="#{user.name}" rendered="#{edit}" label="Imie" required="true" requiredMessage="Imie Użytkownika nie może być puste">
             					<f:validateLength minimum="2" /> 
             				</p:inputText>
-            				<p:message for="username" display="icon"/>   
-            				<h:outputText value="Imie: " />  
-            				<h:outputText value="#{user.name}"/>  
+            				<p:message for="name" display="icon"/>
+            				<ui:remove><!-- editable field Surname --></ui:remove>
+            				<h:outputText value="Nazwisko: " />  
+            				<h:outputText value="#{user.surname}" rendered="#{!edit}"/>
+            				<p:inputText id="surname" value="#{user.surname}" rendered="#{edit}" label="Nazwisko" required="true" requiredMessage="Nazwisko Użytkownika nie może być puste">
+            					<f:validateLength minimum="2" /> 
+            				</p:inputText>
+            				<p:message for="surname" display="icon"/>
+            				<ui:remove><!-- editable field Role --></ui:remove>
+            				<h:outputText value="Rola: " />  
+            				<h:outputText value="#{user.role.name}" rendered="#{!edit}"/>
+            				<p:selectOneMenu id="rolelist" value="#{user.role.name}" rendered="#{edit}">
+            					<p:ajax process="@this"  update="userForm" listener="#{user.rolechange()}"/>
+            					<f:selectItems value="#{rolesList.roles}" var="role" itemValue="#{role.name}" itemLabel="#{role.name}"/>
+        					</p:selectOneMenu>
 				        </h:panelGrid>
 					</p:panel>
-					<p:panel header="Szczegóły Roli: #{user.role.name}" style="width: 49%; float: right;">
-						  <h:panelGrid columns="2" cellpadding="5">  
-            				<h:outputText value="Nazwa: " />  
-            				<h:outputText value="#{user.role.name}"/>  
+					<p:panel  header="Szczegóły Roli: #{user.role.name}" style="width: 49%; float: right;">
+						  <h:panelGrid id="rolePanel" columns="2" style="margin-left: auto; margin-right: auto;">  
+            				<ui:remove><!-- list of roles --></ui:remove>
             				<h:outputText value="Dodawanie Faktur: " />  
-            				<h:outputText value="#{user.role.addInvoice?'TAK':'NIE'}"/>  
+            				<h:outputText value="#{user.role.addInvoice?'TAK':'NIE'}"/>
+            				<h:outputText value="Przeglądanie Faktur: " />  
+            				<h:outputText value="#{user.role.viewInvoice?'TAK':'NIE'}"/>
+            				<h:outputText value="Dodawanie Produktów: " />  
+            				<h:outputText value="#{user.role.addProduct?'TAK':'NIE'}"/>
+            				<h:outputText value="Przeglądanie Produktów: " />  
+            				<h:outputText value="#{user.role.viewProduct?'TAK':'NIE'}"/>
+            				<h:outputText value="Dodawanie Paragonów: " />  
+            				<h:outputText value="#{user.role.addReciept?'TAK':'NIE'}"/>
+            				<h:outputText value="Przeglądanie Paragonów " />  
+            				<h:outputText value="#{user.role.viewReciept?'TAK':'NIE'}"/>
+            				<h:outputText value="Dodawanie Faktur Zakupu: " />  
+            				<h:outputText value="#{user.role.addBuyInvoice?'TAK':'NIE'}"/>
+            				<h:outputText value="Przeglądanie Faktur Zakupu: " />  
+            				<h:outputText value="#{user.role.viewBuyInvoice?'TAK':'NIE'}"/>
+            				<h:outputText value="Dodawanie Ról: " />  
+            				<h:outputText value="#{user.role.addRole?'TAK':'NIE'}"/>
+            				<h:outputText value="Przeglądanie Ról: " />  
+            				<h:outputText value="#{user.role.viewRole?'TAK':'NIE'}"/>
+            				<h:outputText value="Dodawanie Kontrahentów: " />  
+            				<h:outputText value="#{user.role.addContractor?'TAK':'NIE'}"/>
+            				<h:outputText value="Przeglądanie Kontrahentów: " />  
+            				<h:outputText value="#{user.role.viewContractor?'TAK':'NIE'}"/>
+            				<h:outputText value="Dodawanie Uzytkowników: " />  
+            				<h:outputText value="#{user.role.addUser?'TAK':'NIE'}"/>
+            				<h:outputText value="Przeglądanie Użytkowników: " />  
+            				<h:outputText value="#{user.role.viewUser?'TAK':'NIE'}"/>
+            				<h:outputText value="Dodawanie Magazynow: " />  
+            				<h:outputText value="#{user.role.addWarehause?'TAK':'NIE'}"/>
+            				<h:outputText value="Przeglądanie Magazynow: " />  
+            				<h:outputText value="#{user.role.viewWarehause?'TAK':'NIE'}"/>
+            				<h:outputText value="Dodawanie WZ: " />  
+            				<h:outputText value="#{user.role.addDelivery?'TAK':'NIE'}"/>
+            				<h:outputText value="Przeglądanie WZ: " />  
+            				<h:outputText value="#{user.role.viewDelivery?'TAK':'NIE'}"/>
 				        </h:panelGrid>
 					</p:panel>
+					<p:remoteCommand name="changeToView" update="userForm" action="#{user.reload()}">  
+        				<f:setPropertyActionListener value="#{false}" target="#{edit}"  />
+    				</p:remoteCommand>
 					<p:remoteCommand name="changeToEdit" update="userForm">  
-        			<f:setPropertyActionListener value="#{true}"   
-            			target="#{edit}" />  
+        				<f:setPropertyActionListener value="#{true}" target="#{edit}" />  
     				</p:remoteCommand>
 				</h:form>
-				
+				<ui:debug/>
 			</ui:define>
 		</ui:composition>
 	</body>
