@@ -14,7 +14,7 @@
 				<h:form id="userForm">
 				 	<p:growl id="msgs" autoUpdate="true" showDetail="true"  />
 					<p:menubar>
-						<p:menuitem value="Edytuj" icon="ui-icon-edit" actionListener="user1.edit" onclick="changeToEdit()"/>
+						<p:menuitem value="Edytuj" icon="ui-icon-edit" actionListener="user1.edit" onclick="changeToEdit()" disabled="#{!loginUser.user.role.addUser}"/>
 						<p:menuitem id="btn" value="Zapisz"  actionListener="#{user.updateUser()}" icon="ui-icon-disk" update="msgs" rendered="#{edit}" onsuccess="changeToView()"/>
 						<p:menuitem value="Zrezygnuj" icon="ui-icon-cancel" onclick="changeToView()" rendered="#{edit}" />
 						

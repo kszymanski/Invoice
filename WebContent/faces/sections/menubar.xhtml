@@ -12,12 +12,12 @@
         				<p:menuitem value="Strona Główna" url="/" icon="ui-icon-home"/>
         				<p:submenu label="Użytkownicy i Role" >  
            					<p:submenu label="Nowy" icon="ui-icon-contact">  
-                				<p:menuitem value="Użytkownik" url="/UserList?action=new" icon="ui-icon-person"/>  
-                				<p:menuitem value="Rola" url="#" icon="ui-icon-flag" />  
+                				<p:menuitem value="Użytkownik" url="/UserList?action=new" icon="ui-icon-person" disabled="#{!loginUser.user.role.addUser}"/>  
+                				<p:menuitem value="Rola" url="#" icon="ui-icon-flag" disabled="#{!loginUser.user.role.addRole}"/>  
             				</p:submenu>  
             				<p:submenu label="Lista" icon="ui-icon-note">  
-                				<p:menuitem value="Użytkownicy" url="/UserList" icon="ui-icon-person"/>  
-                				<p:menuitem value="Role" url="#" icon="ui-icon-flag"/>  
+                				<p:menuitem value="Użytkownicy" url="/UserList" icon="ui-icon-person" disabled="#{!loginUser.user.role.viewUser}"/>  
+                				<p:menuitem value="Role" url="#" icon="ui-icon-flag" disabled="#{!loginUser.user.role.viewRole}"/>  
             				</p:submenu> 
         				</p:submenu>  
         				<f:facet name="options" >

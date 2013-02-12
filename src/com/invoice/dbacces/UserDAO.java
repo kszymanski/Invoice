@@ -11,6 +11,18 @@ import com.invoice.beans.UserBean;
 
 public class UserDAO {
 	
+	private static UserBean setRs(ResultSet rs) throws SQLException
+	{
+		UserBean user = null;
+		user = new UserBean();
+		user.setIdUser(rs.getString("idUser"));
+		user.setPassword(rs.getString("Password"));
+		user.setName(rs.getString("Name"));
+		user.setSurname(rs.getString("Surname"));
+		user.setRole(RoleDAO.getRole(rs.getInt("idRole")));
+		user.setActive(rs.getBoolean("Active"));
+		return user;
+	}
 	public static UserBean getUser(String id) throws SQLException
 	{
 		String query="Select * From User Where idUser=?";
@@ -22,12 +34,7 @@ public class UserDAO {
 		UserBean user = null;
 		while (rs.next())
 		{
-			user = new UserBean();
-			user.setIdUser(id);
-			user.setPassword(rs.getString("Password"));
-			user.setName(rs.getString("Name"));
-			user.setSurname(rs.getString("Surname"));
-			user.setRole(RoleDAO.getRole(rs.getInt("idRole")));
+			user = setRs(rs);
 		}
 		stm.close();
 		return user;
@@ -47,6 +54,7 @@ public class UserDAO {
 			user.setName(rs.getString("Name"));
 			user.setSurname(rs.getString("Surname"));
 			user.setRole(RoleDAO.getRole(rs.getInt("idRole")));
+			user.setActive(rs.getBoolean("Active"));
 		}
 		stm.close();
 		
@@ -61,12 +69,7 @@ public class UserDAO {
 			ResultSet rs = stm.executeQuery();
 			while (rs.next())
 			{
-				UserBean user = new UserBean();
-				user.setIdUser(rs.getString("idUser"));
-				user.setPassword(rs.getString("Password"));
-				user.setName(rs.getString("Name"));
-				user.setSurname(rs.getString("Surname"));
-				user.setRole(RoleDAO.getRole(rs.getInt("idRole")));
+				UserBean user = setRs(rs);
 				list.add(user);
 			}
 			return list;
@@ -95,7 +98,8 @@ public class UserDAO {
 				user.setName(rs.getString("Name"));
 				user.setSurname(rs.getString("Surname"));
 				user.setRole(RoleDAO.getRole(rs.getInt("idRole")));
-				isValid=true;
+				user.setActive(rs.getBoolean("Active"));
+				if(user.isActive())isValid=true;
 			}
 			stm.close();
 			return isValid;
@@ -111,14 +115,15 @@ public class UserDAO {
 		
 		try 
 		{
-			String query="UPDATE user SET Name = ? , Surname = ? , idRole = ? WHERE idUser = ?";
+			String query="UPDATE user SET Name = ? , Surname = ? , idRole = ?, Active = ? WHERE idUser = ?";
 			Connection con=DBCon.getConnection();
 			con.setAutoCommit(false);
 			PreparedStatement stm= con.prepareStatement(query);
 			stm.setString(1, user.getName());
 			stm.setString(2, user.getSurname());
 			stm.setInt(3, user.getRole().getIdRole());
-			stm.setString(4, user.getIdUser());
+			stm.setBoolean(4, user.isActive());
+			stm.setString(5, user.getIdUser());
 			
 			// execute select SQL stetement
 			int rs = stm.executeUpdate();

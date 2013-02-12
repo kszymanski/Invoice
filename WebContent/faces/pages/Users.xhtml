@@ -12,17 +12,16 @@
 			<h:form id="form">
 				<p:menubar id="menu">
 					<p:menuitem value="Szczegóły" icon="ui-icon-edit" disabled='#{userList.selectedUser == null}' action="#{userList.selectedUser.viewUser()}"/>
-					<p:menuitem value="Nowy" icon="ui-icon-edit" url="/UserList?action=new"/>
+					<p:menuitem value="Nowy" icon="ui-icon-edit" url="/UserList?action=new" disabled="#{!loginUser.user.role.addUser}" />
 				</p:menubar>
 				<p:contextMenu id="contextMenu" for="users">
         			<p:menuitem value="Szczegóły" icon="ui-icon-search" action="#{userList.selectedUser.viewUser()}"/>  
-        			<p:menuitem value="Edit" icon="ui-icon-edit" url="/UserList?id=#{userList.selectedUser.idUser}"/>  
+        			<p:menuitem value="Edit" icon="ui-icon-edit" url="/UserList?id=#{userList.selectedUser.idUser}" disabled="#{!loginUser.user.role.addUser}"/>  
     			</p:contextMenu>
 				<p:dataTable id="users" var="userView" value="#{userList.users}" rowKey="#{userView.idUser}"  
                  selection="#{userList.selectedUser}" selectionMode="single" rows="20"> 
        				<f:facet name="header">  
             			Lista Użytkowników dostępna w Systemie:
-            			<p:menuitem value="View" icon="ui-icon-search" />  
         			</f:facet>  
   					<p:ajax event="rowSelect" update=":form"/>
         			<p:column headerText="Username" >  

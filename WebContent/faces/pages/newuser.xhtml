@@ -10,7 +10,7 @@
 			<ui:define name="windowTitle">View User</ui:define>
 			<ui:define name="content">
 				<f:event type="preRenderView" listener="#{user.start}"/>
-				<p:growl id="msgs" showDetail="true" sticky="true" />
+				<p:growl id="msgs" showDetail="false" showSummary="false"/>
 				<h:form id="userForm">
 				 	<p:growl id="msgs" autoUpdate="true" showDetail="true"  />
 					<p:menubar>
@@ -21,22 +21,25 @@
 						 <h:panelGrid columns="3" style="margin-left: auto; margin-right: auto;">  
             				<ui:remove><!-- username not for edit --></ui:remove>
             				<h:outputText value="Nazwa Uzytkownika: " />  
-            				<p:inputText id="username" value="#{user.idUser}" validator="#{user.idValidation()}" label="Nazwa Użytkownika" required="true" requiredMessage="Nazwa Użytkownika nie może być puste">
-            					<f:validateLength minimum="2" /> 
+            				<p:inputText id="username" value="#{user.idUser}" validator="#{user.idValidation}" label="Nazwa Użytkownika" >
+            					<p:ajax update="msgUsername"  event="keyup"/>
             				</p:inputText>
-            				<p:message for="username" display="icon"/>
+            				<p:message for="username" id="msgUsername" display="icon"/>
             				<ui:remove><!-- editable field Name --></ui:remove>
             				<h:outputText value="Imie: " />  
-            				<p:inputText id="name" value="#{user.name}" label="Imie" required="true" requiredMessage="Imie Użytkownika nie może być puste">
-            					<f:validateLength minimum="2" /> 
+            				<p:inputText id="name" value="#{user.name}" label="Imie" required="true" 
+            							validatorMessage="Imie musi być dłuższe niż 2 znaki" requiredMessage="Imie Użytkownika nie może być puste">
+            					<f:validateLength minimum="2" />
+            					<p:ajax update="msgName"  event="keyup"/> 
             				</p:inputText>
-            				<p:message for="name" display="icon"/>
+            				<p:message for="name" id="msgName" display="icon"/>
             				<ui:remove><!-- editable field Surname --></ui:remove>
             				<h:outputText value="Nazwisko: " />  
             				<p:inputText id="surname" value="#{user.surname}"  label="Nazwisko" required="true" requiredMessage="Nazwisko Użytkownika nie może być puste">
-            					<f:validateLength minimum="2" /> 
+            					<f:validateLength minimum="2" />
+            					<p:ajax update="msgSurname"  event="keyup"/>  
             				</p:inputText>
-            				<p:message for="surname" display="icon"/>
+            				<p:message for="surname" id="msgSurname" display="icon"/>
             				<ui:remove><!-- editable field Role --></ui:remove>
             				<h:outputText value="Rola: " />  
             				<p:selectOneMenu id="rolelist" value="#{user.role.name}" style="width: 165px;">

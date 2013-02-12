@@ -12,10 +12,10 @@
 		</navigation-case>
 	</navigation-rule>
 	<converter>
-    <description>A Converter for RoleBean</description>
-    <converter-id>RoleBeanConverter</converter-id>
-    <converter-class>
+    	<description>A Converter for RoleBean</description>
+    	<converter-id>RoleBeanConverter</converter-id>
+    	<converter-class>
         com.invoice.control.RoleConverter
-    </converter-class>
-</converter>
+    	</converter-class>
+	</converter>
 </faces-config>

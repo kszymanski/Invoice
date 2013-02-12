@@ -18,18 +18,19 @@ import com.invoice.dbacces.UserDAO;
 @ManagedBean(name="user")
 @ViewScoped
 public class UserBean implements Serializable{
+	//fields
 	private static final long serialVersionUID = 1L;
 	protected String idUser;
 	protected String name;
 	protected String surname;
 	protected RoleBean role;
 	protected String password;
+	protected boolean active;
 	protected FacesMessage message;
 	protected boolean error=false;
-	public UserBean()
-	{
-		
-	};
+	//Constructors
+	public UserBean(){};
+	// getters Setters
 	public String getIdUser() {
 		return idUser;
 	}
@@ -63,6 +64,14 @@ public class UserBean implements Serializable{
 		this.password = password;
 	}
 
+	public boolean isActive() {
+		return active;
+	}
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+	
+	
 	public String viewUser() throws IOException
 	{
 		System.out.println("redirect");
@@ -109,6 +118,7 @@ public class UserBean implements Serializable{
 		if(!this.name.equalsIgnoreCase(user.getName())) equal ++;
 		if(!this.surname.equalsIgnoreCase(user.getSurname()))equal++;
 		if(this.role.getIdRole()!= user.role.getIdRole())equal++;
+		if(this.active!= user.isActive())equal++;
 		return equal;
 	}
 	public void updateUser() throws SQLException
@@ -128,12 +138,19 @@ public class UserBean implements Serializable{
 			}
 		message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sukces", "Zmiany zosta³y zapisane.");
 	}
-	public void idValidation() throws ValidatorException, SQLException {
-		System.out.println("validation" + idUser);  
-		if(idUser != null && UserDAO.getUser(idUser) != null) 
-		  {
-		    throw new ValidatorException(
-		                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "error: ", "validation failed"));
-		  }
+	
+	public void idValidation(FacesContext context, UIComponent component,
+		    Object value) throws ValidatorException, SQLException {
+		System.out.println("validation" + value);
+		if(value== null || "" == (String)value)
+			throw new ValidatorException(
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR: ", "Nazwa U¿ytkownika nie mo¿e byæ pusta"));
+		if(((String)value).length() <= 2)
+			throw new ValidatorException(
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR: ", "Nazwa U¿ytkownika musi mieæ min 3 znaki"));
+		if(value != null && UserDAO.getUser((String) value) != null) 
+			throw new ValidatorException(
+		                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR: ", "Nazwa U¿ytkownika Musi Byæ Unikalna"));
+		
 	}
 }
