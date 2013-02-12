@@ -4,12 +4,12 @@ import java.io.Serializable;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import com.invoice.dbacces.RoleDAO;
 @ManagedBean(name="roleBean")
-@RequestScoped
+@ViewScoped
 public class RoleBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private int idRole;
@@ -32,6 +32,7 @@ public class RoleBean implements Serializable {
 	private boolean viewDelivery;
 	private boolean addContractor;
 	private boolean viewContractor;
+	protected FacesMessage message;
 	
 	public int getIdRole() {
 		return idRole;
@@ -169,5 +170,43 @@ public class RoleBean implements Serializable {
 			context.addMessage("Test-Error", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error-Summary", "Error-Detail"));
 		      
 		}
+	}
+	
+	public void deleteRole()
+	{
+
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.getExternalContext().getFlash().setKeepMessages(true);
+		if(idRole == 1)
+		{
+			context.addMessage(null,new FacesMessage(FacesMessage.SEVERITY_WARN, "Zabronione.", "Nie mozna usuwaæ roli szefa"));
+			return;
+		}
+		if(!RoleDAO.deleteRole(this))
+		{
+			context.addMessage(null,new FacesMessage(FacesMessage.SEVERITY_ERROR, "B³¹d", "Zmiany nie zosta³y zapisane."));
+			return;
+		}
+		context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Sukces", "Zmiany zosta³y zapisane."));
+	}
+	public void updateRole()
+	{
+		System.out.println("update role");
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.getExternalContext().getFlash().setKeepMessages(true);
+		if(idRole == 1)
+		{
+			System.out.println("update role 1");
+			context.addMessage(null,new FacesMessage(FacesMessage.SEVERITY_WARN, "Zabronione.", "Nie mozna zmieniac roli szefa"));
+			return;
+		}
+		if(!RoleDAO.updateRole(this))
+		{
+			System.out.println("update role failed");
+			context.addMessage(null,new FacesMessage(FacesMessage.SEVERITY_ERROR, "B³¹d", "Zmiany nie zosta³y zapisane."));
+			return;
+		}
+		System.out.println("update done!");
+		context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Sukces", "Zmiany zosta³y zapisane."));
 	}
 }

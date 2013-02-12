@@ -140,10 +140,10 @@ public class RoleDAO {
 			stm.setBoolean(13, role.isViewContractor());
 			stm.setBoolean(14, role.isAddUser());
 			stm.setBoolean(15, role.isViewUser());
-			stm.setBoolean(16, role.isAddWarehause());
-			stm.setBoolean(17, role.isViewWarehause());
-			stm.setBoolean(18, role.isAddDelivery());
-			stm.setBoolean(19, role.isViewDelivery());
+			stm.setBoolean(16, role.isViewWarehause());
+			stm.setBoolean(17, role.isAddWarehause());
+			stm.setBoolean(18, role.isViewDelivery());
+			stm.setBoolean(19, role.isAddDelivery());
 			
 			
 			
@@ -168,6 +168,80 @@ public class RoleDAO {
 	}
 	public static boolean updateRole(RoleBean role)
 	{
+		try 
+		{
+			System.out.println("set query");
+			String query="UPDATE `role` SET `Name`=?, `AddInvoice`=?, `ViewInvoice`=?, `AddProduct`=?, `ViewProduct`=?," +
+						" `AddReciept`=?, `ViewReciept`=?, `AddBuyInvoice`=?, `ViewBuyInvoice`=?, `AddRole`=?, `ViewRole`=?," +
+						" `AddContractor`=?, `ViewContractor`=?, `AddUser`=?, `ViewUser`=?, `ViewWarehause`=?," +
+						" `AddWarehause`=?, `ViewDelivery`=?, `AddDelivery`=? WHERE `idRole`=?";
+			Connection con=DBCon.getConnection();
+			con.setAutoCommit(false);
+			PreparedStatement stm= con.prepareStatement(query);
+			stm.setString(1, role.getName());
+			stm.setBoolean(2, role.isAddInvoice());
+			stm.setBoolean(3, role.isViewInvoice());
+			stm.setBoolean(4, role.isAddProduct());
+			stm.setBoolean(5, role.isViewProduct());
+			stm.setBoolean(6, role.isAddReciept());
+			stm.setBoolean(7, role.isViewReciept());
+			stm.setBoolean(8, role.isAddBuyInvoice());
+			stm.setBoolean(9, role.isViewBuyInvoice());
+			stm.setBoolean(10, role.isAddRole());
+			stm.setBoolean(11, role.isViewRole());
+			stm.setBoolean(12, role.isAddContractor());
+			stm.setBoolean(13, role.isViewContractor());
+			stm.setBoolean(14, role.isAddUser());
+			stm.setBoolean(15, role.isViewUser());
+			stm.setBoolean(16, role.isViewWarehause());
+			stm.setBoolean(17, role.isAddWarehause());
+			stm.setBoolean(18, role.isViewDelivery());
+			stm.setBoolean(19, role.isAddDelivery());
+			stm.setInt(20, role.getIdRole());
+			
+			// execute select SQL stetement
+			int rs = stm.executeUpdate();
+			if(rs == 1)
+				{
+					con.commit();
+					stm.close();
+					System.out.println("commit");
+					return true;
+				}
+			con.rollback();
+			stm.close();
+		} 
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		return false;
+	}
+	public static boolean deleteRole(RoleBean role)
+	{
+		try 
+		{
+			String query="DELETE FROM `role` WHERE `idRole`=?";
+			Connection con=DBCon.getConnection();
+			con.setAutoCommit(false);
+			PreparedStatement stm= con.prepareStatement(query);
+			stm.setInt(1, role.getIdRole());
+			
+			// execute select SQL stetement
+			int rs = stm.executeUpdate();
+			if(rs == 1)
+				{
+					con.commit();
+					stm.close();
+					return true;
+				}
+			con.rollback();
+			stm.close();
+		} 
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
 		return false;
 	}
 }

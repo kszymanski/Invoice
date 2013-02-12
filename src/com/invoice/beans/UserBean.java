@@ -162,6 +162,7 @@ public class UserBean implements Serializable{
 	
 	public void insertUser() throws SQLException, IOException
 	{
+		System.out.println("insert");
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.getExternalContext().getFlash().setKeepMessages(true);
 		if(UserDAO.getUser(idUser) == null)

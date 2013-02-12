@@ -14,11 +14,11 @@
 				<h:form id="form">
 				 	<p:growl id="msgs" autoUpdate="true" showDetail="true"  />
 					<p:menubar>
-						<p:menuitem id="btn" value="#{msg.save}"  actionListener="#{user.insertUser()}" icon="ui-icon-disk" update="msgs"/>
+						<p:menuitem  process="userForm" id="btn" value="#{msg.save}"  actionListener="#{user.insertUser()}" icon="ui-icon-disk" update="msgs"/>
 						<p:menuitem value="#{msg.cancel}" icon="ui-icon-cancel" url="/UserList" />
 					</p:menubar>
 					<p:panel header="Dane Uzytkownika: #{user.name} #{user.surname}" style="width: 49%; float: left;" >
-						 <h:panelGrid columns="3" style="margin-left: auto; margin-right: auto;">  
+						 <h:panelGrid id="userForm" columns="3" style="margin-left: auto; margin-right: auto;">  
             				<ui:remove><!-- username not for edit --></ui:remove>
             				<h:outputText value="Nazwa Uzytkownika: " />  
             				<p:inputText id="username" value="#{user.idUser}" validator="#{user.idValidation}" label="Nazwa Użytkownika" >
@@ -71,9 +71,7 @@
 				        <p:commandButton update="msgName msgSurname" value="#{msg.save}" actionListener="#{user.insertUser()}"/>
 				        <p:button value="#{msg.cancel}" href="/UserList" />
 					</p:panel>
-					<ui:insert name="addRole">
-    					<ui:include src="/faces/sections/addRole.xhtml" />
-    				</ui:insert>
+					
     				
 					<p:panel  header="Szczegóły Roli: #{user.role.name}" style="width: 49%; float: right;">
 						  <h:panelGrid id="rolePanel" columns="2" style="margin-left: auto; margin-right: auto;">  
@@ -117,6 +115,9 @@
 				        </h:panelGrid>
 					</p:panel>
 				</h:form>
+				<ui:insert name="addRole">
+    					<ui:include src="/faces/sections/addRole.xhtml" />
+    			</ui:insert>
 				<ui:debug/>
 			</ui:define>
 		</ui:composition>

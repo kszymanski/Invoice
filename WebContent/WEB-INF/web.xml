@@ -22,6 +22,14 @@
     <servlet-name>User List</servlet-name>
     <url-pattern>/UserList</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>Role List</servlet-name>
+    <servlet-class>com.invoice.control.RoleList</servlet-class>
+  </servlet>
+   <servlet-mapping>
+    <servlet-name>Role List</servlet-name>
+    <url-pattern>/RoleList</url-pattern>
+  </servlet-mapping>
   <context-param>
     <param-name>javax.faces.PROJECT_STAGE</param-name>
     <param-value>Development</param-value>

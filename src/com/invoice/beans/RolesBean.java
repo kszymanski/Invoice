@@ -36,7 +36,6 @@ public class RolesBean implements Serializable{
 	}
 	public void refreshList()
 	{
-		roles = null;
 		roles=RoleDAO.getRoles();
 	}
 }
