@@ -11,11 +11,11 @@
 			<ui:define name="content">
 				<f:event type="preRenderView" listener="#{user.start}"/>
 				<p:growl id="msgs" showDetail="false" showSummary="false"/>
-				<h:form id="userForm">
+				<h:form id="form">
 				 	<p:growl id="msgs" autoUpdate="true" showDetail="true"  />
 					<p:menubar>
-						<p:menuitem id="btn" value="Zapisz"  actionListener="#{user.updateUser()}" icon="ui-icon-disk" update="msgs"/>
-						<p:menuitem value="Zrezygnuj" icon="ui-icon-cancel" url="/UserList" />
+						<p:menuitem id="btn" value="#{msg.save}"  actionListener="#{user.insertUser()}" icon="ui-icon-disk" update="msgs"/>
+						<p:menuitem value="#{msg.cancel}" icon="ui-icon-cancel" url="/UserList" />
 					</p:menubar>
 					<p:panel header="Dane Uzytkownika: #{user.name} #{user.surname}" style="width: 49%; float: left;" >
 						 <h:panelGrid columns="3" style="margin-left: auto; margin-right: auto;">  
@@ -25,6 +25,7 @@
             					<p:ajax update="msgUsername"  event="keyup"/>
             				</p:inputText>
             				<p:message for="username" id="msgUsername" display="icon"/>
+            				
             				<ui:remove><!-- editable field Name --></ui:remove>
             				<h:outputText value="Imie: " />  
             				<p:inputText id="name" value="#{user.name}" label="Imie" required="true" 
@@ -33,6 +34,7 @@
             					<p:ajax update="msgName"  event="keyup"/> 
             				</p:inputText>
             				<p:message for="name" id="msgName" display="icon"/>
+            				
             				<ui:remove><!-- editable field Surname --></ui:remove>
             				<h:outputText value="Nazwisko: " />  
             				<p:inputText id="surname" value="#{user.surname}"  label="Nazwisko" required="true" requiredMessage="Nazwisko Użytkownika nie może być puste">
@@ -40,15 +42,39 @@
             					<p:ajax update="msgSurname"  event="keyup"/>  
             				</p:inputText>
             				<p:message for="surname" id="msgSurname" display="icon"/>
+            				
+            				<ui:remove><!-- editable field Active? --></ui:remove>
+            				<h:outputText value="Aktywny? : " />
+            				<p:selectBooleanCheckbox  value="#{user.active}"><p:ajax/></p:selectBooleanCheckbox>
+            				<!-- spacer to 3rd column -->
+            				
             				<ui:remove><!-- editable field Role --></ui:remove>
             				<h:outputText value="Rola: " />  
             				<p:selectOneMenu id="rolelist" value="#{user.role.name}" style="width: 165px;">
-            					<p:ajax process="@this"  update="userForm" listener="#{user.rolechange()}"/>
+            					<p:ajax process="@this"  update="form" listener="#{user.rolechange()}"/>
             					<f:selectItems value="#{rolesList.roles}" var="role" itemValue="#{role.name}" itemLabel="#{role.name}"/>
         					</p:selectOneMenu>
-        					<p:commandButton value="Nowa"/>
+        					<p:commandButton id="addRoleButton" value="+" onclick="addRoleDialog.show();" type="button" />
+        					
+            				<ui:remove><!-- Password in match mode --></ui:remove>
+            				<h:outputLabel for="pwd1" value="Password 1: *" />  
+            				<p:password id="pwd1" value="#{user.password}" match="pwd2" label="Password 1" required="true">
+            					<p:ajax update="msgPwd2"  event="keyup"/>
+            				</p:password>
+            				<!-- 3rd column password 1 -->  
+            				<h:outputLabel for="pwd2" value="Password 2: *" />  
+            				<p:password id="pwd2" value="#{user.password}" label="Password 2" required="true">
+            					<p:ajax update="msgPwd2"  event="keyup"/>
+            				</p:password>
+            				<p:message for="pwd2" id="msgPwd2" display="icon"/> 
 				        </h:panelGrid>
+				        <p:commandButton update="msgName msgSurname" value="#{msg.save}" actionListener="#{user.insertUser()}"/>
+				        <p:button value="#{msg.cancel}" href="/UserList" />
 					</p:panel>
+					<ui:insert name="addRole">
+    					<ui:include src="/faces/sections/addRole.xhtml" />
+    				</ui:insert>
+    				
 					<p:panel  header="Szczegóły Roli: #{user.role.name}" style="width: 49%; float: right;">
 						  <h:panelGrid id="rolePanel" columns="2" style="margin-left: auto; margin-right: auto;">  
             				<ui:remove><!-- list of roles --></ui:remove>

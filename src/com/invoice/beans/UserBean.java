@@ -26,10 +26,12 @@ public class UserBean implements Serializable{
 	protected RoleBean role;
 	protected String password;
 	protected boolean active;
+	protected boolean admin;
 	protected FacesMessage message;
 	protected boolean error=false;
 	//Constructors
 	public UserBean(){};
+
 	// getters Setters
 	public String getIdUser() {
 		return idUser;
@@ -72,10 +74,24 @@ public class UserBean implements Serializable{
 	}
 	
 	
+	public boolean isAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
+	}
+
 	public String viewUser() throws IOException
 	{
 		System.out.println("redirect");
 		FacesContext.getCurrentInstance().getExternalContext().redirect("./UserList?id="+idUser);
+		return null;
+	}
+	public String editUser() throws IOException
+	{
+		System.out.println("redirect");
+		FacesContext.getCurrentInstance().getExternalContext().redirect("./UserList?id="+idUser+"&edit=true");
 		return null;
 	}
 	public void start() throws SQLException
@@ -124,6 +140,11 @@ public class UserBean implements Serializable{
 	public void updateUser() throws SQLException
 	{
 		int toUpdate = isEqual(UserDAO.getUser(idUser));
+		if(admin && (!active || role.getIdRole() != 1))
+		{
+			message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Zabronione.", "Nie mozna zmieniac roli ani deaktywowaæ konta szefa");
+			return;
+		}
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.getExternalContext().getFlash().setKeepMessages(true);
 		if(toUpdate == 0)
@@ -139,6 +160,33 @@ public class UserBean implements Serializable{
 		message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sukces", "Zmiany zosta³y zapisane.");
 	}
 	
+	public void insertUser() throws SQLException, IOException
+	{
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.getExternalContext().getFlash().setKeepMessages(true);
+		if(UserDAO.getUser(idUser) == null)
+		{
+			if(UserDAO.insertUser(this))
+			{
+				message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sukces", "Zmiany zosta³y zapisane.");
+				context.addMessage(null, message);
+				context.getExternalContext().redirect("./UserList?id="+idUser);
+			}
+			else
+			{
+				message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "Coœ posz³o nie tak");
+			}
+		}
+	}
+	
+	public void deleteUser() throws SQLException, IOException
+	{
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.getExternalContext().getFlash().setKeepMessages(true);
+		message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Niestety", "To nie zosta³o jeszcze zaimplementowane.");
+		context.addMessage(null, message);
+			
+	}
 	public void idValidation(FacesContext context, UIComponent component,
 		    Object value) throws ValidatorException, SQLException {
 		System.out.println("validation" + value);

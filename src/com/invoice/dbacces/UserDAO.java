@@ -21,6 +21,7 @@ public class UserDAO {
 		user.setSurname(rs.getString("Surname"));
 		user.setRole(RoleDAO.getRole(rs.getInt("idRole")));
 		user.setActive(rs.getBoolean("Active"));
+		user.setAdmin(rs.getBoolean("Admin"));
 		return user;
 	}
 	public static UserBean getUser(String id) throws SQLException
@@ -55,6 +56,7 @@ public class UserDAO {
 			user.setSurname(rs.getString("Surname"));
 			user.setRole(RoleDAO.getRole(rs.getInt("idRole")));
 			user.setActive(rs.getBoolean("Active"));
+			user.setAdmin(rs.getBoolean("Admin"));
 		}
 		stm.close();
 		
@@ -99,6 +101,7 @@ public class UserDAO {
 				user.setSurname(rs.getString("Surname"));
 				user.setRole(RoleDAO.getRole(rs.getInt("idRole")));
 				user.setActive(rs.getBoolean("Active"));
+				user.setAdmin(rs.getBoolean("Admin"));
 				if(user.isActive())isValid=true;
 			}
 			stm.close();
@@ -143,5 +146,42 @@ public class UserDAO {
 			e.printStackTrace();
 		}
 		return false;
+	}
+	
+	public static boolean insertUser(UserBean user)
+	{
+		try 
+		{
+			String query="INSERT INTO user (`idUser`, `Name`, `Surname`, `idRole`, `Password`, `Active`) VALUES (?, ?, ?, ?, ?, ?)";
+			Connection con=DBCon.getConnection();
+			con.setAutoCommit(false);
+			PreparedStatement stm= con.prepareStatement(query);
+			stm.setString(1, user.getIdUser());
+			stm.setString(2, user.getName());
+			stm.setString(3, user.getSurname());
+			stm.setInt(4, user.getRole().getIdRole());
+			stm.setString(5, user.getPassword());
+			stm.setBoolean(6, user.isActive());
+			
+			
+			// execute select SQL stetement
+			int rs = stm.executeUpdate();
+			
+			
+			if(rs == 1)
+				{
+					con.commit();
+					stm.close();
+					return true;
+				}
+			con.rollback();
+			stm.close();
+		} 
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		return false;
+	
 	}
 }

@@ -2,8 +2,14 @@ package com.invoice.beans;
 
 import java.io.Serializable;
 
-import javax.faces.bean.ViewScoped;
-@ViewScoped
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
+
+import com.invoice.dbacces.RoleDAO;
+@ManagedBean(name="roleBean")
+@RequestScoped
 public class RoleBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private int idRole;
@@ -146,5 +152,22 @@ public class RoleBean implements Serializable {
 	}
 	public void setAddDelivery(boolean addDelivery) {
 		this.addDelivery = addDelivery;
+	}
+	
+	public void insertRole() throws Exception
+	{
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.getExternalContext().getFlash().setKeepMessages(true);
+		if(RoleDAO.insertRole(this))
+		{
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sukces", "Zmiany zosta³y zapisane.");
+			context.addMessage(null, message);
+			
+		}
+		else
+		{
+			context.addMessage("Test-Error", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error-Summary", "Error-Detail"));
+		      
+		}
 	}
 }

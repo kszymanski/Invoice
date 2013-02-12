@@ -10,13 +10,18 @@
 			<ui:define name="windowTitle">Users</ui:define>
 			<ui:define name="content">
 			<h:form id="form">
+				<p:growl id="msgs" showDetail="true"/>
 				<p:menubar id="menu">
-					<p:menuitem value="Szczegóły" icon="ui-icon-edit" disabled='#{userList.selectedUser == null}' action="#{userList.selectedUser.viewUser()}"/>
-					<p:menuitem value="Nowy" icon="ui-icon-edit" url="/UserList?action=new" disabled="#{!loginUser.user.role.addUser}" />
+					<p:menuitem value="Szczegóły" icon="ui-icon-search" disabled='#{userList.selectedUser == null}' action="#{userList.selectedUser.viewUser()}"/>
+					<p:menuitem value="edit" icon="ui-icon-refresh" disabled="#{userList.selectedUser==null || !loginUser.user.role.addUser}" action="#{userList.selectedUser.editUser()}"/>
+					<p:menuitem value="Nowy" icon="ui-icon-document" url="/UserList?action=new" disabled="#{!loginUser.user.role.addUser}" />
+					<p:menuitem value="Usuń" icon="ui-icon-closethick" onclick="confirmation.show()" type="button" disabled="#{userList.selectedUser==null || !loginUser.user.role.addUser}"/>
 				</p:menubar>
 				<p:contextMenu id="contextMenu" for="users">
         			<p:menuitem value="Szczegóły" icon="ui-icon-search" action="#{userList.selectedUser.viewUser()}"/>  
-        			<p:menuitem value="Edit" icon="ui-icon-edit" url="/UserList?id=#{userList.selectedUser.idUser}" disabled="#{!loginUser.user.role.addUser}"/>  
+        			<p:menuitem value="Edit" icon="ui-icon-refresh" action="#{userList.selectedUser.editUser()}" disabled="!loginUser.user.role.addUser}"/>
+        			 <p:separator /> 
+        			<p:menuitem value="Usuń" icon="ui-icon-closethick" onclick="confirmation.show()" type="button" disabled="#{!loginUser.user.role.addUser}"/>  
     			</p:contextMenu>
 				<p:dataTable id="users" var="userView" value="#{userList.users}" rowKey="#{userView.idUser}"  
                  selection="#{userList.selectedUser}" selectionMode="single" rows="20"> 
@@ -24,6 +29,7 @@
             			Lista Użytkowników dostępna w Systemie:
         			</f:facet>  
   					<p:ajax event="rowSelect" update=":form"/>
+        			
         			<p:column headerText="Username" >  
             			#{userView.idUser}  
         			</p:column>  
@@ -38,11 +44,21 @@
   
         			<p:column headerText="Role">  
             			#{userView.role.name}  
-        			</p:column>    
+        			</p:column>
+        			
+        			<p:column  headerText="Active" style="width: 2%;">
+        			  <p:selectBooleanCheckbox value="#{userView.active}" disabled="true"  />  
+        			</p:column>
   					<f:facet id="tableFooter" name="footer">  
            					<h:outputText value="#{userList.users.size()} wiersze" />  
         			</f:facet> 
     			</p:dataTable>
+    			<p:confirmDialog id="confirmDialog" message="Na pewno usunąć użytkownika?"  
+                				header="Usuwanie..." severity="alert" widgetVar="confirmation">  
+        			<p:commandButton id="confirm" value="Tak" update="msgs" oncomplete="confirmation.hide()"  
+						                    actionListener="#{userList.selectedUser.deleteUser()}" />  
+        			<p:commandButton id="decline" value="Nie" onclick="confirmation.hide()" type="button" />   
+			    </p:confirmDialog> 
     		</h:form>
     		
 			</ui:define>

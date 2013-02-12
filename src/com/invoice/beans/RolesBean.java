@@ -5,10 +5,10 @@ import java.sql.SQLException;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.RequestScoped;
 import com.invoice.dbacces.RoleDAO;
 @ManagedBean(name="rolesList")
-@ViewScoped
+@RequestScoped
 public class RolesBean implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private List<RoleBean> roles;
@@ -32,9 +32,11 @@ public class RolesBean implements Serializable{
 	}
 	public void start() throws SQLException
 	{
-		
 		System.out.println("start roles");
-		
 	}
-	
+	public void refreshList()
+	{
+		roles = null;
+		roles=RoleDAO.getRoles();
+	}
 }

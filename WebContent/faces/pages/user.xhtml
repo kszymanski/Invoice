@@ -14,8 +14,10 @@
 				<h:form id="userForm">
 				 	<p:growl id="msgs" autoUpdate="true" showDetail="true"  />
 					<p:menubar>
-						<p:menuitem value="Edytuj" icon="ui-icon-edit" actionListener="user1.edit" onclick="changeToEdit()" disabled="#{!loginUser.user.role.addUser}"/>
+						<p:menuitem value="Lista" icon="ui-icon-note"  url="/UserList"/>
+						<p:menuitem value="Edytuj" icon="ui-icon-refresh" actionListener="user1.edit" onclick="changeToEdit()" disabled="#{!loginUser.user.role.addUser}"/>
 						<p:menuitem id="btn" value="Zapisz"  actionListener="#{user.updateUser()}" icon="ui-icon-disk" update="msgs" rendered="#{edit}" onsuccess="changeToView()"/>
+						<p:menuitem value="Usuń" icon="ui-icon-closethick" onclick="confirmation.show()" type="button" disabled="#{!loginUser.user.role.addUser}" rendered="#{edit}"/>
 						<p:menuitem value="Zrezygnuj" icon="ui-icon-cancel" onclick="changeToView()" rendered="#{edit}" />
 						
 					</p:menubar>
@@ -24,7 +26,7 @@
             				<ui:remove><!-- username not for edit --></ui:remove>
             				<h:outputText value="Nazwa Uzytkownika: " />  
             				<h:outputText value="#{user.idUser}" rendered="true"/>
-            				<!-- something  to put in 3rd column -->
+            				<p:selectBooleanCheckbox  value="#{user.active}" disabled="#{!edit}"><p:ajax/></p:selectBooleanCheckbox>
             				<ui:remove><!-- editable field Name --></ui:remove>
             				<h:outputText value="Imie: " />  
             				<h:outputText value="#{user.name}" rendered='#{!edit}'/>
@@ -46,8 +48,15 @@
             					<p:ajax process="@this"  update="userForm" listener="#{user.rolechange()}"/>
             					<f:selectItems value="#{rolesList.roles}" var="role" itemValue="#{role.name}" itemLabel="#{role.name}"/>
         					</p:selectOneMenu>
+        					<p:ajax event="keyup"/>
 				        </h:panelGrid>
 					</p:panel>
+					<p:confirmDialog id="confirmDialog" message="Na pewno usunąć użytkownika?"  
+                				header="Usuwanie..." severity="alert" widgetVar="confirmation">  
+        				<p:commandButton id="confirm" value="Tak" update="msgs" oncomplete="confirmation.hide()"  
+						                    actionListener="#{user.deleteUser()}" />  
+        				<p:commandButton id="decline" value="Nie" onclick="confirmation.hide()" type="button" />   
+			    	</p:confirmDialog> 
 					<p:panel  header="Szczegóły Roli: #{user.role.name}" style="width: 49%; float: right;">
 						  <h:panelGrid id="rolePanel" columns="2" style="margin-left: auto; margin-right: auto;">  
             				<ui:remove><!-- list of roles --></ui:remove>
