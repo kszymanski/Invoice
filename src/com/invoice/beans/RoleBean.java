@@ -6,7 +6,9 @@ import java.sql.SQLException;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 
 import com.invoice.dbacces.RoleDAO;
 import com.invoice.dbacces.UserDAO;
@@ -215,5 +217,20 @@ public class RoleBean implements Serializable {
 		}
 		System.out.println("update done!");
 		message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sukces", "Zmiany zosta³y zapisane.");
+	}
+	
+	public void nameValidation(FacesContext context, UIComponent component,
+		    Object value) throws ValidatorException, SQLException {
+		System.out.println("validation" + value);
+		if(value== null || "" == (String)value)
+			throw new ValidatorException(
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR: ", "Nazwa Roli nie mo¿e byæ pusta"));
+		if(((String)value).length() <= 2)
+			throw new ValidatorException(
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR: ", "Nazwa Roli musi mieæ min 3 znaki"));
+		if(value != null && RoleDAO.getRole((String) value) != null) 
+			throw new ValidatorException(
+		                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR: ", "Nazwa Roli Musi Byæ Unikalna"));
+		
 	}
 }

@@ -13,7 +13,7 @@
 				<p:growl id="msgs" showDetail="true"/>
 				<p:menubar id="menu">
 					<p:menuitem value="Szczegóły" icon="ui-icon-search" disabled='#{userList.selectedUser == null}' action="#{userList.selectedUser.viewUser()}"/>
-					<p:menuitem value="edit" icon="ui-icon-refresh" disabled="#{userList.selectedUser==null || !loginUser.user.role.addUser}" action="#{userList.selectedUser.editUser()}"/>
+					<p:menuitem value="Edytuj" icon="ui-icon-refresh" disabled="#{userList.selectedUser==null || !loginUser.user.role.addUser}" action="#{userList.selectedUser.editUser()}"/>
 					<p:menuitem value="Nowy" icon="ui-icon-document" url="/UserList?action=new" disabled="#{!loginUser.user.role.addUser}" />
 					<p:menuitem value="Usuń" icon="ui-icon-closethick" onclick="confirmation.show()" type="button" disabled="#{userList.selectedUser==null || !loginUser.user.role.addUser}"/>
 				</p:menubar>

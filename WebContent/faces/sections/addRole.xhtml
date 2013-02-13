@@ -13,7 +13,9 @@
 						  
 						  <h:panelGrid id="addRolePanel" columns="2" style="margin-left: auto; margin-right: auto;">  
             				<h:outputText value="Nazwa: "/>
-            				<p:inputText id="roleName" value="#{roleBean.name}" required="true" requiredMessage="Nazwa Roli nie może byc pusta."/>
+            				<p:inputText id="roleName" value="#{roleBean.name}" validator="#{roleBean.nameValidation}">
+            					<p:ajax event="keyup" update=":msgs"/>
+            				</p:inputText>
             				<ui:remove><!-- list of roles --></ui:remove>
             				<h:outputText value="Dodawanie Faktur: " />  
             				<p:selectBooleanCheckbox value="#{roleBean.addInvoice}"/>
@@ -52,8 +54,8 @@
             				<h:outputText value="Przeglądanie WZ: " />  
             				<p:selectBooleanCheckbox value="#{roleBean.viewDelivery}"/>
 				        </h:panelGrid>
-				        	<p:commandButton process="addRole" update=":msgs" value="#{msg.save}" actionListener="#{rolesList.addRole(roleBean)}" onsuccess="addRoleDialog.hide()}"/>
-				        <p:button value="#{msg.cancel}" onclick="addRoleDialog.hide()"/>
+				        <p:commandButton process="addRole" update=":msgs" value="#{msg.save}" actionListener="#{rolesList.addRole(roleBean)}" onsuccess="addRoleDialog.hide()"/>
+				       	<p:button value="#{msg.cancel}" onclick="addRoleDialog.hide()"/>
 					</p:panel>
 					<p:ajax event="close" update=":form" />
 			</p:dialog>

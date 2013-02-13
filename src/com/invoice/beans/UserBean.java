@@ -51,37 +51,32 @@ public class UserBean implements Serializable{
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
-
 	public RoleBean getRole() {
 		return role;
 	}
 	public void setRole(RoleBean role) {
 		this.role = role;
 	}
-
 	public String getPassword() {
 		return password;
 	}
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
 	public boolean isActive() {
 		return active;
 	}
 	public void setActive(boolean active) {
 		this.active = active;
 	}
-	
-	
 	public boolean isAdmin() {
 		return admin;
 	}
-
 	public void setAdmin(boolean admin) {
 		this.admin = admin;
 	}
 
+	// navigation methods
 	public String viewUser() throws IOException
 	{
 		System.out.println("redirect");
@@ -94,6 +89,7 @@ public class UserBean implements Serializable{
 		FacesContext.getCurrentInstance().getExternalContext().redirect("./UserList?id="+idUser+"&edit=true");
 		return null;
 	}
+	//refresh user method before View
 	public void start() throws SQLException
 	{
 		System.out.println("start");
@@ -110,6 +106,7 @@ public class UserBean implements Serializable{
 			UserDAO.getUser(this);
 		}
 	}
+	//Reload data from database
 	public void reload() throws SQLException
 	{
 		System.out.println("reload");
@@ -122,11 +119,13 @@ public class UserBean implements Serializable{
 		error = false;
 		message = null;
 	}
+	//Changing role base on role name
 	public void rolechange()
 	{
 		System.out.println("role change");
 		role = RoleDAO.getRole(role.getName());
 	}
+	//Compare defoult fields
 	private int isEqual(UserBean user)
 	{
 		int equal = 0;
@@ -137,6 +136,7 @@ public class UserBean implements Serializable{
 		if(this.active!= user.isActive())equal++;
 		return equal;
 	}
+	//SQL methods
 	public void updateUser() throws SQLException
 	{
 		int toUpdate = isEqual(UserDAO.getUser(idUser));
@@ -159,7 +159,19 @@ public class UserBean implements Serializable{
 			}
 		message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sukces", "Zmiany zosta³y zapisane.");
 	}
-	
+	public void updateUserPassword() throws SQLException
+	{
+
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.getExternalContext().getFlash().setKeepMessages(true);
+
+		if(!UserDAO.updateUserPassword(this))
+			{
+				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "B³¹d", "Zmiany nie zosta³y zapisane."));
+				return;
+			}
+		context.addMessage(null,new FacesMessage(FacesMessage.SEVERITY_INFO, "Sukces", "Zmiany zosta³y zapisane."));
+	}
 	public void insertUser() throws SQLException, IOException
 	{
 		System.out.println("insert");
@@ -179,7 +191,6 @@ public class UserBean implements Serializable{
 			}
 		}
 	}
-	
 	public void deleteUser() throws SQLException, IOException
 	{
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -188,6 +199,7 @@ public class UserBean implements Serializable{
 		context.addMessage(null, message);
 			
 	}
+	//Validator for username
 	public void idValidation(FacesContext context, UIComponent component,
 		    Object value) throws ValidatorException, SQLException {
 		System.out.println("validation" + value);

@@ -167,6 +167,38 @@ public class UserDAO {
 		return false;
 	}
 	
+	public static boolean updateUserPassword(UserBean user)
+	{
+		
+		try 
+		{
+			String query="UPDATE user SET Password = ? WHERE idUser = ?";
+			Connection con=DBCon.getConnection();
+			con.setAutoCommit(false);
+			PreparedStatement stm= con.prepareStatement(query);
+			stm.setString(1, user.getPassword());
+			stm.setString(2, user.getIdUser());
+			
+			// execute select SQL stetement
+			int rs = stm.executeUpdate();
+			
+			
+			if(rs == 1)
+				{
+					con.commit();
+					stm.close();
+					return true;
+				}
+			con.rollback();
+			stm.close();
+		} 
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
 	public static boolean insertUser(UserBean user)
 	{
 		try 
