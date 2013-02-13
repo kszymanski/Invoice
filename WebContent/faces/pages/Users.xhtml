@@ -24,29 +24,29 @@
         			<p:menuitem value="Usuń" icon="ui-icon-closethick" onclick="confirmation.show()" type="button" disabled="#{!loginUser.user.role.addUser}"/>  
     			</p:contextMenu>
 				<p:dataTable id="users" var="userView" value="#{userList.users}" rowKey="#{userView.idUser}"  
-                 selection="#{userList.selectedUser}" selectionMode="single" rows="20"> 
+                 selection="#{userList.selectedUser}" filteredValue="#{userList.filteredUsers}" selectionMode="single" scrollRows="20" scrollable="true" liveScroll="true" scrollHeight="390" widgetVar="usersTable"> 
        				<f:facet name="header">  
             			Lista Użytkowników dostępna w Systemie:
         			</f:facet>  
   					<p:ajax event="rowSelect" update=":form"/>
         			
-        			<p:column headerText="Username" >  
+        			<p:column headerText="Username" filterBy="#{userView.idUser}">  
             			#{userView.idUser}  
         			</p:column>  
   
-        			<p:column headerText="Name">  
+        			<p:column headerText="Name" filterBy="#{userView.name}">  
             			#{userView.name}  
         			</p:column>  
   
-        			<p:column headerText="Surname" >  
+        			<p:column headerText="Surname" filterBy="#{userView.surname}" >  
             			#{userView.surname}  
         			</p:column>  
   
-        			<p:column headerText="Role">  
-            			#{userView.role.name}  
+        			<p:column headerText="Role" filterBy="#{userView.role.name}" style="width: 12%;">  
+            			#{userView.role.name} 
         			</p:column>
         			
-        			<p:column  headerText="Active" style="width: 2%;">
+        			<p:column  headerText="Active" style="width: 5%;">
         			  <p:selectBooleanCheckbox value="#{userView.active}" disabled="true"  />  
         			</p:column>
   					<f:facet id="tableFooter" name="footer">  

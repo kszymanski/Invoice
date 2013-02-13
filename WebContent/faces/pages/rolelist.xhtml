@@ -24,20 +24,19 @@
         			<f:setPropertyActionListener value="true" target="#{rolesList.edit}" />  
     			</p:remoteCommand>
 			</h:form>
-			<h:form id="form">
+			<h:form id="form" style="width: 49%;">
 				<p:contextMenu id="contextMenu" for="rolesDataTable">
         			<p:menuitem value="Usuń" icon="ui-icon-closethick" onclick="confirmation.show()" type="button" disabled="#{!loginUser.user.role.addRole}"/>  
     			</p:contextMenu>
 				<p:dataTable id="rolesDataTable" var="roleView" value="#{rolesList.roles}" rowKey="#{roleView.name}"  
-                 selection="#{rolesList.selectedRole}" selectionMode="single" style="width: 49%; float: left;" 
-                 paginator="true" rows="20"  
-                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" > 
+                 selection="#{rolesList.selectedRole}" selectionMode="single" style=" float: left;" 
+                  scrollRows="20" scrollable="true" liveScroll="true" scrollHeight="390" widgetVar="rolesTable" filteredValue="#{rolesList.filtered}"> 
        				<p:ajax event="rowSelect" update=":menuForm:menu :roleDetailForm"/>
        				<f:facet name="header">  
             			Lista Ról dostępna w Systemie:
         			</f:facet>
         			
-        			<p:column headerText="Nazwa:" >  
+        			<p:column  footerText="Nazwa:"   filterBy="#{roleView.name}" >  
             			#{roleView.name}  
         			</p:column>  
 

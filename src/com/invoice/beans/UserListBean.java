@@ -13,6 +13,7 @@ public class UserListBean implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private List<UserBean> users;
 	private UserBean selectedUser;
+	private List<UserBean> filteredUsers;
 	public UserListBean()
 	{
 		users=UserDAO.getUserList();
@@ -30,5 +31,13 @@ public class UserListBean implements Serializable{
 	public void setSelectedUser(UserBean selectedUser) {
 		this.selectedUser = selectedUser;
 	}
-	
+
+	public List<UserBean> getFilteredUsers() {
+		return filteredUsers;
+	}
+
+	public void setFilteredUsers(List<UserBean> filteredUsers) {
+		this.filteredUsers = filteredUsers;
+	}
+
 }

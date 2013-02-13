@@ -18,6 +18,7 @@ public class RolesBean implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private List<RoleBean> roles;
 	private RoleBean selectedRole;
+	private List<RoleBean> filtered;
 	private boolean edit=false;
 	private FacesMessage message = null;
 	public RolesBean()
@@ -37,6 +38,12 @@ public class RolesBean implements Serializable{
 	public void setSelectedRole(RoleBean selectedRole) {
 		this.selectedRole = selectedRole;
 	}
+	public List<RoleBean> getFiltered() {
+		return filtered;
+	}
+	public void setFiltered(List<RoleBean> filtered) {
+		this.filtered = filtered;
+	}
 	public boolean isEdit() {
 		return edit;
 	}
@@ -46,8 +53,7 @@ public class RolesBean implements Serializable{
 	public void removeRole() throws SQLException
 	{
 		System.out.println("Deleting role");
-		selectedRole.deleteRole();
-		roles.remove(selectedRole);
+		if(selectedRole.deleteRole())roles.remove(selectedRole);
 	}
 	public void updateRole() throws SQLException
 	{

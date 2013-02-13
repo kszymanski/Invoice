@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.invoice.beans.RoleBean;
 import com.invoice.beans.UserBean;
 
 public class UserDAO {
@@ -39,6 +40,24 @@ public class UserDAO {
 		}
 		stm.close();
 		return user;
+		
+	}
+	public static List<UserBean> getUsers(RoleBean role) throws SQLException
+	{
+		String query="Select * From User Where idRole=?";
+		PreparedStatement stm= DBCon.getConnection().prepareStatement(query);
+		stm.setInt(1, role.getIdRole());
+
+		// execute select SQL stetement
+		ResultSet rs = stm.executeQuery();
+		List<UserBean> users = new ArrayList<UserBean>();
+		while (rs.next())
+		{
+			UserBean user = setRs(rs);
+			users.add(user);
+		}
+		stm.close();
+		return users;
 		
 	}
 	public static void getUser(UserBean user) throws SQLException

@@ -1,6 +1,7 @@
 package com.invoice.beans;
 
 import java.io.Serializable;
+import java.sql.SQLException;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -8,6 +9,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import com.invoice.dbacces.RoleDAO;
+import com.invoice.dbacces.UserDAO;
 @ManagedBean(name="roleBean")
 @ViewScoped
 public class RoleBean implements Serializable {
@@ -171,7 +173,7 @@ public class RoleBean implements Serializable {
 		}
 	}
 	
-	public void deleteRole()
+	public boolean deleteRole() throws SQLException
 	{
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -179,14 +181,20 @@ public class RoleBean implements Serializable {
 		if(idRole == 1)
 		{
 			context.addMessage(null,new FacesMessage(FacesMessage.SEVERITY_WARN, "Zabronione.", "Nie mozna usuwaæ roli szefa"));
-			return;
+			return false;
+		}
+		if(UserDAO.getUsers(this).size()>0)
+		{
+			context.addMessage(null,new FacesMessage(FacesMessage.SEVERITY_WARN, "Zabronione.", "Nie mozna usuwaæ u¿ywanej roli"));
+			return false;
 		}
 		if(!RoleDAO.deleteRole(this))
 		{
 			context.addMessage(null,new FacesMessage(FacesMessage.SEVERITY_ERROR, "B³¹d", "Zmiany nie zosta³y zapisane."));
-			return;
+			return false;
 		}
 		context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Sukces", "Zmiany zosta³y zapisane."));
+		return true;
 	}
 	public void updateRole()
 	{
