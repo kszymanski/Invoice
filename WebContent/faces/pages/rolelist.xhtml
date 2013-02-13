@@ -8,26 +8,34 @@
 	<body>
 		<ui:composition template="/faces/templates/masterLayout.xhtml">
 			<ui:define name="windowTitle">Roles</ui:define>
-			<f:event type="preRenderView" listener="#{rolesList.refreshList()}"/>
 			<ui:define name="content">
-			<h:form id="form">
-				<p:growl id="msgs" showDetail="true"/>
+			<p:growl id="msgs" showDetail="true"/>
+			<h:form id="menuForm">
 				<p:menubar id="menu">
-					<p:menuitem value="Edytuj" icon="ui-icon-refresh" onclick="changeToEdit()" disabled="#{rolesList.selectedRole==null || !loginUser.user.role.addRole}"/>
-					<p:menuitem id="btn" value="Zapisz"  actionListener="#{rolesList.selectedRole.updateRole()}" icon="ui-icon-disk" update="msgs" rendered="#{edit}" onsuccess="changeToView()"/>
-					<p:menuitem value="Nowy" icon="ui-icon-document" onclick="addRoleDialog.show();" disabled="#{!loginUser.user.role.addUser}" />
-					<p:menuitem value="Usuń" icon="ui-icon-closethick" onclick="confirmation.show()" type="button" disabled="#{rolesList.selectedRole==null || !loginUser.user.role.addRole}"/>
-					<p:menuitem value="Zrezygnuj" icon="ui-icon-cancel" onclick="changeToView()" rendered="#{edit}" />
+					<p:menuitem id="btnEdit" value="Edytuj" icon="ui-icon-refresh" onclick="changeToEdit()" disabled="#{rolesList.selectedRole==null || !loginUser.user.role.addRole}"/>
+					<p:menuitem id="btnNew" value="Nowy" icon="ui-icon-document" onclick="addRoleDialog.show();" disabled="#{!loginUser.user.role.addUser}" />
+					<p:menuitem id="btnDelete" value="Usuń" icon="ui-icon-closethick" onclick="confirmation.show()" type="button" disabled="#{rolesList.selectedRole==null || !loginUser.user.role.addRole}"/>
+					<p:menuitem id="btnCancel" value="Zrezygnuj" icon="ui-icon-cancel" onclick="changeToView()" rendered="#{rolesList.edit}" />
 				</p:menubar>
-				<p:contextMenu id="contextMenu" for="roles">
+				<p:remoteCommand name="changeToView" update=":roleDetailForm :menuForm" action="#{rolesList.refreshList()}">  
+        			<f:setPropertyActionListener value="false" target="#{rolesList.edit}" />
+    			</p:remoteCommand>
+				<p:remoteCommand name="changeToEdit" update=":roleDetailForm :menuForm">  
+        			<f:setPropertyActionListener value="true" target="#{rolesList.edit}" />  
+    			</p:remoteCommand>
+			</h:form>
+			<h:form id="form">
+				<p:contextMenu id="contextMenu" for="rolesDataTable">
         			<p:menuitem value="Usuń" icon="ui-icon-closethick" onclick="confirmation.show()" type="button" disabled="#{!loginUser.user.role.addRole}"/>  
     			</p:contextMenu>
-				<p:dataTable id="roles" var="roleView" value="#{rolesList.roles}" rowKey="#{roleView.name}"  
-                 selection="#{rolesList.selectedRole}" selectionMode="single" rows="20" style="width: 49%; float: left;"> 
+				<p:dataTable id="rolesDataTable" var="roleView" value="#{rolesList.roles}" rowKey="#{roleView.name}"  
+                 selection="#{rolesList.selectedRole}" selectionMode="single" style="width: 49%; float: left;" 
+                 paginator="true" rows="20"  
+                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" > 
+       				<p:ajax event="rowSelect" update=":menuForm:menu :roleDetailForm"/>
        				<f:facet name="header">  
             			Lista Ról dostępna w Systemie:
-        			</f:facet>  
-  					<p:ajax event="rowSelect" update=":form"/>
+        			</f:facet>
         			
         			<p:column headerText="Nazwa:" >  
             			#{roleView.name}  
@@ -39,59 +47,57 @@
     			</p:dataTable>
     			<p:confirmDialog id="confirmDialog" message="Na pewno usunąć role?"  
                 				header="Usuwanie..." severity="alert" widgetVar="confirmation">  
-        			<p:commandButton id="confirm" value="Tak" update="msgs" oncomplete="confirmation.hide()"  
-						                    actionListener="#{rolesList.selectedRole.deleteRole()}" />  
-        			<p:commandButton id="decline" value="Nie" onclick="confirmation.hide()" type="button" />   
-			    </p:confirmDialog>
-			    <p:panel  header="Szczegóły Roli: #{rolesList.selectedRole.name}" style="width: 49%; float: right;" rendered="#{rolesList.selectedRole != null}">
+        			<p:commandButton id="confirm" value="Tak" update=":msgs :form:rolesDataTable" oncomplete="confirmation.hide() #{rolesList.refreshList()}"  
+						                    actionListener="#{rolesList.removeRole()}" />  
+        			<p:commandButton id="decline" value="Nie" onclick="confirmation.hide()" type="button" />
+			</p:confirmDialog>
+			    </h:form>
+			    <h:form id="roleDetailForm">
+			    <p:panel  id="roleDetailPanel" header="Szczegóły Roli: #{rolesList.selectedRole.name}" style="width: 49%; float: right;" rendered="#{rolesList.selectedRole != null}">
 						  <h:panelGrid id="rolePanel" columns="2" style="margin-left: auto; margin-right: auto;">  
             				<ui:remove><!-- list of roles --></ui:remove>
             				<h:outputText value="Dodawanie Faktur: " />  
-            				<p:selectBooleanCheckbox value="#{rolesList.selectedRole.addInvoice}" disabled="#{!edit}" > <p:ajax update="form"/>  </p:selectBooleanCheckbox>
+            				<p:selectBooleanCheckbox value="#{rolesList.selectedRole.addInvoice}" disabled="#{!rolesList.edit}"/>
             				<h:outputText value="Przeglądanie Faktur: " />  
-            				<p:selectBooleanCheckbox value="#{rolesList.selectedRole.viewInvoice}" disabled="#{!edit}"/>
+            				<p:selectBooleanCheckbox value="#{rolesList.selectedRole.viewInvoice}" disabled="#{!rolesList.edit}"/>
             				<h:outputText value="Dodawanie Produktów: " />  
-            				<p:selectBooleanCheckbox value="#{rolesList.selectedRole.addProduct}" disabled="#{!edit}"/>
+            				<p:selectBooleanCheckbox value="#{rolesList.selectedRole.addProduct}" disabled="#{!rolesList.edit}"/>
             				<h:outputText value="Przeglądanie Produktów: " />  
-            				<p:selectBooleanCheckbox value="#{rolesList.selectedRole.viewProduct}" disabled="#{!edit}"/>
+            				<p:selectBooleanCheckbox value="#{rolesList.selectedRole.viewProduct}" disabled="#{!rolesList.edit}"/>
             				<h:outputText value="Dodawanie Paragonów: " />  
-            				<p:selectBooleanCheckbox value="#{rolesList.selectedRole.addReciept}" disabled="#{!edit}"/>
+            				<p:selectBooleanCheckbox value="#{rolesList.selectedRole.addReciept}" disabled="#{!rolesList.edit}"/>
             				<h:outputText value="Przeglądanie Paragonów " />  
-            				<p:selectBooleanCheckbox value="#{rolesList.selectedRole.viewReciept}" disabled="#{!edit}"/>
+            				<p:selectBooleanCheckbox value="#{rolesList.selectedRole.viewReciept}" disabled="#{!rolesList.edit}"/>
             				<h:outputText value="Dodawanie Faktur Zakupu: " />  
-            				<p:selectBooleanCheckbox value="#{rolesList.selectedRole.addBuyInvoice}" disabled="#{!edit}"/>
+            				<p:selectBooleanCheckbox value="#{rolesList.selectedRole.addBuyInvoice}" disabled="#{!rolesList.edit}"/>
             				<h:outputText value="Przeglądanie Faktur Zakupu: " />  
-            				<p:selectBooleanCheckbox value="#{rolesList.selectedRole.viewBuyInvoice}" disabled="#{!edit}"/>
+            				<p:selectBooleanCheckbox value="#{rolesList.selectedRole.viewBuyInvoice}" disabled="#{!rolesList.edit}"/>
             				<h:outputText value="Dodawanie Ról: " />  
-            				<p:selectBooleanCheckbox value="#{rolesList.selectedRole.addRole}" disabled="#{!edit}"/>
+            				<p:selectBooleanCheckbox value="#{rolesList.selectedRole.addRole}" disabled="#{!rolesList.edit}"/>
             				<h:outputText value="Przeglądanie Ról: " />  
-            				<p:selectBooleanCheckbox value="#{rolesList.selectedRole.viewRole}" disabled="#{!edit}"/>
+            				<p:selectBooleanCheckbox value="#{rolesList.selectedRole.viewRole}" disabled="#{!rolesList.edit}"/>
             				<h:outputText value="Dodawanie Kontrahentów: " />  
-            				<p:selectBooleanCheckbox value="#{rolesList.selectedRole.addContractor}" disabled="#{!edit}"/>
+            				<p:selectBooleanCheckbox value="#{rolesList.selectedRole.addContractor}" disabled="#{!rolesList.edit}"/>
             				<h:outputText value="Przeglądanie Kontrahentów: " />  
-            				<p:selectBooleanCheckbox value="#{rolesList.selectedRole.viewContractor}" disabled="#{!edit}"/>
+            				<p:selectBooleanCheckbox value="#{rolesList.selectedRole.viewContractor}" disabled="#{!rolesList.edit}"/>
             				<h:outputText value="Dodawanie Uzytkowników: " />  
-            				<p:selectBooleanCheckbox value="#{rolesList.selectedRole.addUser}" disabled="#{!edit}"/>
+            				<p:selectBooleanCheckbox value="#{rolesList.selectedRole.addUser}" disabled="#{!rolesList.edit}"/>
             				<h:outputText value="Przeglądanie Użytkowników: " />  
-            				<p:selectBooleanCheckbox value="#{rolesList.selectedRole.viewUser}" disabled="#{!edit}"/>
+            				<p:selectBooleanCheckbox value="#{rolesList.selectedRole.viewUser}" disabled="#{!rolesList.edit}"/>
             				<h:outputText value="Dodawanie Magazynow: " />  
-            				<p:selectBooleanCheckbox value="#{rolesList.selectedRole.addWarehause}" disabled="#{!edit}"/>
+            				<p:selectBooleanCheckbox value="#{rolesList.selectedRole.addWarehause}" disabled="#{!rolesList.edit}"/>
             				<h:outputText value="Przeglądanie Magazynow: " />  
-            				<p:selectBooleanCheckbox value="#{rolesList.selectedRole.viewWarehause}" disabled="#{!edit}"/>
+            				<p:selectBooleanCheckbox value="#{rolesList.selectedRole.viewWarehause}" disabled="#{!rolesList.edit}"/>
             				<h:outputText value="Dodawanie WZ: " />  
-            				<p:selectBooleanCheckbox value="#{rolesList.selectedRole.addDelivery}" disabled="#{!edit}"/>
+            				<p:selectBooleanCheckbox value="#{rolesList.selectedRole.addDelivery}" disabled="#{!rolesList.edit}"/>
             				<h:outputText value="Przeglądanie WZ: " />  
-            				<p:selectBooleanCheckbox value="#{rolesList.selectedRole.viewDelivery}" disabled="#{!edit}"/>
+            				<p:selectBooleanCheckbox value="#{rolesList.selectedRole.viewDelivery}" disabled="#{!rolesList.edit}"/>
 				        </h:panelGrid>
-				        <p:commandButton update="msgs" value="#{msg.save}" action="#{rolesList.selectedRole.updateRole()}" rendered="#{edit}"/>
+				        <p:commandButton process="roleDetailPanel" update=":msgs" value="#{msg.save}"  actionListener="#{rolesList.updateRole()}" rendered="#{rolesList.edit}" onsuccess="changeToView()"/>
+				        <p:commandButton value="Zrezygnuj" onclick="changeToView()" type="button" rendered="#{rolesList.edit}"/>
 					</p:panel>
-					<p:remoteCommand name="changeToView" update="form" action="#{rolesList.refreshList()}">  
-        				<f:setPropertyActionListener value="#{false}" target="#{edit}"  />
-    				</p:remoteCommand>
-					<p:remoteCommand name="changeToEdit" update="form">  
-        				<f:setPropertyActionListener value="#{true}" target="#{edit}" />  
-    				</p:remoteCommand> 
-    		</h:form>
+					</h:form>
+    		
     		<ui:insert name="addRole">
     				<ui:include src="/faces/sections/addRole.xhtml" />
     		</ui:insert>

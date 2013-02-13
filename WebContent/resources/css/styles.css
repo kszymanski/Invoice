@@ -45,6 +45,7 @@ div
 	width: 1050px;
 	border-left:2px solid;
 	border-right:2px solid;
+	min-height: 550px;
 }
 
 #footer

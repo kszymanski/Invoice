@@ -50,7 +50,7 @@
             				
             				<ui:remove><!-- editable field Role --></ui:remove>
             				<h:outputText value="Rola: " />  
-            				<p:selectOneMenu id="rolelist" value="#{user.role.name}" style="width: 165px;">
+            				<p:selectOneMenu id="roleslistForm" value="#{user.role.name}" style="width: 165px;">
             					<p:ajax process="@this"  update="form" listener="#{user.rolechange()}"/>
             					<f:selectItems value="#{rolesList.roles}" var="role" itemValue="#{role.name}" itemLabel="#{role.name}"/>
         					</p:selectOneMenu>

@@ -52,7 +52,7 @@
             				<h:outputText value="Przeglądanie WZ: " />  
             				<p:selectBooleanCheckbox value="#{roleBean.viewDelivery}"/>
 				        </h:panelGrid>
-				        <p:commandButton process="addRole" update=":form:msgs" value="#{msg.save}" actionListener="#{roleBean.insertRole}" onsuccess="addRoleDialog.hide() #{rolesList.refreshList()}"/>
+				        	<p:commandButton process="addRole" update=":msgs" value="#{msg.save}" actionListener="#{rolesList.addRole(roleBean)}" onsuccess="addRoleDialog.hide()}"/>
 				        <p:button value="#{msg.cancel}" onclick="addRoleDialog.hide()"/>
 					</p:panel>
 					<p:ajax event="close" update=":form" />

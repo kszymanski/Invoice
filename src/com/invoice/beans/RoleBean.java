@@ -163,7 +163,6 @@ public class RoleBean implements Serializable {
 		{
 			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sukces", "Zmiany zosta造 zapisane.");
 			context.addMessage(null, message);
-			
 		}
 		else
 		{
@@ -197,16 +196,16 @@ public class RoleBean implements Serializable {
 		if(idRole == 1)
 		{
 			System.out.println("update role 1");
-			context.addMessage(null,new FacesMessage(FacesMessage.SEVERITY_WARN, "Zabronione.", "Nie mozna zmieniac roli szefa"));
+			message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Zabronione.", "Nie mozna zmieniac roli szefa");
 			return;
 		}
 		if(!RoleDAO.updateRole(this))
 		{
 			System.out.println("update role failed");
-			context.addMessage(null,new FacesMessage(FacesMessage.SEVERITY_ERROR, "B章d", "Zmiany nie zosta造 zapisane."));
+			message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "B章d", "Zmiany nie zosta造 zapisane.");
 			return;
 		}
 		System.out.println("update done!");
-		context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Sukces", "Zmiany zosta造 zapisane."));
+		message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sukces", "Zmiany zosta造 zapisane.");
 	}
 }
