@@ -1,4 +1,4 @@
-package com.invoice.beans;
+package com.invoice.beans.basic;
 
 import java.io.IOException;
 import java.io.Serializable;

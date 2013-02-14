@@ -4,7 +4,7 @@ import javax.faces.event.PhaseEvent;
 import javax.faces.event.PhaseId;
 import javax.faces.event.PhaseListener;
 
-import com.invoice.beans.LoginBean;
+import com.invoice.beans.basic.LoginBean;
 
 @SuppressWarnings("unused")
 public class AuthorizationListener implements PhaseListener {

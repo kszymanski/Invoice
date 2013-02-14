@@ -4,7 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.invoice.beans.ReceiptBean;
+import com.invoice.beans.basic.ReceiptBean;
 
 public class ReceiptDAO {
 	public static ReceiptBean getReceiptBean(int idReceipt){

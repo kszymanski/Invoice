@@ -1,4 +1,4 @@
-package com.invoice.beans;
+package com.invoice.beans.lists;
 
 import java.io.Serializable;
 import java.sql.SQLException;
@@ -11,6 +11,7 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.context.RequestContext;
 
+import com.invoice.beans.basic.RoleBean;
 import com.invoice.dbacces.RoleDAO;
 @ManagedBean(name="rolesList")
 @ViewScoped
@@ -61,8 +62,8 @@ public class RolesBean implements Serializable{
 		roles.remove(selectedRole);
 		selectedRole.updateRole();
 		roles.add(selectedRole);
-		message=selectedRole.message;
-		selectedRole.message = null;
+		message=selectedRole.getMessage();
+		selectedRole.setMessage(null);
 		if(message != null )
 		{
 			System.out.println("Updating role Message");

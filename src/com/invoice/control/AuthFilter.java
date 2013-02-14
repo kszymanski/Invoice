@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.invoice.beans.LoginBean;
+import com.invoice.beans.basic.LoginBean;
 
 public class AuthFilter implements Filter{
 

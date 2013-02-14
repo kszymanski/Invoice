@@ -8,7 +8,7 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.faces.convert.FacesConverter;
 
-import com.invoice.beans.RoleBean;
+import com.invoice.beans.basic.RoleBean;
 @FacesConverter(value = "roleConverter")
 public class RoleConverter implements Converter{
 	

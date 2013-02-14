@@ -1,4 +1,4 @@
-package com.invoice.beans;
+package com.invoice.beans.basic;
 
 import java.io.Serializable;
 import java.sql.SQLException;
@@ -36,7 +36,7 @@ public class RoleBean implements Serializable {
 	private boolean viewDelivery;
 	private boolean addContractor;
 	private boolean viewContractor;
-	protected FacesMessage message;
+	private FacesMessage message;
 	
 	public int getIdRole() {
 		return idRole;
@@ -159,6 +159,12 @@ public class RoleBean implements Serializable {
 		this.addDelivery = addDelivery;
 	}
 	
+	public FacesMessage getMessage() {
+		return message;
+	}
+	public void setMessage(FacesMessage message) {
+		this.message = message;
+	}
 	public void insertRole() throws Exception
 	{
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -206,17 +212,17 @@ public class RoleBean implements Serializable {
 		if(idRole == 1)
 		{
 			System.out.println("update role 1");
-			message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Zabronione.", "Nie mozna zmieniac roli szefa");
+			setMessage(new FacesMessage(FacesMessage.SEVERITY_WARN, "Zabronione.", "Nie mozna zmieniac roli szefa"));
 			return;
 		}
 		if(!RoleDAO.updateRole(this))
 		{
 			System.out.println("update role failed");
-			message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "B章d", "Zmiany nie zosta造 zapisane.");
+			setMessage(new FacesMessage(FacesMessage.SEVERITY_ERROR, "B章d", "Zmiany nie zosta造 zapisane."));
 			return;
 		}
 		System.out.println("update done!");
-		message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sukces", "Zmiany zosta造 zapisane.");
+		setMessage(new FacesMessage(FacesMessage.SEVERITY_INFO, "Sukces", "Zmiany zosta造 zapisane."));
 	}
 	
 	public void nameValidation(FacesContext context, UIComponent component,

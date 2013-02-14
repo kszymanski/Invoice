@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.invoice.beans.RoleBean;
+import com.invoice.beans.basic.RoleBean;
 
 public class RoleDAO {
 	private static RoleBean getRs(ResultSet rs) throws SQLException

@@ -1,10 +1,12 @@
-package com.invoice.beans;
+package com.invoice.beans.lists;
 
 import java.io.Serializable;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+
+import com.invoice.beans.basic.UserBean;
 import com.invoice.dbacces.UserDAO;
 @ManagedBean(name="userList")
 @ViewScoped
