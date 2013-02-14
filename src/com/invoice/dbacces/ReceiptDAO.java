@@ -10,7 +10,7 @@ public class ReceiptDAO {
 	public static ReceiptBean getReceiptBean(int idReceipt){
 		ResultSet rs;
 		ReceiptBean receipt = null;
-		String query="Select * From receipt Where idReceipt=?";
+		String query="Select * From Receipt Where idReceipt=?";
 		try {
 			PreparedStatement stm= DBCon.getConnection().prepareStatement(query);
 			stm.setInt(1, idReceipt);

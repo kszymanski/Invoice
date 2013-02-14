@@ -9,6 +9,9 @@ public class DBCon {
 	final static String CONNECTION_STRING = "jdbc:mysql://127.0.0.1/mydb";
 	final static String LOGIN = "root";
 	final static String PASSWORD = "";
+	//final static String CONNECTION_STRING = "jdbc:mysql://127.11.8.129:3306/mydb";
+	//final static String LOGIN = "adminSTxmspm";
+	//final static String PASSWORD = "YeGtV_uGnPmt";
 	   
 	static Connection connect() {
 		con = null;   

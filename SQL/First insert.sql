@@ -1,5 +1,5 @@
 INSERT 
-	INTO role (`Name`,
+	INTO Role (`Name`,
 				`AddInvoice`,
 				`ViewInvoice`,
 				`AddProduct`,
@@ -18,9 +18,9 @@ INSERT
 				`AddWarehause`,
 				`ViewDelivery`,
 				`AddDelivery`)
-	VALUES (admin, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
+	VALUES ('admin', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
 INSERT 
-	INTO user (`idUser`,
+	INTO User (`idUser`,
 			`Name`,
 			`Surname`,
 			`idRole`,

@@ -137,7 +137,7 @@ public class UserDAO {
 		
 		try 
 		{
-			String query="UPDATE user SET Name = ? , Surname = ? , idRole = ?, Active = ? WHERE idUser = ?";
+			String query="UPDATE User SET Name = ? , Surname = ? , idRole = ?, Active = ? WHERE idUser = ?";
 			Connection con=DBCon.getConnection();
 			con.setAutoCommit(false);
 			PreparedStatement stm= con.prepareStatement(query);
@@ -172,7 +172,7 @@ public class UserDAO {
 		
 		try 
 		{
-			String query="UPDATE user SET Password = ? WHERE idUser = ?";
+			String query="UPDATE User SET Password = ? WHERE idUser = ?";
 			Connection con=DBCon.getConnection();
 			con.setAutoCommit(false);
 			PreparedStatement stm= con.prepareStatement(query);
@@ -203,7 +203,7 @@ public class UserDAO {
 	{
 		try 
 		{
-			String query="INSERT INTO user (`idUser`, `Name`, `Surname`, `idRole`, `Password`, `Active`) VALUES (?, ?, ?, ?, ?, ?)";
+			String query="INSERT INTO User (`idUser`, `Name`, `Surname`, `idRole`, `Password`, `Active`) VALUES (?, ?, ?, ?, ?, ?)";
 			Connection con=DBCon.getConnection();
 			con.setAutoCommit(false);
 			PreparedStatement stm= con.prepareStatement(query);

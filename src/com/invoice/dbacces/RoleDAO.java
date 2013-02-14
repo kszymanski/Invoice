@@ -45,7 +45,7 @@ public class RoleDAO {
 	{
 		ResultSet rs;
 		RoleBean role = null;
-		String query="Select * From role Where idRole=?";
+		String query="Select * From Role Where idRole=?";
 		try {
 			PreparedStatement stm= DBCon.getConnection().prepareStatement(query);
 			stm.setInt(1, idRole);
@@ -70,7 +70,7 @@ public class RoleDAO {
 	{
 		ResultSet rs;
 		RoleBean role = null;
-		String query="Select * From role Where Name=?";
+		String query="Select * From Role Where Name=?";
 		try {
 			PreparedStatement stm= DBCon.getConnection().prepareStatement(query);
 			stm.setString(1, name);
@@ -94,7 +94,7 @@ public class RoleDAO {
 	public static List<RoleBean> getRoles()
 	{
 		List<RoleBean> list=new ArrayList<RoleBean>();
-		String query="Select * From role";
+		String query="Select * From Role";
 		try {
 			PreparedStatement stm= DBCon.getConnection().prepareStatement(query);
 			
@@ -117,7 +117,7 @@ public class RoleDAO {
 	{
 		try 
 		{
-			String query="INSERT INTO role (`Name`, `AddInvoice`, `ViewInvoice`, `AddProduct`, " +
+			String query="INSERT INTO Role (`Name`, `AddInvoice`, `ViewInvoice`, `AddProduct`, " +
 							"`ViewProduct`, `AddReciept`, `ViewReciept`, `AddBuyInvoice`, `ViewBuyInvoice`, " +
 								"`AddRole`, `ViewRole`, `AddContractor`, `ViewContractor`, `AddUser`, `ViewUser`, " +
 									"`ViewWarehause`, `AddWarehause`, `ViewDelivery`, `AddDelivery`) " +
@@ -171,7 +171,7 @@ public class RoleDAO {
 		try 
 		{
 			System.out.println("set query");
-			String query="UPDATE `role` SET `Name`=?, `AddInvoice`=?, `ViewInvoice`=?, `AddProduct`=?, `ViewProduct`=?," +
+			String query="UPDATE `Role` SET `Name`=?, `AddInvoice`=?, `ViewInvoice`=?, `AddProduct`=?, `ViewProduct`=?," +
 						" `AddReciept`=?, `ViewReciept`=?, `AddBuyInvoice`=?, `ViewBuyInvoice`=?, `AddRole`=?, `ViewRole`=?," +
 						" `AddContractor`=?, `ViewContractor`=?, `AddUser`=?, `ViewUser`=?, `ViewWarehause`=?," +
 						" `AddWarehause`=?, `ViewDelivery`=?, `AddDelivery`=? WHERE `idRole`=?";
@@ -221,7 +221,7 @@ public class RoleDAO {
 	{
 		try 
 		{
-			String query="DELETE FROM `role` WHERE `idRole`=?";
+			String query="DELETE FROM `Role` WHERE `idRole`=?";
 			Connection con=DBCon.getConnection();
 			con.setAutoCommit(false);
 			PreparedStatement stm= con.prepareStatement(query);
