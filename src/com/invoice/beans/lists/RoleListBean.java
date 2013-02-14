@@ -15,14 +15,14 @@ import com.invoice.beans.basic.RoleBean;
 import com.invoice.dbacces.RoleDAO;
 @ManagedBean(name="rolesList")
 @ViewScoped
-public class RolesBean implements Serializable{
+public class RoleListBean implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private List<RoleBean> roles;
 	private RoleBean selectedRole;
 	private List<RoleBean> filtered;
 	private boolean edit=false;
 	private FacesMessage message = null;
-	public RolesBean()
+	public RoleListBean()
 	{
 		roles=RoleDAO.getRoles();
 		System.out.println(roles.size());
