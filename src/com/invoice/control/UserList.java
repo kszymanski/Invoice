@@ -32,7 +32,7 @@ public class UserList extends HttpServlet {
 	private void processRequest(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException
 	{
 		
-		String nextpage = "/faces/pages/Users.xhtml";
+		String nextpage = "/faces/pages/lists/userlist.xhtml";
 		String username = request.getParameter("id");
 		String action = request.getParameter("action");
 		HttpSession session =request.getSession();
@@ -43,13 +43,13 @@ public class UserList extends HttpServlet {
 		{
 			session.setAttribute("id",username);
 			session.setAttribute("edit", edit);
-			nextpage = "/faces/pages/user.xhtml";
+			nextpage = "/faces/pages/single/user.xhtml";
 			if(user == null || !user.getUser().getRole().isViewUser())  nextpage = "/faces/errors/notauth.xhtml";
 		}
 		else if (action != null && action != "")
 		{
 			session.setAttribute("action", action);
-			nextpage = "/faces/pages/newuser.xhtml";
+			nextpage = "/faces/pages/single/newuser.xhtml";
 			if(user == null || !user.getUser().getRole().isAddUser())  nextpage = "/faces/errors/notauth.xhtml";
 		}
 		request.getRequestDispatcher(nextpage).forward(request, response);

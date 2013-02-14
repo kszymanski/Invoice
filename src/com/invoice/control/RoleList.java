@@ -31,7 +31,7 @@ private static final long serialVersionUID = 1L;
 	private void processRequest(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException
 	{
 		
-		String nextpage = "/faces/pages/rolelist.xhtml";
+		String nextpage = "/faces/pages/lists/rolelist.xhtml";
 		HttpSession session =request.getSession();
 		LoginBean user = (session != null) ? (LoginBean)session.getAttribute("loginUser") : null;
 		if(user == null || !user.getUser().getRole().isViewRole())  nextpage = "/faces/errors/notauth.xhtml";
