@@ -3,7 +3,7 @@ package com.invoice.beans.basic;
 public class StockBean {
 	private WarehauseBean warehause;
 	private ProductBean product;
-	private float stack;
+	private float stock;
 	
 	public WarehauseBean getWarehause() {
 		return warehause;
@@ -20,11 +20,11 @@ public class StockBean {
 		this.product = product;
 	}
 	
-	public float getStack() {
-		return stack;
+	public float getStock() {
+		return stock;
 	}
 	
-	public void setStack(float stack) {
-		this.stack = stack;
+	public void setStock(float stock) {
+		this.stock = stock;
 	}
 }

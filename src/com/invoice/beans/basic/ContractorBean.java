@@ -1,7 +1,7 @@
 package com.invoice.beans.basic;
 
 public class ContractorBean {
-	private int idConstractor;
+	private int idContractor;
 	private String name;
 	private String longName;
 	private int nip;
@@ -13,11 +13,11 @@ public class ContractorBean {
 	private String region;
 	private char type;
 	
-	public int getIdConstractor() {
-		return idConstractor;
+	public int getIdContractor() {
+		return idContractor;
 	}
-	public void setIdConstractor(int idConstractor) {
-		this.idConstractor = idConstractor;
+	public void setIdContractor(int idContractor) {
+		this.idContractor = idContractor;
 	}
 	public String getName() {
 		return name;
