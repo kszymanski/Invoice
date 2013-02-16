@@ -5,9 +5,9 @@ import java.util.Date;
 public class ExternalDeliveryBean {
 	private int idExternalDelivery;
 	private int idWarehause;
-	private boolean Auto;
-	private Date Date;
-	private int Contractor_idContractor;
+	private boolean auto;
+	private Date date;
+	private int idContractor;
 	private String idUser;
 
 	public void setIdExternalDelivery(int idExternalDelivery){
@@ -19,7 +19,7 @@ public class ExternalDeliveryBean {
 	}
 	
 	public void setIdWarehause (int idWarehause){
-	this.idWarehause = idWarehause;
+		this.idWarehause = idWarehause;
 	}
 	
 	public int getIdWarehause(){
@@ -27,27 +27,27 @@ public class ExternalDeliveryBean {
 	}
 	
 	public void setAuto (boolean Auto){
-		this.Auto = Auto;
+		this.auto = Auto;
 	}
 	
 	public boolean getAuto (){
-		return Auto;
+		return auto;
 	}
 	
 	public void setDate(Date Date){
-		this.Date = Date;
+		this.date = Date;
 	}
 	
 	public Date getDate(){
-		return Date;
+		return date;
 	}
 	
-	public void setContractor_idContractor(int Contractor_idContractor){
-		this.Contractor_idContractor = Contractor_idContractor;
+	public void setIdContractor(int contractor){
+		this.idContractor = contractor;
 	}
 	
-	public int getContractor_idContractor(){
-		return Contractor_idContractor;
+	public int getIdContractor(){
+		return idContractor;
 	}
 	
 	public void setIdUser(String idUser){
