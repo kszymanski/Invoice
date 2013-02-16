@@ -18,7 +18,7 @@
     <servlet-name>User List</servlet-name>
     <servlet-class>com.invoice.control.UserList</servlet-class>
   </servlet>
-   <servlet-mapping>
+  <servlet-mapping>
     <servlet-name>User List</servlet-name>
     <url-pattern>/UserList</url-pattern>
   </servlet-mapping>
@@ -26,9 +26,17 @@
     <servlet-name>Role List</servlet-name>
     <servlet-class>com.invoice.control.RoleList</servlet-class>
   </servlet>
-   <servlet-mapping>
+  <servlet-mapping>
     <servlet-name>Role List</servlet-name>
     <url-pattern>/RoleList</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>Product List</servlet-name>
+    <servlet-class>com.invoice.control.ProductList</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Product List</servlet-name>
+    <url-pattern>/ProductList</url-pattern>
   </servlet-mapping>
   <context-param>
     <param-name>javax.faces.PROJECT_STAGE</param-name>
@@ -38,10 +46,10 @@
     <filter-name>AuthFilter</filter-name>
     <filter-class>com.invoice.control.AuthFilter</filter-class>
   </filter>
-<filter-mapping>
-	<filter-name>AuthFilter</filter-name>
-	<servlet-name>Faces Servlet</servlet-name>
-	<servlet-name>User List</servlet-name>
-	
-</filter-mapping> 
+  <filter-mapping>
+    <filter-name>AuthFilter</filter-name>
+    <servlet-name>Faces Servlet</servlet-name>
+    <servlet-name>User List</servlet-name>
+    <servlet-name>Product List</servlet-name>
+  </filter-mapping>
 </web-app>

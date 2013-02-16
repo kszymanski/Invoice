@@ -1,7 +1,13 @@
 package com.invoice.beans.basic;
 
-public class ProductBean {
+import java.io.Serializable;
 
+public class ProductBean implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int idProduct;
 	private String Name;
 	private String LongName;

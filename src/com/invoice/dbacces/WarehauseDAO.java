@@ -27,7 +27,7 @@ public class WarehauseDAO {
 				warehause.setAddress(rs.getString("Address"));
 				warehause.setCity(rs.getString("City"));
 				warehause.setPostCode(rs.getInt("PostCode"));
-				warehause.setDefaultWarehause(rs.getBoolean("Default"));
+				warehause.setDefaultWarehause(rs.getBoolean("Default?"));
 				
 			}
 			stm.close();

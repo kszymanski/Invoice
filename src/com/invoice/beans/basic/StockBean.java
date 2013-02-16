@@ -1,10 +1,23 @@
 package com.invoice.beans.basic;
 
-public class StockBean {
+import java.io.Serializable;
+
+import com.invoice.dbacces.WarehauseDAO;
+
+public class StockBean implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 	private WarehauseBean warehause;
 	private ProductBean product;
 	private float stock;
 	
+	public StockBean(){};
+	public StockBean(int idWarehause)
+	{
+		warehause = WarehauseDAO.getWarehauseBean(1);
+		product = new ProductBean();
+		stock = 0;
+	}
 	public WarehauseBean getWarehause() {
 		return warehause;
 	}

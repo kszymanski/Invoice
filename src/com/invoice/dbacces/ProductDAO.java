@@ -1,8 +1,10 @@
 package com.invoice.dbacces;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,4 +78,44 @@ public class ProductDAO {
 		return list;
 		
 	}
+	
+	public static int insertProduct(ProductBean product)
+	{
+		try 
+		{
+			String query="INSERT INTO Product (`Name`, `LongName`, `Descryption`, `DefaultPrice`, `DefaultTax`, `Code`, `Picture`) VALUES (?, ?, ?, ?, ?, ?, ?)";
+			Connection con=DBCon.getConnection();
+			con.setAutoCommit(false);
+			PreparedStatement stm= con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+			stm.setString(1, product.getName());
+			stm.setString(2, product.getLongName());
+			stm.setString(3, product.getDescryption());
+			stm.setFloat(4, product.getDefaultPrice());
+			stm.setFloat(5, product.getDefaultTax());
+			stm.setInt(6, product.getCode());
+			stm.setString(7, product.getPicture());
+			
+			// execute select SQL stetement
+			int rs = stm.executeUpdate();
+			
+			
+			if(rs == 1)
+				{
+					ResultSet rsId = stm.getGeneratedKeys();
+					rsId.next();
+					int auto_id = rsId.getInt(1);
+					con.commit();
+					stm.close();
+					return auto_id;
+				}
+			con.rollback();
+			stm.close();
+		} 
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	
 }
