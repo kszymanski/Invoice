@@ -21,7 +21,13 @@ public class WarehauseDAO {
 			while (rs.next())
 			{
 				warehause = new WarehauseBean();
-	
+				warehause.setIdWarehause(rs.getInt("idWarehause"));
+				warehause.setName(rs.getString("Name"));
+				warehause.setDescription(rs.getString("Description"));
+				warehause.setAddress(rs.getString("Address"));
+				warehause.setCity(rs.getString("City"));
+				warehause.setPostCode(rs.getInt("PostCode"));
+				warehause.setDefaultWarehause(rs.getBoolean("Default"));
 				
 			}
 			stm.close();
