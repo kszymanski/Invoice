@@ -21,7 +21,9 @@ public class StockDAO {
 			while (rs.next())
 			{
 				stock = new StockBean();
-
+				stock.setProduct(ProductDAO.getProductBean(rs.getInt("idProduct")));
+				stock.setWarehause(WarehauseDAO.getWarehauseBean(rs.getInt("idWarehause")));
+				stock.setStock(rs.getFloat("Stock"));
 				
 			}
 			stm.close();
