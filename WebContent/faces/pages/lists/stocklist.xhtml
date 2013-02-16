@@ -17,14 +17,14 @@
 					<p:menuitem value="Nowy" icon="ui-icon-document" url="#" disabled="#{!loginUser.user.role.addProduct}" />
 					<p:menuitem value="Usuń" icon="ui-icon-closethick" type="button" disabled="#{!loginUser.user.role.addProduct}"/>
 				</p:menubar>
-				<p:contextMenu id="contextMenu" for="productDataTable">
+				<p:contextMenu id="contextMenu" for="stockDataTable">
         			<p:menuitem value="Szczegóły" icon="ui-icon-search"/>  
         			<p:menuitem value="Edit" icon="ui-icon-refresh"  disabled="!#{loginUser.user.role.addProduct}"/>
         			 <p:separator /> 
         			<p:menuitem value="Usuń" icon="ui-icon-closethick" type="button" disabled="#{!loginUser.user.role.addProduct}"/>  
     			</p:contextMenu>
-				<p:dataTable id="productDataTable" var="" value="" rowKey=""  
-                 selection="" filteredValue="" selectionMode="single" scrollRows="20" scrollable="true" liveScroll="true" scrollHeight="390" widgetVar="productDataTable"> 
+				<p:dataTable id="stockDataTable" var="" value="" rowKey=""  
+                 selection="" filteredValue="" selectionMode="single" scrollRows="20" scrollable="true" liveScroll="true" scrollHeight="390" widgetVar="stockDataTable"> 
        				<f:facet name="header">  
             			Lista Użytkowników dostępna w Systemie:
         			</f:facet>  
