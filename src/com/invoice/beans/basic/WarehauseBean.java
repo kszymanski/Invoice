@@ -3,7 +3,7 @@ package com.invoice.beans.basic;
 public class WarehauseBean {
 	private int idWarehause;
 	private String name;
-	private String descryption;
+	private String description;
 	private String address;
 	private String city;
 	private int postCode;
@@ -21,11 +21,11 @@ public class WarehauseBean {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getDescryption() {
-		return descryption;
+	public String getDescription() {
+		return description;
 	}
-	public void setDescryption(String descryption) {
-		this.descryption = descryption;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	public String getAddress() {
 		return address;
