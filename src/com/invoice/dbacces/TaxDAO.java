@@ -21,7 +21,9 @@ public class TaxDAO {
 			while (rs.next())
 			{
 				tax = new TaxBean();
-
+				tax.setIdTax(rs.getInt("idTax"));
+				tax.setAmount(rs.getString("Amount"));
+				tax.setName(rs.getFloat("Name"));
 				
 			}
 			stm.close();
