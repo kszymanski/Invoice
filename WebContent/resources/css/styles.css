@@ -66,3 +66,7 @@ div
 {
 	position: relative;
 }
+input.ui-column-filter
+{
+	visibility: hidden;
+}

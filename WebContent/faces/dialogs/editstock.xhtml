@@ -24,8 +24,8 @@
               			<p:inputText id="productTax" value="#{stockList.selectedStock.product.defaultTax}" converter="javax.faces.Float" >
               			</p:inputText>
         			</h:panelGrid> 
-        			<p:commandButton id="btn_add" value="Save" update=":stockListForm :msgs @parent"  
-                            			 actionListener="#{stockList.editStockProduct()}">  
+        			<p:commandButton id="btn_add" value="Save" process="editProductForm" update=":stockListForm :msgs @parent"  
+                            			 actionListener="#{stockList.editStockProduct()}" oncomplete="stockDataTable.clearFilters()">  
             		</p:commandButton> 
             		<p:commandButton value="Close" type="reset" onclick="editProductDialog.hide()"/> 
     			</p:panel>  

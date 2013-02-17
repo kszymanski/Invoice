@@ -16,6 +16,7 @@ public class StockListBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private List<StockBean> stocks;
+	private List<StockBean> filtredStocks;
 	private StockBean selectedStock;
 	private StockBean newStock;
 	
@@ -32,6 +33,14 @@ public class StockListBean implements Serializable {
 
 	public void setStocks(List<StockBean> stocks) {
 		this.stocks = stocks;
+	}
+
+	public List<StockBean> getFiltredStocks() {
+		return filtredStocks;
+	}
+
+	public void setFiltredStocks(List<StockBean> filtredStocks) {
+		this.filtredStocks = filtredStocks;
 	}
 
 	public StockBean getSelectedStock() {

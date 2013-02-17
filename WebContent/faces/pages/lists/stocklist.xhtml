@@ -18,21 +18,41 @@
 					<p:menuitem value="Usuń" icon="ui-icon-closethick" type="button" disabled="#{!loginUser.user.role.addProduct}"/>
 				</p:menubar>
 				
-				<p:contextMenu id="contextMenu" for="stockDataTable">
-        			<p:menuitem value="Szczegóły" icon="ui-icon-search"/>  
-        			<p:menuitem value="Edit" icon="ui-icon-refresh"  disabled="!#{loginUser.user.role.addProduct}"/>
-        			 <p:separator /> 
-        			<p:menuitem value="Usuń" icon="ui-icon-closethick" type="button" disabled="#{!loginUser.user.role.addProduct}"/>  
-    			</p:contextMenu>
 				<p:dataTable id="stockDataTable" var="stock" value="#{stockList.stocks}" rowKey="#{stock.product.idProduct}"
-                 selection="#{stockList.selectedStock}" selectionMode="single" scrollRows="20" scrollable="true" liveScroll="true" scrollHeight="390" widgetVar="stockDataTable"> 
+                 selection="#{stockList.selectedStock}" selectionMode="single" scrollRows="20" scrollable="true" liveScroll="true" scrollHeight="390" 
+                 filteredValue="#{stockList.filtredStocks}" sortMode="multiple" resizableColumns="true" widgetVar="stockDataTable"> 
        				<f:facet name="header">  
-            			Stock.
+           				   <p:toolbar>
+           				   	<p:toolbarGroup align="left">
+           				   		<h:outputText value="Produkty:" /> 
+           				   	</p:toolbarGroup>
+                			<p:toolbarGroup align="right"> 
+                			<p:outputLabel for="globalFilter" value="Search:"/>  
+                			<p:inputText id="globalFilter" onkeyup="stockDataTable.filter()" style="width:150px;"/> 
+                			</p:toolbarGroup> 
+            				</p:toolbar>
         			</f:facet>  
-  					<p:ajax event="rowSelect" update=":stockListForm"/>
-  					<p:column>
-  						#{stock.product.name}
+  					<p:column headerText="Kod" filterBy="#{stock.product.idProduct}" sortBy="#{stock.product.idProduct}">
+  						  <h:outputText value="#{stock.product.idProduct}" /> 
   					</p:column>
+  					<p:column  headerText="Name" filterBy="#{stock.product.name}" sortBy="#{stock.product.name}">
+  						  <h:outputText id="stockName" value="#{stock.product.name}" />
+  						  <p:tooltip for="stockName" value="#{stock.product.longName}" showEffect="slide" hideEffect="slide" /> 
+  					</p:column>
+  					
+  					<p:column headerText="Cena" filterBy="#{stock.product.defaultPrice}" sortBy="#{stock.product.defaultPrice}">
+  						  <h:outputText value="#{stock.product.defaultPrice}" /> 
+  					</p:column>
+  					<p:column headerText="VAT" filterBy="#{stock.product.defaultTax}" sortBy="#{stock.product.defaultTax}">
+  						  <h:outputText value="#{stock.product.defaultTax}" /> 
+  					</p:column>
+  					<p:column headerText="Stan" filterBy="#{stock.stock}" sortBy="#{stock.stock}">
+  						  <h:outputText value="#{stock.stock}" /> 
+  					</p:column>
+  					<p:column headerText="Jedn." filterBy="#{stock.product.unit}" sortBy="#{stock.product.unit}">
+  						  <h:outputText value="#{stock.product.unit}" /> 
+  					</p:column>
+  					<p:ajax event="rowSelect" update=":stockListForm :editProductForm"/>
     			</p:dataTable>
     		</h:form>
     		<ui:insert name="addProduct">

@@ -30,10 +30,18 @@
     			</p:contextMenu>
 				<p:dataTable id="rolesDataTable" var="roleView" value="#{rolesList.roles}" rowKey="#{roleView.name}"  
                  selection="#{rolesList.selectedRole}" selectionMode="single" style=" float: left;" 
-                  scrollRows="20" scrollable="true" liveScroll="true" scrollHeight="390" widgetVar="rolesTable" filteredValue="#{rolesList.filtered}"> 
+                  scrollRows="20" scrollable="true" liveScroll="true" scrollHeight="370" widgetVar="rolesTable" filteredValue="#{rolesList.filtered}"> 
        				<p:ajax event="rowSelect" update=":menuForm:menu :roleDetailForm"/>
        				<f:facet name="header">  
-            			Lista Ról dostępna w Systemie:
+           				   <p:toolbar>
+           				   	<p:toolbarGroup align="left">
+           				   		<h:outputText value="Role:" /> 
+           				   	</p:toolbarGroup>
+                			<p:toolbarGroup align="right"> 
+                			<p:outputLabel for="globalFilter" value="Search:"/>  
+                			<p:inputText id="globalFilter" onkeyup="rolesTable.filter()" style="width:150px;"/> 
+                			</p:toolbarGroup> 
+            				</p:toolbar>
         			</f:facet>
         			
         			<p:column  footerText="Nazwa:"   filterBy="#{roleView.name}" >  

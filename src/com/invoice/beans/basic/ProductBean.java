@@ -16,6 +16,7 @@ public class ProductBean implements Serializable {
 	private float DefaultTax;
 	private int Code;
 	private String Picture;
+	private String unit;
 	
 	public void setIdProduct(int idProdcut){
 		this.idProduct = idProdcut;
@@ -79,6 +80,14 @@ public class ProductBean implements Serializable {
 	
 	public String getPicture(){
 		return Picture;
+	}
+
+	public String getUnit() {
+		return unit;
+	}
+
+	public void setUnit(String unit) {
+		this.unit = unit;
 	}
 	
 	

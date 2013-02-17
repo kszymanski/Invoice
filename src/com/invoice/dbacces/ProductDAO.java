@@ -24,7 +24,7 @@ public class ProductDAO {
 		product.setDefaultTax(rs.getFloat("DefaultTax"));
 		product.setCode(rs.getInt("Code"));
 		product.setPicture(rs.getString("Picture"));
-	
+		product.setUnit(rs.getString("Unit"));
 		return product;
 	}
 	
@@ -83,7 +83,7 @@ public class ProductDAO {
 	{
 		try 
 		{
-			String query="INSERT INTO Product (`Name`, `LongName`, `Descryption`, `DefaultPrice`, `DefaultTax`, `Code`, `Picture`) VALUES (?, ?, ?, ?, ?, ?, ?)";
+			String query="INSERT INTO Product (`Name`, `LongName`, `Descryption`, `DefaultPrice`, `DefaultTax`, `Code`, `Picture`, `Unit`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 			Connection con=DBCon.getConnection();
 			con.setAutoCommit(false);
 			PreparedStatement stm= con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
@@ -94,7 +94,7 @@ public class ProductDAO {
 			stm.setFloat(5, product.getDefaultTax());
 			stm.setInt(6, product.getCode());
 			stm.setString(7, product.getPicture());
-			
+			stm.setString(7, product.getUnit());
 			// execute select SQL stetement
 			int rs = stm.executeUpdate();
 			

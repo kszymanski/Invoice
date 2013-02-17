@@ -25,9 +25,19 @@
     			</p:contextMenu>
 				<p:dataTable id="users" var="userView" value="#{userList.users}" rowKey="#{userView.idUser}"  
                  selection="#{userList.selectedUser}" filteredValue="#{userList.filteredUsers}" selectionMode="single" scrollRows="20" scrollable="true" liveScroll="true" scrollHeight="390" widgetVar="usersTable"> 
-       				<f:facet name="header">  
-            			Lista Użytkowników dostępna w Systemie:
-        			</f:facet>  
+       				
+            			<f:facet name="header">  
+           				   <p:toolbar>
+           				   	<p:toolbarGroup align="left">
+           				   		<h:outputText value="Użytkownicy:" /> 
+           				   	</p:toolbarGroup>
+                			<p:toolbarGroup align="right"> 
+                			<p:outputLabel for="globalFilter" value="Search:"/>  
+                			<p:inputText id="globalFilter" onkeyup="usersTable.filter()" style="width:150px;"/> 
+                			</p:toolbarGroup> 
+            				</p:toolbar>
+        			</f:facet>
+        			
   					<p:ajax event="rowSelect" update=":form"/>
         			
         			<p:column headerText="Username" filterBy="#{userView.idUser}">  
