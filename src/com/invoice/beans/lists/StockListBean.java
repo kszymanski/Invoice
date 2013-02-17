@@ -7,6 +7,9 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
+
+import org.primefaces.context.RequestContext;
 
 import com.invoice.beans.basic.StockBean;
 import com.invoice.dbacces.StockDAO;
@@ -25,6 +28,16 @@ public class StockListBean implements Serializable {
 		stocks = StockDAO.getStockList(1);
 		if(!stocks.isEmpty())setSelectedStock(stocks.get(0));
 		newStock = new StockBean(1);
+		HttpSession session=(HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		String id = (String) session.getAttribute("id");
+		if(id!=null)
+		{
+			for (StockBean stock : stocks) {
+				if(stock.getProduct().getIdProduct() == Integer.parseInt(id))setSelectedStock(stock);
+				RequestContext.getCurrentInstance().execute("editProductDialog.show()");
+			}
+		}
+		
 	}
 
 	public List<StockBean> getStocks() {

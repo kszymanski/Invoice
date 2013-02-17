@@ -29,6 +29,5 @@ public class ContractorDAO {
 				e.printStackTrace();
 			}
 		return contractor;
-		
 	}
 }

@@ -33,9 +33,14 @@ public class ProductList extends HttpServlet {
 	{
 		
 		String nextpage = "/faces/pages/lists/stocklist.xhtml";
+		String productId = request.getParameter("id");
 		HttpSession session =request.getSession();
 		LoginBean user = (session != null) ? (LoginBean)session.getAttribute("loginUser") : null;
 		if(user == null || !user.getUser().getRole().isViewProduct())  nextpage = "/faces/errors/notauth.xhtml";
+		if(productId != null && productId != "")
+		{
+			session.setAttribute("id",productId);
+		}
 		request.getRequestDispatcher(nextpage).forward(request, response);
 	}
 }
