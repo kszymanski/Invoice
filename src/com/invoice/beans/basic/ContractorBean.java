@@ -80,6 +80,9 @@ public class ContractorBean {
 		this.type = type;
 	}
 	
-	
+	public boolean deleteContractor(){
+		// w trakcie tworzenia
+		return true;
+	}
 	
 }
