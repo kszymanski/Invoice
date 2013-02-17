@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+	<head><title>IGNORED</title></head>
+	<body>
+		<ui:composition template="/faces/templates/masterLayout.xhtml">
+			<ui:define name="windowTitle">Contractors</ui:define>
+			<ui:define name="content">
+			<p:growl id="msgsAdoption" showDetail="true"/>
+			<h:form id="adoptionListForm">
+				<p:menubar id="menu">
+					<p:menuitem value="Szczegóły" icon="ui-icon-search" onclick="dlg.show()" disabled="#{!loginUser.user.role.viewBuyInvoice}"/>
+					<p:menuitem value="Edytuj" icon="ui-icon-refresh"  disabled="#{stockList.selectedStock == null || !loginUser.user.role.addBuyInvoice}"/>
+					<p:menuitem value="Nowy" icon="ui-icon-document"  disabled="#{!loginUser.user.role.addBuyInvoice}" />
+					<p:menuitem value="Usuń" icon="ui-icon-closethick" type="button" disabled="#{!loginUser.user.role.addBuyInvoice}"/>
+				</p:menubar>
+				<p:dataTable id="adoptionDataTable" var="adoption" value="#{adoptionList.adoptions}" rowKey="#{adoption.idExternalAdoption}"
+                 selection="#{adoptionList.selectedAdoption}" selectionMode="single" scrollRows="20" scrollable="true" liveScroll="true" scrollHeight="390" 
+                 filteredValue="#{adoptionList.filteredAdoptions}" sortMode="multiple" resizableColumns="true" widgetVar="adoptionDataTable"> 
+       				<f:facet name="header">
+           				<p:toolbar>
+           				   	<p:toolbarGroup align="left">
+           				   		<h:outputText value="Produkty:" /> 
+           				   	</p:toolbarGroup>
+                			<p:toolbarGroup align="right"> 
+                				<p:outputLabel for="globalFilter" value="Search:"/>  
+                				<p:inputText id="globalFilter" onkeyup="stockDataTable.filter()" style="width:150px;"/> 
+                				<p:commandButton value="Clear" process="globalFilter" type="reset" onclick="$('#stockListForm\\:stockDataTable\\:globalFilter').val('').keyup(); return false;"/>
+                			</p:toolbarGroup> 
+            			</p:toolbar>
+        			</f:facet>  
+  					<p:column headerText="Numer" filterBy="#{adoption.idExternalAdoption}" sortBy="#{adoption.idExternalAdoption}">
+  						  <h:outputText value="#{adoption.idExternalAdoption}" /> 
+  					</p:column>
+  					
+  					<p:ajax event="rowSelect" update=":adoptionListForm"/>
+    			</p:dataTable>
+			</h:form>
+			<p:dialog id="dialog" header="Dynamic Dialog" widgetVar="dlg" modal="true" dynamic="true">  
+    			 <ui:include src="/faces/dialogs/addproduct.xhtml"/>
+			</p:dialog> 
+			</ui:define>
+		</ui:composition>
+	</body>
+</html>
