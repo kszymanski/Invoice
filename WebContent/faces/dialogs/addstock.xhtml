@@ -17,6 +17,8 @@
               			<p:inputText id="productLongName" value="#{stockList.newStock.product.longName}"></p:inputText>
               			<h:outputLabel value="Opis : *" for="productDescryption"></h:outputLabel>
               			<p:inputTextarea id="productDescryption" value="#{stockList.newStock.product.descryption}"></p:inputTextarea>
+              			<h:outputLabel value="Jednostka : *" for="productUnit"></h:outputLabel>
+              			<p:inputText id="productUnit" value="#{stockList.newStock.product.unit}"></p:inputText>
               			<h:outputLabel value="Cena : *" for="productPrice"></h:outputLabel>
               			<p:inputText id="productPrice" value="#{stockList.newStock.product.defaultPrice}" converter="javax.faces.Float" >
               			</p:inputText>

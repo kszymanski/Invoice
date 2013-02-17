@@ -28,3 +28,7 @@ INSERT
 			`Active`,
 			`Admin`) 
 	VALUES ('admin', 'Admin','Administrator', 1, 'admin', 1,1);
+INSERT 
+	INTO `Warehause` (`Name`,
+					`Default?`) 
+	VALUES ('Main', '1');

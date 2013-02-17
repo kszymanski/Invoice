@@ -94,7 +94,7 @@ public class ProductDAO {
 			stm.setFloat(5, product.getDefaultTax());
 			stm.setInt(6, product.getCode());
 			stm.setString(7, product.getPicture());
-			stm.setString(7, product.getUnit());
+			stm.setString(8, product.getUnit());
 			// execute select SQL stetement
 			int rs = stm.executeUpdate();
 			
