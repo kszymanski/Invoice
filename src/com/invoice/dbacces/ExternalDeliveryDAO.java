@@ -22,7 +22,7 @@ public class ExternalDeliveryDAO {
 			{
 				externaldelivery = new ExternalDeliveryBean();
 				externaldelivery.setIdExternalDelivery(rs.getInt("idReceipt"));
-			//	externaldelivery.setWarehause(WareHauseDAO.getWareHause(rs.getString("idWareHause");
+			//	externaldelivery.setIdWarehause(WarehauseDAO.getWarehauseBean(rs.getInt("idWarehause")));
 				externaldelivery.setAuto(rs.getBoolean("Auto"));
 				externaldelivery.setDate(rs.getDate("Date"));
 				externaldelivery.setIdContractor(rs.getInt("idContractor"));
