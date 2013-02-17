@@ -102,6 +102,8 @@ public class StockListBean implements Serializable {
 			stocks.remove(selectedStock);
 			if(stocks.size()>0)selectedStock = stocks.get(0);
 			else selectedStock = null;
+			
 		}
+		
 	}
 }
