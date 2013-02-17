@@ -56,5 +56,9 @@ public class StockListBean implements Serializable {
 	public void addStockProduct() {
          if(StockDAO.insertStock(newStock)) FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Dodano!"));
          else FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Nie dodano!"));
-    }  
+    }
+	public void editStockProduct()
+	{
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("zmieniam!"));
+	}
 }

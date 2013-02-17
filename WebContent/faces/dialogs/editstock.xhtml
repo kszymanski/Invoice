@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+	<head><title>IGNORED</title></head>
+	<body>
+		<ui:composition>
+		<p:dialog id="editProduct" header="Basic Dialog" dynamic="true"  widgetVar="editProductDialog" modal="true" showEffect="explode" hideEffect="explode" closable="false">  
+			<h:form id="editProductForm">
+				 <p:panel header="EDIT">  
+        			<h:panelGrid columns="2" id="editProductGrid" >  
+              			<h:outputLabel value="Krótka Nazwa : *" for="productName"></h:outputLabel>
+              			<p:inputText id="productName" value="#{stockList.selectedStock.product.name}"></p:inputText>
+              			<h:outputLabel value="Nazwa : *" for="productLongName"></h:outputLabel>
+              			<p:inputText id="productLongName" value="#{stockList.selectedStock.product.longName}"></p:inputText>
+              			<h:outputLabel value="Opis : *" for="productDescryption"></h:outputLabel>
+              			<p:inputTextarea id="productDescryption" value="#{stockList.selectedStock.product.descryption}"></p:inputTextarea>
+              			<h:outputLabel value="Cena : *" for="productPrice"></h:outputLabel>
+              			<p:inputText id="productPrice" value="#{stockList.selectedStock.product.defaultPrice}" converter="javax.faces.Float" >
+              			</p:inputText>
+              			<h:outputLabel value="TAX : *" for="productTax"></h:outputLabel>
+              			<p:inputText id="productTax" value="#{stockList.selectedStock.product.defaultTax}" converter="javax.faces.Float" >
+              			</p:inputText>
+        			</h:panelGrid> 
+        			<p:commandButton id="btn_add" value="Save" update=":stockListForm :msgs @parent"  
+                            			 actionListener="#{stockList.editStockProduct()}">  
+            		</p:commandButton> 
+            		<p:commandButton value="Close" type="reset" onclick="editProductDialog.hide()"/> 
+    			</p:panel>  
+			</h:form>
+		</p:dialog>
+		</ui:composition>
+	</body>
+</html>
