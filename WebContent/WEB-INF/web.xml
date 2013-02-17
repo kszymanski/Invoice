@@ -38,6 +38,17 @@
     <servlet-name>Product List</servlet-name>
     <url-pattern>/ProductList</url-pattern>
   </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>Contractor List</servlet-name>
+    <servlet-class>com.invoice.control.ContractorList</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Contractor List</servlet-name>
+    <url-pattern>/ContractorList</url-pattern>
+  </servlet-mapping>
+  
+  
   <context-param>
     <param-name>javax.faces.PROJECT_STAGE</param-name>
     <param-value>Development</param-value>
