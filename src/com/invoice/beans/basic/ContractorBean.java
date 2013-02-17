@@ -11,7 +11,7 @@ public class ContractorBean {
 	private int postCode;
 	private String country;
 	private String region;
-	private char type;
+	private String type;
 	
 	public int getIdContractor() {
 		return idContractor;
@@ -73,10 +73,10 @@ public class ContractorBean {
 	public void setRegion(String region) {
 		this.region = region;
 	}
-	public char getType() {
+	public String getType() {
 		return type;
 	}
-	public void setType(char type) {
+	public void setType(String type) {
 		this.type = type;
 	}
 	
