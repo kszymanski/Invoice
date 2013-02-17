@@ -7,8 +7,8 @@
 	<head><title>IGNORED</title></head>
 	<body>
 		<ui:composition>
-		<p:dialog id="editProduct" header="Edit product" dynamic="true"  widgetVar="editProductDialog" modal="true" showEffect="explode" hideEffect="explode" closable="false">  
-			<h:form id="editProductForm">
+		<p:dialog id="editContractor" header="Edit contractor" dynamic="true"  widgetVar="editContractorDialog" modal="true" showEffect="explode" hideEffect="explode" closable="false">  
+			<h:form id="editContractorForm">
 				  <h:panelGrid columns="2">
         			<p:outputPanel id="imagePanel" autoUpdate="true">  
         				<p:graphicImage library="images" name="#{stockList.selectedStock.product.picture != null ? stockList.selectedStock.product.picture:'default_product.png'}"/>  
@@ -31,10 +31,10 @@
               			</p:inputText>
         			</h:panelGrid> 
     			 </h:panelGrid>
-    			 <p:commandButton id="btn_add" value="Save" process="editProductForm" update=":stockListForm :msgs @parent"  
+    			 <p:commandButton id="btn_add" value="Save" process="editContractorForm" update=":contractorListForm :msgs @parent"  
                             			 actionListener="#{stockList.selectedStock.product.updateProduct}" oncomplete="stockDataTable.clearFilters()">  
             		</p:commandButton> 
-            		<p:commandButton value="Close" type="reset" onclick="editProductDialog.hide()"/>
+            		<p:commandButton value="Close" type="reset" onclick="editContractorDialog.hide()"/>
 			</h:form>
 		</p:dialog>
 		</ui:composition>

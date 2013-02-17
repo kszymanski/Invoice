@@ -7,37 +7,12 @@
 	<head><title>IGNORED</title></head>
 	<body>
 		<ui:composition>
-		<p:dialog id="addContractor" header="Basic Dialog" widgetVar="addContractorDialog" modal="true" showEffect="explode" hideEffect="explode" closable="false">  
+		<p:dialog id="addContractor" header="Add Contractor" widgetVar="addContractorDialog" modal="true" showEffect="explode" hideEffect="explode" closable="false">  
 			<h:form id="addContractorForm">
-				<h:panelGrid columns="2">
-        			
-        			<p:outputPanel id="imagePanel" autoUpdate="true">  
-        				<p:graphicImage library="images" name="#{stockList.newStock.product.picture}"/>  
-   					</p:outputPanel>
-        			
-        			<h:panelGrid columns="2" id="addProductGrid">  
-              			<h:outputLabel value="Krótka Nazwa : *" for="productName"></h:outputLabel>
-              			<p:inputText id="productName" value="#{stockList.newStock.product.name}" 
-              									validator="#{stockList.newStock.product.nameValidation}"/>
-              			<h:outputLabel value="Nazwa : *" for="productLongName"></h:outputLabel>
-              			<p:inputText id="productLongName" value="#{stockList.newStock.product.longName}"></p:inputText>
-              			<h:outputLabel value="Opis : *" for="productDescryption"></h:outputLabel>
-              			<p:inputTextarea id="productDescryption" value="#{stockList.newStock.product.descryption}"></p:inputTextarea>
-              			<h:outputLabel value="Jednostka : *" for="productUnit"></h:outputLabel>
-              			<p:inputText id="productUnit" value="#{stockList.newStock.product.unit}"></p:inputText>
-              			<h:outputLabel value="Cena : *" for="productPrice"></h:outputLabel>
-              			<p:inputText id="productPrice" value="#{stockList.newStock.product.defaultPrice}" converter="javax.faces.Float" >
-              			</p:inputText>
-              			<h:outputLabel value="TAX : *" for="productTax"></h:outputLabel>
-              			<p:inputText id="productTax" value="#{stockList.newStock.product.defaultTax}" converter="javax.faces.Float" >
-              			</p:inputText>
-        			</h:panelGrid>
-    			 </h:panelGrid>
-    			 <p:commandButton id="btn_add" value="Add" update=":stockListForm :msgs @parent"  
-                           			action="#{stockList.reinit()}" actionListener="#{stockList.addStockProduct()}">  
-          			<p:collector value="#{stockList.newStock}" addTo="#{stockList.stocks}" />  
-            	</p:commandButton> 
-				<p:commandButton value="Close" type="reset" onclick="addProductDialog.hide()"/>  
+        			<h:panelGrid columns="2" id="addContractorGrid">  
+
+    	   		  	 </h:panelGrid>
+    		<p:commandButton value="OK" type="reset" onclick="addContractorDialog.hide()"/>
 			</h:form>
 		</p:dialog>
 		</ui:composition>

@@ -7,31 +7,13 @@
 	<head><title>IGNORED</title></head>
 	<body>
 		<ui:composition>
-		<p:dialog id="viewProduct" header="View product" dynamic="true"  widgetVar="viewProductDialog" modal="true" showEffect="explode" hideEffect="explode" closable="false">  
-			<h:form id="viewProductForm">
-				  <h:panelGrid columns="2">
-        			<p:outputPanel id="imagePanel" autoUpdate="true">  
-        				<p:graphicImage library="images" name="#{stockList.selectedStock.product.picture != null ? stockList.selectedStock.product.picture:'default_product.png'}"/>  
-   					</p:outputPanel> 
-        			<h:panelGrid columns="2" id="editProductGrid" >  
-              			<h:outputLabel value="Krótka Nazwa : *" for="productName"></h:outputLabel>
-              			<p:inputText id="productName" value="#{stockList.selectedStock.product.name}" 
-              					disabled="true"/>
-              			<h:outputLabel value="Nazwa : *" for="productLongName"></h:outputLabel>
-              			<p:inputText id="productLongName" value="#{stockList.selectedStock.product.longName}" disabled="true"/>
-              			<h:outputLabel value="Opis : *" for="productDescryption"></h:outputLabel>
-              			<p:inputTextarea id="productDescryption" value="#{stockList.selectedStock.product.descryption}" disabled="true"/>
-              			<h:outputLabel value="Jednostka : *" for="productUnit"></h:outputLabel>
-              			<p:inputText id="productUnit" value="#{stockList.newStock.product.unit}" disabled="true"/>
-              			<h:outputLabel value="Cena : *" for="productPrice"></h:outputLabel>
-              			<p:inputText id="productPrice" value="#{stockList.selectedStock.product.defaultPrice}" converter="javax.faces.Float" disabled="true">
-              			</p:inputText>
-              			<h:outputLabel value="TAX : *" for="productTax"></h:outputLabel>
-              			<p:inputText id="productTax" value="#{stockList.selectedStock.product.defaultTax}" converter="javax.faces.Float" disabled="true" >
-              			</p:inputText>
+		<p:dialog id="viewContractor" header="View contractor" dynamic="true"  widgetVar="viewContractorDialog" modal="true" showEffect="explode" hideEffect="explode" closable="false">  
+			<h:form id="viewContractorForm">
+        			<h:panelGrid columns="2" id="editContractorGrid" >  
+              			
         			</h:panelGrid> 
-    			 </h:panelGrid>
-           		<p:commandButton value="OK" type="reset" onclick="viewProductDialog.hide()"/>
+
+           		<p:commandButton value="OK" type="reset" onclick="viewContractorDialog.hide()"/>
 			</h:form>
 		</p:dialog>
 		</ui:composition>

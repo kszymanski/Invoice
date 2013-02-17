@@ -12,17 +12,14 @@
 			<p:growl id="msgs" showDetail="true"/>
 			<h:form id="contractorListForm">
 			<p:menubar id="menu">
-					<p:menuitem value="Szczegóły" onclick="viewProductDialog.show()" icon="ui-icon-search" disabled="#{stockList.selectedStock == null || !loginUser.user.role.viewProduct}"/>
-					<p:menuitem value="Edytuj" icon="ui-icon-refresh" onclick="editProductDialog.show()" disabled="#{stockList.selectedStock == null || !loginUser.user.role.addProduct}"/>
-					<p:menuitem value="Nowy" icon="ui-icon-document"  onclick="addProductDialog.show()" disabled="#{!loginUser.user.role.addProduct}" />
-					<p:menuitem value="Usuń" icon="ui-icon-closethick" type="button"  onclick="confirmation.show()" disabled="#{!loginUser.user.role.addProduct}"/>
+					<p:menuitem value="Szczegóły" onclick="viewContractorDialog.show()" icon="ui-icon-search" disabled="#{contractorList.selectedContractor == null || !loginUser.user.role.viewContractor}"/>
+					<p:menuitem value="Edytuj" icon="ui-icon-refresh" onclick="editContractorDialog.show()" disabled="#{contractorList.selectedContractor == null || !loginUser.user.role.addContractor}"/>
+					<p:menuitem value="Nowy" icon="ui-icon-document"  onclick="addContractorDialog.show()" disabled="#{!loginUser.user.role.addContractor}" />
+					<p:menuitem value="Usuń" icon="ui-icon-closethick" type="button"  onclick="confirmation.show()" disabled="#{!loginUser.user.role.addContractor}"/>
 				</p:menubar>
-			
-			
-				<p:dataTable id="contractorsDataTable" var="contractor" value="#{contractorList.contractors}" rowKey="#{contractor.idContractor}" selection="#{contractorList.selectedContractor}" selectionMode="single"
+				<p:dataTable id="contractorDataTable" var="contractor" value="#{contractorList.contractors}" rowKey="#{contractor.idContractor}" selection="#{contractorList.selectedContractor}" selectionMode="single"
 				scrollRows="20" scrollable="true" liveScroll="true" scrollHeight="390" 
-                 filteredValue="#{contractorList.filtredContractors}" sortMode="multiple" resizableColumns="true" widgetVar="contractorDataTable"> 
-				
+                 filteredValue="#{contractorList.filtredContractors}" sortMode="multiple" resizableColumns="true" widgetVar="contractorDataTable"> 		
 				<f:facet name="header">
            				<p:toolbar>
            				   	<p:toolbarGroup align="left">
@@ -35,9 +32,6 @@
                 			</p:toolbarGroup> 
             			</p:toolbar>
         			</f:facet>  
-				
-				
-				 
 				 <p:column headerText="Kod"  filterBy="#{contractor.idContractor}" sortBy="#{contractor.idContractor}">
 				 	<h:outputText value="#{contractor.idContractor}" /> 
 				 </p:column>  
@@ -66,8 +60,18 @@
 				  	<h:outputText value="#{contractor.type}" />
 				  </p:column>  
 				  
+				  	<p:ajax event="rowSelect" update=":contractorListForm"/>
+				  
 				</p:dataTable>
 				</h:form>
+				
+				<ui:insert name="addContractor">
+    				<ui:include src="/faces/dialogs/addcontractor.xhtml" />
+    			</ui:insert>
+    			<ui:insert name="viewContractor">
+    				<ui:include src="/faces/dialogs/viewcontractor.xhtml" />
+    			</ui:insert>
+				
 				</ui:define>    
 		</ui:composition>			
 	</body>
