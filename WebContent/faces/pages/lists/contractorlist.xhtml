@@ -7,11 +7,57 @@
 	<head><title>IGNORED</title></head>
 	<body>
 		<ui:composition template="/faces/templates/masterLayout.xhtml">
-			<ui:define name="windowTitle">Contractor</ui:define>
+			<ui:define name="windowTitle">Contractors</ui:define>
 			<ui:define name="content">
 			<p:growl id="msgs" showDetail="true"/>
-			<h:form >
+			<h:form id="contractorListForm">
+				<p:dataTable id="contractorsDataTable" var="contractor" value="#{contractorList.contractors}" rowKey="#{contractor.idContractor}" selection="#{contractorList.selectedContractor}" selectionMode="single">   >
+				 
+				 <p:column headerText="id">
+				 #{contractor.idContractor}
+				 </p:column>  
+				 
+				 <p:column headerText="Name">
+				  #{contractor.name}
+				  </p:column>  
+				  
+				  <p:column headerText="Long Name">
+				  #{contractor.longName}
+				  </p:column>  
+				  
+				  <p:column headerText="NIP">
+				  #{contractor.nip}
+				  </p:column>  
+				  
+				  <p:column headerText="REGON">
+				  #{contractor.regon}
+				  </p:column>  
+				  
+				  <p:column headerText="Ulica">
+				  #{contractor.street}
+				  </p:column>  
+				  
+				 <p:column headerText="Miasto">
+				  #{contractor.city}
+				  </p:column>  
+				  
+				  <p:column headerText="Kod pocztowy">
+				  #{contractor.postCode}
+				  </p:column>  
+				   
+				   <p:column headerText="Kraj">
+				  #{contractor.country}
+				  </p:column>  
+				  
+				  <p:column headerText="Region">
+				  #{contractor.regon}
+				  </p:column>  
+				  
+				  <p:column headerText="Type">
+				  #{contractor.type}
+				  </p:column>  
 				
+				</p:dataTable>
 			</h:form>
 			</ui:define>
 		</ui:composition>
