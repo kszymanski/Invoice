@@ -12,7 +12,7 @@
 			<p:growl id="msgs" showDetail="true"/>
 			<h:form id="stockListForm">
 				<p:menubar id="menu">
-					<p:menuitem value="Szczegóły" icon="ui-icon-search"/>
+					<p:menuitem value="Szczegóły" onclick="viewProductDialog.show()" icon="ui-icon-search" disabled="#{stockList.selectedStock == null || !loginUser.user.role.viewProduct}"/>
 					<p:menuitem value="Edytuj" icon="ui-icon-refresh" onclick="editProductDialog.show()" disabled="#{stockList.selectedStock == null || !loginUser.user.role.addProduct}"/>
 					<p:menuitem value="Nowy" icon="ui-icon-document"  onclick="addProductDialog.show()" disabled="#{!loginUser.user.role.addProduct}" />
 					<p:menuitem value="Usuń" icon="ui-icon-closethick" type="button"  onclick="confirmation.show()" disabled="#{!loginUser.user.role.addProduct}"/>
@@ -67,6 +67,9 @@
     		</ui:insert>
     		<ui:insert name="editProduct">
     				<ui:include src="/faces/dialogs/editstock.xhtml" />
+    		</ui:insert>
+    		<ui:insert name="viewProduct">
+    				<ui:include src="/faces/dialogs/viewstock.xhtml" />
     		</ui:insert>
 			</ui:define>
 		</ui:composition>
