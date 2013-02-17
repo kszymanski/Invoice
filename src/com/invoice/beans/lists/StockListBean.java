@@ -1,6 +1,7 @@
 package com.invoice.beans.lists;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -8,8 +9,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
-
-import org.primefaces.context.RequestContext;
 
 import com.invoice.beans.basic.StockBean;
 import com.invoice.dbacces.StockDAO;
@@ -33,9 +32,15 @@ public class StockListBean implements Serializable {
 		if(id!=null)
 		{
 			for (StockBean stock : stocks) {
-				if(stock.getProduct().getIdProduct() == Integer.parseInt(id))setSelectedStock(stock);
-				RequestContext.getCurrentInstance().execute("editProductDialog.show()");
+				if(stock.getProduct().getIdProduct() == Integer.parseInt(id))
+				{
+					setSelectedStock(stock);
+					filtredStocks = new ArrayList<StockBean>();
+					filtredStocks.add(stock);
+				}
+				
 			}
+			session.removeAttribute("id");
 		}
 		
 	}
@@ -75,6 +80,10 @@ public class StockListBean implements Serializable {
         newStock = new StockBean(1);  
         return null;  
     }
+	public void reinitFilter()
+	{
+		filtredStocks = null;
+	}
 	public void addStockProduct() {
 		int productId = StockDAO.insertStock(newStock);
          if(productId != 0){
