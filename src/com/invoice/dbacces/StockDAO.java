@@ -89,7 +89,7 @@ public class StockDAO {
 			}
 		return list;
 	}
-	public static boolean insertStock(StockBean stock)
+	public static int insertStock(StockBean stock)
 	{
 		try 
 		{
@@ -101,7 +101,7 @@ public class StockDAO {
 			if(ProductDAO.getProductBean(stock.getProduct().getIdProduct()) == null)
 			{
 				productId = ProductDAO.insertProduct(stock.getProduct());
-				if(productId == 0) return false;
+				if(productId == 0) return 0;
 			}
 			stm.setInt(1, productId);
 			stm.setInt(2, stock.getWarehause().getIdWarehause());
@@ -115,7 +115,7 @@ public class StockDAO {
 				{
 					con.commit();
 					stm.close();
-					return true;
+					return productId;
 				}
 			con.rollback();
 			stm.close();
@@ -124,7 +124,7 @@ public class StockDAO {
 		{
 			e.printStackTrace();
 		}
-		return false;
+		return 0;
 	
 	}
 }

@@ -63,7 +63,11 @@ public class StockListBean implements Serializable {
         return null;  
     }
 	public void addStockProduct() {
-         if(StockDAO.insertStock(newStock)) FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Dodano!"));
+		int productId = StockDAO.insertStock(newStock);
+         if(productId != 0){
+        	 newStock.getProduct().setIdProduct(productId);
+        	 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Dodano!"));
+         }
          else FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Nie dodano!"));
     }
 	public void editStockProduct()
