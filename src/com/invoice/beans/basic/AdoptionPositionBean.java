@@ -1,18 +1,24 @@
 package com.invoice.beans.basic;
 
-public class AdoptionPositionBean {
-	private int idExternalDoption;
+import java.io.Serializable;
+
+public class AdoptionPositionBean implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private int idExternalAdoption;
 	private int idProduct;
 	private float count;
 	private float price;
 	private String unit;
 	
-	public int getIdExternalDoption() {
-		return idExternalDoption;
+	public int getIdExternalAdoption() {
+		return idExternalAdoption;
 	}
 	
-	public void setIdExternalDoption(int idExternalDoption) {
-		this.idExternalDoption = idExternalDoption;
+	public void setIdExternalAdoption(int idExternalAdoption) {
+		this.idExternalAdoption = idExternalAdoption;
 	}
 	
 	public int getIdProduct() {

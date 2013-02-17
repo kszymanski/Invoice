@@ -89,6 +89,40 @@ public class StockDAO {
 			}
 		return list;
 	}
+	
+	public static boolean updateStock(StockBean stock)
+	{
+		
+		try 
+		{
+			String query="UPDATE Stock SET Stock = ? WHERE idProduct = ? AND idWarehause = ?";
+			Connection con=DBCon.getConnection();
+			con.setAutoCommit(false);
+			PreparedStatement stm= con.prepareStatement(query);
+			stm.setFloat(1, stock.getStock());
+			stm.setInt(2, stock.getProduct().getIdProduct());
+			stm.setInt(3, stock.getWarehause().getIdWarehause());
+			
+			// execute select SQL stetement
+			int rs = stm.executeUpdate();
+			
+			
+			if(rs == 1)
+				{
+					con.commit();
+					stm.close();
+					return true;
+				}
+			con.rollback();
+			stm.close();
+		} 
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
 	public static int insertStock(StockBean stock)
 	{
 		try 
@@ -126,5 +160,34 @@ public class StockDAO {
 		}
 		return 0;
 	
+	}
+	public static boolean deleteStock(StockBean stock)
+	{
+		try 
+		{
+			String query="DELETE FROM `Stock` WHERE `idProduct`=?";
+			Connection con=DBCon.getConnection();
+			con.setAutoCommit(false);
+			PreparedStatement stm= con.prepareStatement(query);
+			stm.setInt(1, stock.getProduct().getIdProduct());
+			
+			
+			// execute select SQL stetement
+			int rs = stm.executeUpdate();
+			if(rs == 1)
+				{
+					con.commit();
+					stm.close();
+					if(!ProductDAO.deleteProduct(stock.getProduct()))return false;
+					return true;
+				}
+			con.rollback();
+			stm.close();
+		} 
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		return false;
 	}
 }

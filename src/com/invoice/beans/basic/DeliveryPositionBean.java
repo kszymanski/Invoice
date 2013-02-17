@@ -1,6 +1,12 @@
 package com.invoice.beans.basic;
 
-public class DeliveryPositionBean {
+import java.io.Serializable;
+
+public class DeliveryPositionBean implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int idProduct;
 	private int idExternalDelivery;
 	private float Count;

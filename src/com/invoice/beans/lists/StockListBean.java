@@ -72,7 +72,10 @@ public class StockListBean implements Serializable {
 	public StockBean getNewStock() {
 		return newStock;
 	}
-
+	public void copyName()
+	{
+		newStock.getProduct().setLongName(newStock.getProduct().getName());
+	}
 	public void setNewStock(StockBean newStock) {
 		this.newStock = newStock;
 	}
@@ -92,8 +95,13 @@ public class StockListBean implements Serializable {
          }
          else FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Nie dodano!"));
     }
-	public void editStockProduct()
+	public void deleteStockProduct()
 	{
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("zmieniam!"));
+		if(selectedStock.deleteStock())
+		{
+			stocks.remove(selectedStock);
+			if(stocks.size()>0)selectedStock = stocks.get(0);
+			else selectedStock = null;
+		}
 	}
 }

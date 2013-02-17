@@ -53,6 +53,31 @@ public class ProductDAO {
 		return product;
 		
 	}
+	public static ProductBean getProductBean(String productName){
+		ResultSet rs;
+		ProductBean product = null;
+		String query="Select * From Product Where Name=?";
+		try {
+			PreparedStatement stm= DBCon.getConnection().prepareStatement(query);
+			stm.setString(1, productName);
+
+		// execute select SQL stetement
+		
+			rs = stm.executeQuery();
+			while (rs.next())
+			{
+				product = getRs(rs);
+
+				
+			}
+			stm.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		return product;
+		
+	}
 	
 	public static List<ProductBean> getProductList(){
 		ResultSet rs;
@@ -77,6 +102,49 @@ public class ProductDAO {
 			}
 		return list;
 		
+	}
+	public static boolean updateProduct(ProductBean product)
+	{
+		
+		try 
+		{
+			String query="UPDATE Product SET Name = ?," +
+											" LongName = ?," +
+											" Descryption = ?," +
+											" DefaultPrice = ?," +
+											" DefaultTax = ?," +
+											" Code = ?," +
+											" Unit = ? WHERE idProduct = ?";
+			Connection con=DBCon.getConnection();
+			con.setAutoCommit(false);
+			PreparedStatement stm= con.prepareStatement(query);
+			stm.setString(1, product.getName());
+			stm.setString(2, product.getLongName());
+			stm.setString(3, product.getDescryption());
+			stm.setFloat(4, product.getDefaultPrice());
+			stm.setFloat(5, product.getDefaultTax());
+			stm.setInt(6, product.getCode());
+			stm.setString(7, product.getUnit());
+			stm.setInt(8, product.getIdProduct());
+			
+			// execute select SQL stetement
+			int rs = stm.executeUpdate();
+			
+			
+			if(rs == 1)
+				{
+					con.commit();
+					stm.close();
+					return true;
+				}
+			con.rollback();
+			stm.close();
+		} 
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		return false;
 	}
 	
 	public static int insertProduct(ProductBean product)
@@ -117,5 +185,31 @@ public class ProductDAO {
 		}
 		return 0;
 	}
-	
+	public static boolean deleteProduct(ProductBean product)
+	{
+		try 
+		{
+			String query="DELETE FROM `Product` WHERE `idProduct`=?";
+			Connection con=DBCon.getConnection();
+			con.setAutoCommit(false);
+			PreparedStatement stm= con.prepareStatement(query);
+			stm.setInt(1, product.getIdProduct());
+			
+			// execute select SQL stetement
+			int rs = stm.executeUpdate();
+			if(rs == 1)
+				{
+					con.commit();
+					stm.close();
+					return true;
+				}
+			con.rollback();
+			stm.close();
+		} 
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		return false;
+	}
 }

@@ -19,7 +19,8 @@ CREATE  TABLE IF NOT EXISTS `mydb`.`Product` (
   `DefaultPrice` FLOAT NULL ,
   `DefaultTax` FLOAT NULL ,
   `Code` INT NULL ,
-  `Picture` VARCHAR(50) NULL ,
+  `Picture` VARCHAR(50) NULL DEFAULT 'default_product.png' ,
+  `Unit` VARCHAR(5) NOT NULL DEFAULT 'szt.' ,
   PRIMARY KEY (`idProduct`) ,
   UNIQUE INDEX `idTowar_UNIQUE` (`idProduct` ASC) )
 ENGINE = InnoDB;
@@ -221,7 +222,6 @@ CREATE  TABLE IF NOT EXISTS `mydb`.`DeliveryPosition` (
   `idExternalDelivery` INT NOT NULL ,
   `Count` FLOAT NOT NULL ,
   `Price` FLOAT NOT NULL ,
-  `Unit` VARCHAR(10) NOT NULL ,
   PRIMARY KEY (`idProduct`, `idExternalDelivery`) ,
   INDEX `fk_Product_idx` (`idProduct` ASC) ,
   INDEX `fk_ExternalDelivery_idx` (`idExternalDelivery` ASC) ,
@@ -335,7 +335,6 @@ CREATE  TABLE IF NOT EXISTS `mydb`.`AdoptionPosition` (
   `idProduct` INT NOT NULL ,
   `Count` FLOAT NOT NULL DEFAULT 1.0 ,
   `Price` FLOAT NOT NULL DEFAULT 0.0 ,
-  `Unit` VARCHAR(10) NOT NULL DEFAULT 'szt.' ,
   PRIMARY KEY (`idExternalAdoption`, `idProduct`) ,
   INDEX `fk_AdoptionPosition_Product1_idx` (`idProduct` ASC) ,
   CONSTRAINT `fk_AdoptionPosition_ExternalAdoption1`
@@ -366,19 +365,6 @@ CREATE  TABLE IF NOT EXISTS `mydb`.`BuyInvoice` (
     REFERENCES `mydb`.`ExternalAdoption` (`idExternalAdoption` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `mydb`.`Tax`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`Tax` ;
-
-CREATE  TABLE IF NOT EXISTS `mydb`.`Tax` (
-  `idTax` INT NOT NULL AUTO_INCREMENT ,
-  `Amount` VARCHAR(45) NOT NULL ,
-  `Name` FLOAT NOT NULL ,
-  PRIMARY KEY (`idTax`) )
 ENGINE = InnoDB;
 
 USE `mydb` ;
