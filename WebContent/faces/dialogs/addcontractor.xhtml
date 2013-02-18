@@ -10,9 +10,46 @@
 		<p:dialog id="addContractor" header="Add Contractor" widgetVar="addContractorDialog" modal="true" showEffect="explode" hideEffect="explode" closable="false">  
 			<h:form id="addContractorForm">
         			<h:panelGrid columns="2" id="addContractorGrid">  
-
-    	   		  	 </h:panelGrid>
-    		<p:commandButton value="OK" type="reset" onclick="addContractorDialog.hide()"/>
+        			
+		              			<p:outputPanel id="imagePanel" autoUpdate="true">  
+        			   		<p:graphicImage library="images" name='contractor.png'/>  
+   				  		</p:outputPanel> 
+        			
+        			<h:panelGrid columns="2" id="addProductGrid">  
+              				<h:outputLabel value="Krótka Nazwa : *" for="contractorName" ></h:outputLabel>
+              				<p:inputText id="contractorName" value="#{contractorList.selectedContractor.name}"/>
+              			
+              				<h:outputLabel value="Długa Nazwa : *" for="contractorLongName" ></h:outputLabel>
+              				<p:inputText id="contractorLongName" value="#{contractorList.selectedContractor.longName}" />
+              				
+              				<h:outputLabel value="NIP : *" for="contractorNip" ></h:outputLabel>
+              				<p:inputText id="contractorNip" value="#{contractorList.selectedContractor.nip}" />
+              				
+              				<h:outputLabel value="REGON : *" for="contractorRegon" ></h:outputLabel>
+              				<p:inputText id="contractorRegon" value="#{contractorList.selectedContractor.regon}" />
+              			
+              				<h:outputLabel value="Ulica : *" for="contractorStreet" ></h:outputLabel>
+              				<p:inputText id="contractorStreet" value="#{contractorList.selectedContractor.street}" />
+              			
+              				<h:outputLabel value="Miasto : *" for="contractorCity" ></h:outputLabel>
+              				<p:inputText id="contractorCity" value="#{contractorList.selectedContractor.city}" />
+              			
+              				<h:outputLabel value="Kod pocztowy : *" for="contractorPostCode" ></h:outputLabel>
+              				<p:inputText id="contractorPostCode" value="#{contractorList.selectedContractor.postCode}" />
+              				
+              				<h:outputLabel value="Region : *" for="contractorRegion" ></h:outputLabel>
+              				<p:inputText id="contractorRegion" value="#{contractorList.selectedContractor.region}" />
+              				
+              				<h:outputLabel value="Typ : *" for="contractorType" ></h:outputLabel>
+              				<p:inputText id="contractorType" value="#{contractorList.selectedContractor.type}" />
+              				
+        			</h:panelGrid>
+    			 </h:panelGrid>
+    			
+    			<p:commandButton id="btn_add" value="Add" update=":contractorListForm :msgs @parent"  />
+				<p:commandButton value="Close" type="reset" onclick="addContractorDialog.hide(); dlg.show();"/>  
+    			
+    			
 			</h:form>
 		</p:dialog>
 		</ui:composition>
