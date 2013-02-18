@@ -60,17 +60,23 @@
 				  	<h:outputText value="#{contractor.type}" />
 				  </p:column>  
 				  
-				  	<p:ajax event="rowSelect" update=":contractorListForm"/>
-				  
+				  	<p:ajax event="rowSelect" update=":contractorListForm :editContractorForm :viewContractorForm"/>
+				
 				</p:dataTable>
 				</h:form>
 				
 				<ui:insert name="addContractor">
     				<ui:include src="/faces/dialogs/addcontractor.xhtml" />
     			</ui:insert>
+    			
     			<ui:insert name="viewContractor">
     				<ui:include src="/faces/dialogs/viewcontractor.xhtml" />
     			</ui:insert>
+    			
+    			<ui:insert name="editContractor">
+    				<ui:include src="/faces/dialogs/editcontractor.xhtml" />
+    			</ui:insert>
+    			
 				
 				</ui:define>    
 		</ui:composition>			

@@ -1,5 +1,10 @@
 package com.invoice.beans.basic;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+
+import com.invoice.dbacces.ContractorDAO;
+
 public class ContractorBean {
 	private int idContractor;
 	private String name;
@@ -81,8 +86,17 @@ public class ContractorBean {
 	}
 	
 	public boolean deleteContractor(){
-		// w trakcie tworzenia
+		
+		if(!ContractorDAO.deleteContractor(this))
+		{
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Nie uda³o sie"));
+			return false;
+		}
+	else
+	{
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Usunieto"));
 		return true;
+	}	
 	}
 	
 }

@@ -9,32 +9,48 @@
 		<ui:composition>
 		<p:dialog id="editContractor" header="Edit contractor" dynamic="true"  widgetVar="editContractorDialog" modal="true" showEffect="explode" hideEffect="explode" closable="false">  
 			<h:form id="editContractorForm">
-				  <h:panelGrid columns="2">
-        			<p:outputPanel id="imagePanel" autoUpdate="true">  
-        				<p:graphicImage library="images" name="#{stockList.selectedStock.product.picture != null ? stockList.selectedStock.product.picture:'default_product.png'}"/>  
-   					</p:outputPanel> 
-        			<h:panelGrid columns="2" id="editProductGrid" >  
-              			<h:outputLabel value="Krótka Nazwa : *" for="productName"></h:outputLabel>
-              			<p:inputText id="productName" value="#{stockList.selectedStock.product.name}" 
-              					validator="#{stockList.selectedStock.product.nameChangeValidation}"/>
-              			<h:outputLabel value="Nazwa : *" for="productLongName"></h:outputLabel>
-              			<p:inputText id="productLongName" value="#{stockList.selectedStock.product.longName}" required="true" requiredMessage="Nazwa nie może być pusta"></p:inputText>
-              			<h:outputLabel value="Opis : *" for="productDescryption"></h:outputLabel>
-              			<p:inputTextarea id="productDescryption" value="#{stockList.selectedStock.product.descryption}"></p:inputTextarea>
-              			<h:outputLabel value="Jednostka : *" for="productUnit"></h:outputLabel>
-              			<p:inputText id="productUnit" value="#{stockList.newStock.product.unit}"></p:inputText>
-              			<h:outputLabel value="Cena : *" for="productPrice"></h:outputLabel>
-              			<p:inputText id="productPrice" value="#{stockList.selectedStock.product.defaultPrice}" converter="javax.faces.Float" validator="#{stockList.selectedStock.product.priceValidation}">
-              			</p:inputText>
-              			<h:outputLabel value="TAX : *" for="productTax"></h:outputLabel>
-              			<p:inputText id="productTax" value="#{stockList.selectedStock.product.defaultTax}" converter="javax.faces.Float" validator="#{stockList.selectedStock.product.taxValidation}" >
-              			</p:inputText>
+        			<h:panelGrid columns="2">  
+              			<p:outputPanel id="imagePanel" autoUpdate="true">  
+        			   		<p:graphicImage library="images" name='contractor.png'/>  
+   				  		</p:outputPanel> 
+              		<h:panelGrid columns="2" id="editContractorGrid" >  
+              		
+              				<h:outputLabel value="Krótka Nazwa : *" for="contractorName" ></h:outputLabel>
+              				<p:inputText id="contractorName" value="#{contractorList.selectedContractor.name}"/>
+              			
+              				<h:outputLabel value="Długa Nazwa : *" for="contractorLongName" ></h:outputLabel>
+              				<p:inputText id="contractorLongName" value="#{contractorList.selectedContractor.longName}" />
+              				
+              				<h:outputLabel value="NIP : *" for="contractorNip" ></h:outputLabel>
+              				<p:inputText id="contractorNip" value="#{contractorList.selectedContractor.nip}" />
+              				
+              				<h:outputLabel value="REGON : *" for="contractorRegon" ></h:outputLabel>
+              				<p:inputText id="contractorRegon" value="#{contractorList.selectedContractor.regon}" />
+              			
+              				<h:outputLabel value="Ulica : *" for="contractorStreet" ></h:outputLabel>
+              				<p:inputText id="contractorStreet" value="#{contractorList.selectedContractor.street}" />
+              			
+              				<h:outputLabel value="Miasto : *" for="contractorCity" ></h:outputLabel>
+              				<p:inputText id="contractorCity" value="#{contractorList.selectedContractor.city}" />
+              			
+              				<h:outputLabel value="Kod pocztowy : *" for="contractorPostCode" ></h:outputLabel>
+              				<p:inputText id="contractorPostCode" value="#{contractorList.selectedContractor.postCode}" />
+              				
+              				<h:outputLabel value="Region : *" for="contractorRegion" ></h:outputLabel>
+              				<p:inputText id="contractorRegion" value="#{contractorList.selectedContractor.region}" />
+              				
+              				<h:outputLabel value="Typ : *" for="contractorType" ></h:outputLabel>
+              				<p:inputText id="contractorType" value="#{contractorList.selectedContractor.type}" />
+              				
+              			
         			</h:panelGrid> 
-    			 </h:panelGrid>
-    			 <p:commandButton id="btn_add" value="Save" process="editContractorForm" update=":contractorListForm :msgs @parent"  
-                            			 actionListener="#{stockList.selectedStock.product.updateProduct}" oncomplete="stockDataTable.clearFilters()">  
+        			</h:panelGrid> 
+        			
+        				 <p:commandButton id="btn_add" value="Save" process="editContractorForm" update=":contractorListForm :msgs @parent"  
+                            			 oncomplete="contractorDataTable.clearFilters()">  
             		</p:commandButton> 
             		<p:commandButton value="Close" type="reset" onclick="editContractorDialog.hide()"/>
+        			
 			</h:form>
 		</p:dialog>
 		</ui:composition>

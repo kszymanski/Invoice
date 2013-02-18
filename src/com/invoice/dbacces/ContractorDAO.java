@@ -1,5 +1,6 @@
 package com.invoice.dbacces;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -7,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.invoice.beans.basic.ContractorBean;
+import com.invoice.beans.basic.StockBean;
 
 public class ContractorDAO {
 	
@@ -76,5 +78,114 @@ public class ContractorDAO {
 			}
 		return list;
 	}
+	
+	
+	
+	// Do uzupe³nienia
+	
+	
+	public static boolean updateContractor(ContractorBean contractor)
+	{
+		
+		try 
+		{
+			String query="UPDATE Contractor SET Contractor = ? WHERE idContractor = ?";
+			Connection con=DBCon.getConnection();
+			con.setAutoCommit(false);
+			PreparedStatement stm= con.prepareStatement(query);
+			stm.setInt(1, contractor.getIdContractor());
+	
+			
+			// execute select SQL stetement
+			int rs = stm.executeUpdate();
+			
+			
+			if(rs == 1)
+				{
+					con.commit();
+					stm.close();
+					return true;
+				}
+			con.rollback();
+			stm.close();
+		} 
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	
+	public static int insertContractor(StockBean stock)
+	{
+		try 
+		{
+			String query="INSERT INTO Stock (`idProduct`, `idWarehause`, `Stock`) VALUES (?, ?, ?)";
+			Connection con=DBCon.getConnection();
+			con.setAutoCommit(false);
+			PreparedStatement stm= con.prepareStatement(query);
+			int productId = 0;
+			if(ProductDAO.getProductBean(stock.getProduct().getIdProduct()) == null)
+			{
+				productId = ProductDAO.insertProduct(stock.getProduct());
+				if(productId == 0) return 0;
+			}
+			stm.setInt(1, productId);
+			stm.setInt(2, stock.getWarehause().getIdWarehause());
+			stm.setFloat(3, stock.getStock());
+			
+			// execute select SQL stetement
+			int rs = stm.executeUpdate();
+			
+			
+			if(rs == 1)
+				{
+					con.commit();
+					stm.close();
+					return productId;
+				}
+			con.rollback();
+			stm.close();
+		} 
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		return 0;
+	
+	}
+	public static boolean deleteContractor(ContractorBean contractor)
+	{
+		try 
+		{
+			String query="DELETE FROM `Contractor` WHERE `idContractor`=?";
+			Connection con=DBCon.getConnection();
+			con.setAutoCommit(false);
+			PreparedStatement stm= con.prepareStatement(query);
+			stm.setInt(1, contractor.getIdContractor());
+			
+			
+			// execute select SQL stetement
+			int rs = stm.executeUpdate();
+			if(rs == 1)
+				{
+					con.commit();
+					stm.close();
+				//	if(!ContractorDAO.deleteContractor())return false;
+					return true;
+				}
+			con.rollback();
+			stm.close();
+		} 
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	
+	
 	
 }
