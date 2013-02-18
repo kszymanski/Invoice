@@ -16,9 +16,12 @@ public class UserListBean implements Serializable{
 	private List<UserBean> users;
 	private UserBean selectedUser;
 	private List<UserBean> filteredUsers;
+	private UserBean newUser;
 	public UserListBean()
 	{
 		users=UserDAO.getUserList();
+		if(!users.isEmpty())selectedUser = users.get(0);
+		newUser = new UserBean();
 	}
 
 	public List<UserBean> getUsers() {
@@ -42,4 +45,16 @@ public class UserListBean implements Serializable{
 		this.filteredUsers = filteredUsers;
 	}
 
+	public UserBean getNewUser() {
+		return newUser;
+	}
+
+	public void setNewUser(UserBean newUser) {
+		this.newUser = newUser;
+	}
+	
+	public String reinit() {  
+        newUser = new UserBean();  
+        return null;  
+    }
 }

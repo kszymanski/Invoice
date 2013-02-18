@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+	<head><title>IGNORED</title></head>
+	<body>
+		<ui:composition>
+			<p:dialog id="addUser" header="Add User" dynamic="false"  width="1050" widgetVar="addUserDialog" modal="true" showEffect="explode" hideEffect="explode" closable="false">
+				<h:form id="addUserForm">
+					<p:menubar>
+						<p:menuitem  update=":userListForm :msgs @parent" value="#{msg.save}" actionListener="#{userList.newUser.insertUser()}" action="#{userList.reinit}" onsuccess="addUserDialog.hide()">
+							<p:collector value="#{userList.newUser}" addTo="#{userList.users}" />	
+						</p:menuitem>
+						<p:menuitem value="#{msg.cancel}" update="addUserForm" process="@this" type="reset" icon="ui-icon-cancel" onclick="addUserDialog.hide()" />
+					</p:menubar>
+					<p:panel header="Dane Uzytkownika:" style="width: 49%; float: left;" >
+						 <h:panelGrid id="addUserGrid" columns="3" style="margin-left: auto; margin-right: auto;">  
+            				<ui:remove><!-- username not for edit --></ui:remove>
+            				<h:outputText value="Nazwa Uzytkownika: " />  
+            				<p:inputText id="username" value="#{userList.newUser.idUser}" validator="#{userList.newUser.idValidation}" label="Nazwa Użytkownika" >
+            					
+            				</p:inputText>
+            				<p:message for="username" id="msgUsername" display="icon"/>
+            				
+            				<ui:remove><!-- editable field Name --></ui:remove>
+            				<h:outputText value="Imie: " />  
+            				<p:inputText id="name" value="#{userList.newUser.name}" label="Imie" required="true" 
+            							validatorMessage="Imie musi być dłuższe niż 2 znaki" requiredMessage="Imie Użytkownika nie może być puste">
+            					<f:validateLength minimum="2" />
+            					
+            				</p:inputText>
+            				<p:message for="name" id="msgName" display="icon"/>
+            				
+            				<ui:remove><!-- editable field Surname --></ui:remove>
+            				<h:outputText value="Nazwisko: " />  
+            				<p:inputText id="surname" value="#{userList.newUser.surname}"  label="Nazwisko" required="true" requiredMessage="Nazwisko Użytkownika nie może być puste">
+            					<f:validateLength minimum="2" />
+            				</p:inputText>
+            				<p:message for="surname" id="msgSurname" display="icon"/>
+            				
+            				<ui:remove><!-- editable field Active? --></ui:remove>
+            				<h:outputText value="Aktywny? : " />
+            				<p:selectBooleanCheckbox  value="#{userList.newUser.active}" />
+            				<!-- spacer to 3rd column -->
+            				
+            				<ui:remove><!-- editable field Role --></ui:remove>
+            				<h:outputText value="Rola: " />  
+            				<p:selectOneMenu id="roleslistForm" value="#{userList.newUser.role.idRole}" style="width: 165px;">
+            					<p:ajax process="@this"  update="addUserRolePanel" listener="#{userList.newUser.rolechange()}"/>
+            					<f:selectItems value="#{rolesList.roles}" var="role" itemValue="#{role.idRole}" itemLabel="#{role.name}"/>
+        					</p:selectOneMenu>
+        					<!-- here will be add role button -->
+        					
+            				<ui:remove><!-- Password in match mode --></ui:remove>
+            				<h:outputLabel for="pwd1" value="Password 1: *" />  
+            				<p:password id="pwd1" value="#{userList.newUser.password}" match="pwd2" label="Password 1" required="true">
+            					
+            				</p:password>
+            				<!-- 3rd column password 1 -->  
+            				<h:outputLabel for="pwd2" value="Password 2: *" />  
+            				<p:password id="pwd2" value="#{userList.newUser.password}" label="Password 2" required="true">
+            					
+            				</p:password>
+            				<p:message for="pwd2" id="msgPwd2" display="icon"/> 
+				        </h:panelGrid>
+				        <p:commandButton update=":userListForm :msgs @parent" value="#{msg.save}" actionListener="#{userList.newUser.insertUser()}" action="#{userList.reinit}" onsuccess="addUserDialog.hide()">
+				        	<p:collector value="#{userList.newUser}" addTo="#{userList.users}" />
+				        </p:commandButton>
+				        <p:commandButton value="#{msg.cancel}" process="@this" type="reset" onclick="addUserDialog.hide()"/>
+					</p:panel>
+					
+    				
+					<p:panel  header="Szczegóły Roli: #{userList.newUser.role.name}" style="width: 49%; float: right;">
+						  <h:panelGrid id="addUserRolePanel" columns="2" style="margin-left: auto; margin-right: auto;">  
+            				<ui:remove><!-- list of roles --></ui:remove>
+            				<h:outputText value="Dodawanie Faktur: " />  
+            				<h:outputText value="#{userList.newUser.role.addInvoice?'TAK':'NIE'}"/>
+            				<h:outputText value="Przeglądanie Faktur: " />  
+            				<h:outputText value="#{userList.newUser.role.viewInvoice?'TAK':'NIE'}"/>
+            				<h:outputText value="Dodawanie Produktów: " />  
+            				<h:outputText value="#{userList.newUser.role.addProduct?'TAK':'NIE'}"/>
+            				<h:outputText value="Przeglądanie Produktów: " />  
+            				<h:outputText value="#{userList.newUser.role.viewProduct?'TAK':'NIE'}"/>
+            				<h:outputText value="Dodawanie Paragonów: " />  
+            				<h:outputText value="#{userList.newUser.role.addReciept?'TAK':'NIE'}"/>
+            				<h:outputText value="Przeglądanie Paragonów " />  
+            				<h:outputText value="#{userList.newUser.role.viewReciept?'TAK':'NIE'}"/>
+            				<h:outputText value="Dodawanie Faktur Zakupu: " />  
+            				<h:outputText value="#{userList.newUser.role.addBuyInvoice?'TAK':'NIE'}"/>
+            				<h:outputText value="Przeglądanie Faktur Zakupu: " />  
+            				<h:outputText value="#{userList.newUser.role.viewBuyInvoice?'TAK':'NIE'}"/>
+            				<h:outputText value="Dodawanie Ról: " />  
+            				<h:outputText value="#{userList.newUser.role.addRole?'TAK':'NIE'}"/>
+            				<h:outputText value="Przeglądanie Ról: " />  
+            				<h:outputText value="#{userList.newUser.role.viewRole?'TAK':'NIE'}"/>
+            				<h:outputText value="Dodawanie Kontrahentów: " />  
+            				<h:outputText value="#{userList.newUser.role.addContractor?'TAK':'NIE'}"/>
+            				<h:outputText value="Przeglądanie Kontrahentów: " />  
+            				<h:outputText value="#{userList.newUser.role.viewContractor?'TAK':'NIE'}"/>
+            				<h:outputText value="Dodawanie Uzytkowników: " />  
+            				<h:outputText value="#{userList.newUser.role.addUser?'TAK':'NIE'}"/>
+            				<h:outputText value="Przeglądanie Użytkowników: " />  
+            				<h:outputText value="#{userList.newUser.role.viewUser?'TAK':'NIE'}"/>
+            				<h:outputText value="Dodawanie Magazynow: " />  
+            				<h:outputText value="#{userList.newUser.role.addWarehause?'TAK':'NIE'}"/>
+            				<h:outputText value="Przeglądanie Magazynow: " />  
+            				<h:outputText value="#{userList.newUser.role.viewWarehause?'TAK':'NIE'}"/>
+            				<h:outputText value="Dodawanie WZ: " />  
+            				<h:outputText value="#{userList.newUser.role.addDelivery?'TAK':'NIE'}"/>
+            				<h:outputText value="Przeglądanie WZ: " />  
+            				<h:outputText value="#{userList.newUser.role.viewDelivery?'TAK':'NIE'}"/>
+				        </h:panelGrid>
+					</p:panel>
+				</h:form>
+    		</p:dialog>
+		</ui:composition>
+	</body>
+</html>

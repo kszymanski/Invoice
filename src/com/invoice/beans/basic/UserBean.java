@@ -5,8 +5,6 @@ import java.io.Serializable;
 import java.sql.SQLException;
 
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
@@ -15,8 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import com.invoice.dbacces.RoleDAO;
 import com.invoice.dbacces.UserDAO;
 
-@ManagedBean(name="user")
-@ViewScoped
 public class UserBean implements Serializable{
 	//fields
 	private static final long serialVersionUID = 1L;
@@ -30,7 +26,10 @@ public class UserBean implements Serializable{
 	protected FacesMessage message;
 	protected boolean error=false;
 	//Constructors
-	public UserBean(){};
+	public UserBean()
+	{
+		role = RoleDAO.getRole(1);
+	}
 
 	// getters Setters
 	public String getIdUser() {
@@ -123,9 +122,9 @@ public class UserBean implements Serializable{
 	public void rolechange()
 	{
 		System.out.println("role change");
-		role = RoleDAO.getRole(role.getName());
+		role = RoleDAO.getRole(role.getIdRole());
 	}
-	//Compare defoult fields
+	//Compare default fields
 	private int isEqual(UserBean user)
 	{
 		int equal = 0;
@@ -133,37 +132,40 @@ public class UserBean implements Serializable{
 		if(!this.name.equalsIgnoreCase(user.getName())) equal ++;
 		if(!this.surname.equalsIgnoreCase(user.getSurname()))equal++;
 		if(this.role.getIdRole()!= user.role.getIdRole())equal++;
-		if(this.active!= user.isActive())equal++;
+		if(this.active != user.isActive())equal++;
 		return equal;
 	}
 	//SQL methods
 	public void updateUser() throws SQLException
 	{
+		FacesContext context = FacesContext.getCurrentInstance();
 		int toUpdate = isEqual(UserDAO.getUser(idUser));
 		if(admin && (!active || role.getIdRole() != 1))
 		{
 			message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Zabronione.", "Nie mozna zmieniac roli ani deaktywowaæ konta szefa");
+			context.addMessage(null, message);
 			return;
 		}
-		FacesContext context = FacesContext.getCurrentInstance();
-		context.getExternalContext().getFlash().setKeepMessages(true);
+		
 		if(toUpdate == 0)
 		{
 			message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Nothing to update.", "Nie by³o zmian");
+			context.addMessage(null, message);
 			return;
 		}
 		if(!UserDAO.updateUser(this))
 			{
 				message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "B³¹d", "Zmiany nie zosta³y zapisane.");
+				context.addMessage(null, message);
 				return;
 			}
 		message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sukces", "Zmiany zosta³y zapisane.");
+		context.addMessage(null, message);
 	}
 	public void updateUserPassword() throws SQLException
 	{
 
 		FacesContext context = FacesContext.getCurrentInstance();
-		context.getExternalContext().getFlash().setKeepMessages(true);
 
 		if(!UserDAO.updateUserPassword(this))
 			{
@@ -176,14 +178,12 @@ public class UserBean implements Serializable{
 	{
 		System.out.println("insert");
 		FacesContext context = FacesContext.getCurrentInstance();
-		context.getExternalContext().getFlash().setKeepMessages(true);
 		if(UserDAO.getUser(idUser) == null)
 		{
 			if(UserDAO.insertUser(this))
 			{
 				message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sukces", "Zmiany zosta³y zapisane.");
 				context.addMessage(null, message);
-				context.getExternalContext().redirect("./UserList?id="+idUser);
 			}
 			else
 			{
