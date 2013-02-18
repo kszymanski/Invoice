@@ -34,23 +34,16 @@ public class UserList extends HttpServlet {
 		
 		String nextpage = "/faces/pages/lists/userlist.xhtml";
 		String username = request.getParameter("id");
-		String action = request.getParameter("action");
 		HttpSession session =request.getSession();
 		LoginBean user = (session != null) ? (LoginBean)session.getAttribute("loginUser") : null;
 		if(user == null || !user.getUser().getRole().isViewUser())  nextpage = "/faces/errors/notauth.xhtml";
-		boolean edit =Boolean.parseBoolean(request.getParameter("edit"));
 		if(username != null && username != "")
 		{
-			session.setAttribute("id",username);
-			session.setAttribute("edit", edit);
-			nextpage = "/faces/pages/single/user.xhtml";
-			if(user == null || !user.getUser().getRole().isViewUser())  nextpage = "/faces/errors/notauth.xhtml";
-		}
-		else if (action != null && action != "")
-		{
-			session.setAttribute("action", action);
-			nextpage = "/faces/pages/single/newuser.xhtml";
-			if(user == null || !user.getUser().getRole().isAddUser())  nextpage = "/faces/errors/notauth.xhtml";
+			if(user == null || !user.getUser().getRole().isViewUser())
+			{
+				if(user == null || !user.getUser().getRole().isViewUser());
+			}
+			else session.setAttribute("id",username);
 		}
 		request.getRequestDispatcher(nextpage).forward(request, response);
 	}

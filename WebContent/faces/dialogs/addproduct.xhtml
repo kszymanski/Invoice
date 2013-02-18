@@ -6,16 +6,13 @@
       xmlns:p="http://primefaces.org/ui">
 	<head><title>IGNORED</title></head>
 	<body>
-		<ui:composition template="/faces/templates/masterLayout.xhtml">
-			<ui:define name="windowTitle">Products</ui:define>
-			<ui:define name="content">
+	<ui:composition>
 			<p:growl id="msgs" showDetail="true"/>
 			<h:form id="stockListForm">
 				<p:menubar id="menu">
-					<p:menuitem value="Szczegóły" icon="ui-icon-search" onclick="viewProductDialog.show()" disabled="#{stockList.selectedStock == null || !loginUser.user.role.viewProduct}"/>
-					<p:menuitem value="Edytuj" icon="ui-icon-refresh" onclick="editProductDialog.show()" disabled="#{stockList.selectedStock == null || !loginUser.user.role.addProduct}"/>
-					<p:menuitem value="Nowy" icon="ui-icon-document"  onclick="addProductDialog.show()" disabled="#{!loginUser.user.role.addProduct}" />
-					<p:menuitem value="Usuń" icon="ui-icon-closethick" type="button"  onclick="confirmation.show()" disabled="#{!loginUser.user.role.addProduct}"/>
+					<p:menuitem value="Add" onclick="dlg.show()" icon="ui-icon-search" disabled="#{stockList.selectedStock == null || !loginUser.user.role.viewProduct}"/>
+					<p:menuitem value="Nowy" icon="ui-icon-document"  onclick="dlg.hide(); addProductDialog.show();" disabled="#{!loginUser.user.role.addProduct}" />
+					<p:menuitem value="Close" type="reset" icon="ui-icon-refresh" onclick="dlg.hide()" disabled="#{stockList.selectedStock == null || !loginUser.user.role.addProduct}"/>
 				</p:menubar>
 				
 				<p:dataTable id="stockDataTable" var="stock" value="#{stockList.stocks}" rowKey="#{stock.product.idProduct}"
@@ -53,7 +50,7 @@
   					<p:column headerText="Jedn." filterBy="#{stock.product.unit}" sortBy="#{stock.product.unit}">
   						  <h:outputText value="#{stock.product.unit}" /> 
   					</p:column>
-  					<p:ajax event="rowSelect" update=":stockListForm :editProductForm :viewProductForm"/>
+  					<p:ajax event="rowSelect" update=":stockListForm"/>
     			</p:dataTable>
     			<p:confirmDialog id="confirmDialog" message="Na pewno usunąć towar"  
                 				header="Usuwanie..." severity="alert" widgetVar="confirmation">  
@@ -62,16 +59,6 @@
         			<p:commandButton id="decline" value="Nie" onclick="confirmation.hide()" type="button" />
 				</p:confirmDialog>
     		</h:form>
-    		<ui:insert name="addProduct">
-    				<ui:include src="/faces/dialogs/addstock.xhtml" />
-    		</ui:insert>
-    		<ui:insert name="editProduct">
-    				<ui:include src="/faces/dialogs/editstock.xhtml" />
-    		</ui:insert>
-    		<ui:insert name="viewProduct">
-    				<ui:include src="/faces/dialogs/viewstock.xhtml" />
-    		</ui:insert>
-			</ui:define>
 		</ui:composition>
 	</body>
 </html>

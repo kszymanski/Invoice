@@ -1,8 +1,10 @@
 package com.invoice.beans.basic;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class ExternalAdoptionBean {
+public class ExternalAdoptionBean implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private int idExternalAdoption;
 	private ContractorBean contractor;
 	private UserBean user;

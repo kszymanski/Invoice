@@ -7,13 +7,9 @@
 	<head><title>IGNORED</title></head>
 	<body>
 		<ui:composition>
-		<p:dialog id="addProduct" header="Basic Dialog" widgetVar="addProductDialog" modal="true" showEffect="explode" hideEffect="explode" closable="false">  
-			<h:form id="addProductForm">
+		<p:dialog id="countProduct" header="Basic Dialog" widgetVar="countProductDialog" modal="true" showEffect="explode" hideEffect="explode" closable="false">  
+			<h:form id="countProductForm">
 				<h:panelGrid columns="2">
-        			
-        			<p:outputPanel id="imagePanel" autoUpdate="true">  
-        				<p:graphicImage library="images" name="#{stockList.newStock.product.picture}"/>  
-   					</p:outputPanel>
         			
         			<h:panelGrid columns="2" id="addProductGrid">  
               			<h:outputLabel value="Krótka Nazwa : *" for="productName"></h:outputLabel>
@@ -33,9 +29,8 @@
               			</p:inputText>
         			</h:panelGrid>
     			 </h:panelGrid>
-    			 <p:commandButton id="btn_add" value="Add" update=":stockListForm :msgs @parent"  
-                           			action="#{stockList.reinit()}" actionListener="#{stockList.addStockProduct()}">  
-          			<p:collector value="#{stockList.newStock}" addTo="#{stockList.stocks}" />  
+    			 <p:commandButton id="btn_add" value="Add" update=":stockListForm :msgs @parent">  
+          			<p:collector value="#{stockList.selectedStock}" addTo="#{adoptionList.selectedAdoption}" />  
             	</p:commandButton> 
 				<p:commandButton value="Close" type="reset" onclick="addProductDialog.hide(); dlg.show();"/>  
 			</h:form>
