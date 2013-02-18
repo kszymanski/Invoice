@@ -1,7 +1,7 @@
 package com.invoice.beans.lists;
 
+import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -10,6 +10,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
+import org.primefaces.component.dialog.Dialog;
 import com.invoice.beans.basic.StockBean;
 import com.invoice.dbacces.StockDAO;
 @ManagedBean(name="stockList")
@@ -22,27 +23,27 @@ public class StockListBean implements Serializable {
 	private StockBean selectedStock;
 	private StockBean newStock;
 	
-	public StockListBean()
+	public StockListBean() throws IOException
 	{
 		stocks = StockDAO.getStockList(1);
-		if(!stocks.isEmpty())setSelectedStock(stocks.get(0));
 		newStock = new StockBean(1);
 		HttpSession session=(HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
 		String id = (String) session.getAttribute("id");
 		if(id!=null)
 		{
-			for (StockBean stock : stocks) {
+			for (StockBean stock : stocks) 
+			{
 				if(stock.getProduct().getIdProduct() == Integer.parseInt(id))
 				{
 					setSelectedStock(stock);
-					filtredStocks = new ArrayList<StockBean>();
-					filtredStocks.add(stock);
 				}
-				
 			}
 			session.removeAttribute("id");
+			if(selectedStock == null)FacesContext.getCurrentInstance().getExternalContext().redirect("./faces/errors/notauth.xhtml");
+			Dialog dialog = (Dialog) FacesContext.getCurrentInstance().getViewRoot().findComponent("viewProduct");
+			dialog.setVisible(true);
 		}
-		
+		if(!stocks.isEmpty() && selectedStock == null)setSelectedStock(stocks.get(0));
 	}
 
 	public List<StockBean> getStocks() {

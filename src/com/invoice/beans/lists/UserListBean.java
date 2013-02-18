@@ -1,10 +1,15 @@
 package com.invoice.beans.lists;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
+
+import org.primefaces.component.dialog.Dialog;
 
 import com.invoice.beans.basic.UserBean;
 import com.invoice.dbacces.UserDAO;
@@ -17,11 +22,29 @@ public class UserListBean implements Serializable{
 	private UserBean selectedUser;
 	private List<UserBean> filteredUsers;
 	private UserBean newUser;
-	public UserListBean()
+	public UserListBean() throws IOException
 	{
 		users=UserDAO.getUserList();
-		if(!users.isEmpty())selectedUser = users.get(0);
 		newUser = new UserBean();
+		
+		HttpSession session=(HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		String id = (String) session.getAttribute("id");
+		if(id!=null)
+		{
+			for (UserBean user : users) 
+			{
+				if(user.getIdUser().compareTo(id) == 0)
+				{
+					setSelectedUser(user);
+				}
+				
+			}
+			session.removeAttribute("id");
+			if(selectedUser == null)FacesContext.getCurrentInstance().getExternalContext().redirect("./faces/errors/notauth.xhtml");
+			Dialog dialog = (Dialog) FacesContext.getCurrentInstance().getViewRoot().findComponent("detailUser");
+			dialog.setVisible(true);
+		}
+		if(!users.isEmpty() && selectedUser == null)selectedUser = users.get(0);
 	}
 
 	public List<UserBean> getUsers() {

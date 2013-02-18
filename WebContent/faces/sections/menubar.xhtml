@@ -13,13 +13,8 @@
         				<p:menuitem value="Magazyn" url="/ProductList" icon="ui-icon-home" disabled="#{!loginUser.user.role.viewProduct}"/>
         				<p:menuitem value="Kontrahenci" url="/ContractorList" icon="ui-icon-home"/>
         				<p:submenu label="Użytkownicy i Role" >  
-           					<p:submenu label="Nowy" icon="ui-icon-contact">  
-                				<p:menuitem value="Użytkownik" url="/UserList?action=new" icon="ui-icon-person" disabled="#{!loginUser.user.role.addUser}"/>  
-            				</p:submenu>  
-            				<p:submenu label="Lista" icon="ui-icon-note">  
-                				<p:menuitem value="Użytkownicy" url="/UserList" icon="ui-icon-person" disabled="#{!loginUser.user.role.viewUser}"/>  
-                				<p:menuitem value="Role" url="/RoleList" icon="ui-icon-flag" disabled="#{!loginUser.user.role.viewRole}"/>  
-            				</p:submenu> 
+                			<p:menuitem value="Użytkownicy" url="/UserList" icon="ui-icon-person" disabled="#{!loginUser.user.role.viewUser}"/>  
+                			<p:menuitem value="Role" url="/RoleList" icon="ui-icon-flag" disabled="#{!loginUser.user.role.viewRole}"/>  
         				</p:submenu>  
         				<f:facet name="options" >
             				<p:commandButton action="#{loginUser.logout()}" value="Logout" icon="ui-icon-extlink" style="float: right;"/>  

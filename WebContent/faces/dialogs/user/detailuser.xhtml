@@ -7,7 +7,7 @@
 	<head><title>IGNORED</title></head>
 	<body>
 		<ui:composition>
-			<p:dialog id="detailUser" header="Add User" dynamic="true"  width="1050" widgetVar="detailUserDialog" modal="true" showEffect="explode" hideEffect="explode" closable="false">
+			<p:dialog id="detailUser" header="Add User" dynamic="true"  width="1050" widgetVar="detailUserDialog" modal="true" showEffect="explode" hideEffect="explode" closable="true">
 				<h:form id="detailUserForm">
 					<p:menubar>
 						<p:menuitem value="#{msg.close}" process="@this" icon="ui-icon-cancel" onclick="detailUserDialog.hide()" />
@@ -31,7 +31,6 @@
             				<h:outputText value="Rola: " />  
             				<h:outputText id="roleslistForm" value="#{userList.selectedUser.role.name}"/>
 				        </h:panelGrid>
-				        <p:commandButton value="#{msg.close}" process="@this" onclick="detailUserDialog.hide()"/>
 					</p:panel>
 					
     				
