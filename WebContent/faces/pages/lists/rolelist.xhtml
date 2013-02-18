@@ -41,6 +41,7 @@
                 			<p:toolbarGroup align="right"> 
                 			<p:outputLabel for="globalFilter" value="Search:"/>  
                 			<p:inputText id="globalFilter" onkeyup="rolesTable.filter()" style="width:150px;"/> 
+                			<p:commandButton value="Clear" process="globalFilter" type="reset" onclick="$('#form\\:rolesDataTable\\:globalFilter').val('').keyup(); return false;"/>
                 			</p:toolbarGroup> 
             				</p:toolbar>
         			</f:facet>
