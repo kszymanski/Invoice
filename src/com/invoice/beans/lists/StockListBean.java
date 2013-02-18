@@ -81,7 +81,8 @@ public class StockListBean implements Serializable {
 		this.newStock = newStock;
 	}
 	public String reinit() {  
-        newStock = new StockBean(1);  
+        selectedStock = stocks.get(stocks.indexOf(newStock));
+		newStock = new StockBean(1);  
         return null;  
     }
 	public void reinitFilter()

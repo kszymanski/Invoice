@@ -33,11 +33,11 @@
               			</p:inputText>
         			</h:panelGrid>
     			 </h:panelGrid>
-    			 <p:commandButton id="btn_add" value="Add" update=":stockListForm :msgs @parent"  
-                           			action="#{stockList.reinit()}" actionListener="#{stockList.addStockProduct()}">  
+    			 <p:commandButton id="btn_add" value="Add" update=":countStock :stockListForm :msgs @parent"  
+                           			action="#{stockList.reinit()}" actionListener="#{stockList.addStockProduct()}" onsuccess="addProductDialog.hide(); stockListDialog.show();">  
           			<p:collector value="#{stockList.newStock}" addTo="#{stockList.stocks}" />  
             	</p:commandButton> 
-				<p:commandButton value="Close" type="reset" onclick="addProductDialog.hide();"/>  
+				<p:commandButton value="Close" type="reset" onclick="addProductDialog.hide(); stockListDialog.show();"/>  
 			</h:form>
 		</p:dialog>
 		</ui:composition>

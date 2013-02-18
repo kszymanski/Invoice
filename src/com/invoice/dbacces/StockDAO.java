@@ -19,13 +19,13 @@ public class StockDAO {
 		return stock;
 	}
 	
-	public static StockBean getStockBean(int idStock){
+	public static StockBean getStockBean(int idProduct){
 		ResultSet rs;
 		StockBean stock = null;
-		String query="Select * From Stock Where idStock=?";
+		String query="Select * From Stock Where idProduct=?";
 		try {
 			PreparedStatement stm= DBCon.getConnection().prepareStatement(query);
-			stm.setInt(1, idStock);
+			stm.setInt(1, idProduct);
 
 		// execute select SQL stetement
 		
@@ -40,7 +40,30 @@ public class StockDAO {
 				e.printStackTrace();
 			}
 		return stock;
+	}
+	
+	public static StockBean getStockBean(int idProduct, int idWarehause){
+		ResultSet rs;
+		StockBean stock = null;
+		String query="Select * From Stock Where idProduct=? AND idWarehause=?";
+		try {
+			PreparedStatement stm= DBCon.getConnection().prepareStatement(query);
+			stm.setInt(1, idProduct);
+			stm.setInt(2, idWarehause);
+
+		// execute select SQL stetement
 		
+			rs = stm.executeQuery();
+			while (rs.next())
+			{
+				stock = getRs(rs);
+			}
+			stm.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		return stock;
 	}
 	
 	public static List<StockBean> getStockList(){

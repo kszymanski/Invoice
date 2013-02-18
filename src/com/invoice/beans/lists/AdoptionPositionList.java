@@ -12,18 +12,21 @@ import javax.servlet.http.HttpSession;
 
 import com.invoice.beans.basic.AdoptionPositionBean;
 import com.invoice.beans.basic.ExternalAdoptionBean;
+import com.invoice.beans.basic.StockBean;
 import com.invoice.dbacces.AdoptionPositionDAO;
 import com.invoice.dbacces.ExternalAdoptionDAO;
+import com.invoice.dbacces.StockDAO;
 @ManagedBean(name="externalAdoption")
 @ViewScoped
 public class AdoptionPositionList implements Serializable{
 	private static final long serialVersionUID = 1L;
-	private List<AdoptionPositionBean> positions;
-	private AdoptionPositionBean selectedPosition;
+	private List<StockBean> positions;
+	private StockBean selectedPosition;
 	private ExternalAdoptionBean adoption;
 	
 	public AdoptionPositionList() throws IOException
 	{
+		positions = new ArrayList<StockBean>();
 		HttpSession session=(HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
 		String id = (String) session.getAttribute("id");
 		if(id!=null)
@@ -35,26 +38,30 @@ public class AdoptionPositionList implements Serializable{
 				FacesContext.getCurrentInstance().getExternalContext().redirect("./faces/errors/notauth.xhtml");
 				return;
 			}
-			positions = AdoptionPositionDAO.getAdoptionPositionBean(adoption.getIdExternalAdoption());
+			List<AdoptionPositionBean> adoptionPositions= AdoptionPositionDAO.getAdoptionPositionBean(adoption.getIdExternalAdoption());
+			for (AdoptionPositionBean adp : adoptionPositions)
+			{
+				positions.add(StockDAO.getStockBean(adp.getIdProduct(), 1));
+			}
+			
 		}
 		else
 		{
-			positions = new ArrayList<AdoptionPositionBean>();
 			adoption = new ExternalAdoptionBean();
 		}
 		
 	}
 	
-	public List<AdoptionPositionBean> getPositions() {
+	public List<StockBean> getPositions() {
 		return positions;
 	}
-	public void setPositions(List<AdoptionPositionBean> positions) {
+	public void setPositions(List<StockBean> positions) {
 		this.positions = positions;
 	}
-	public AdoptionPositionBean getSelectedPosition() {
+	public StockBean getSelectedPosition() {
 		return selectedPosition;
 	}
-	public void setSelectedPosition(AdoptionPositionBean selectedPosition) {
+	public void setSelectedPosition(StockBean selectedPosition) {
 		this.selectedPosition = selectedPosition;
 	}
 	public ExternalAdoptionBean getAdoption() {

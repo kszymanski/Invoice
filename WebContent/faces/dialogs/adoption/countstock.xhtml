@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+	<head><title>IGNORED</title></head>
+	<body>
+		<ui:composition>
+		<p:dialog id="countStock" header="Ile?" widgetVar="countStockDialog" modal="true" showEffect="explode" hideEffect="explode" closable="false">  
+			<h:form id="countStockForm">
+        			<h:panelGrid columns="2" id="countStockGrid">  
+              			<h:outputLabel value="Krótka Nazwa Produktu:" ></h:outputLabel>
+              			<h:outputText id="productName" value="#{stockList.selectedStock.product.name}"/>
+              			<h:outputLabel value="Ilość : *" for="countStockInput"></h:outputLabel>
+              			<p:inputText id="countStockInput" value="#{stockList.selectedStock.stock}" converter="javax.faces.Float"/>
+        			</h:panelGrid>
+    			 <p:commandButton id="btn_add" value="Add" update=":adoptionForm:adoptionDataTable :msgs @parent" onsuccess="countStockDialog.hide(); stockListDialog.show();">  
+          			<p:collector value="#{stockList.selectedStock}" addTo="#{externalAdoption.positions}" />  
+            	</p:commandButton> 
+				<p:commandButton value="Close" type="reset" onclick="countStockDialog.hide(); stockListDialog.show();"/>  
+			</h:form>
+		</p:dialog>
+		</ui:composition>
+	</body>
+</html>
