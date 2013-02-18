@@ -10,6 +10,10 @@
 				<h:form>
 					<p:menubar autoDisplay="false">  
         				<p:menuitem value="Strona Główna" url="/" icon="ui-icon-home"/>
+        				<p:submenu label="Zakupy" >  
+                			<p:menuitem value="Faktury Zakupu" url="#" icon="ui-icon-person" disabled="#{!loginUser.user.role.viewBuyInvoice}"/>  
+                			<p:menuitem value="Przyjęcia Mag." url="/AdoptionList" icon="ui-icon-flag" disabled="#{!loginUser.user.role.viewBuyInvoice}"/>  
+        				</p:submenu>
         				<p:menuitem value="Magazyn" url="/ProductList" icon="ui-icon-home" disabled="#{!loginUser.user.role.viewProduct}"/>
         				<p:menuitem value="Kontrahenci" url="/ContractorList" icon="ui-icon-home"/>
         				<p:submenu label="Użytkownicy i Role" >  

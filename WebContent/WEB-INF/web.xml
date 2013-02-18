@@ -48,6 +48,14 @@
     <url-pattern>/ContractorList</url-pattern>
   </servlet-mapping>
   
+   <servlet>
+    <servlet-name>Adoption List</servlet-name>
+    <servlet-class>com.invoice.control.AdoptionList</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Adoption List</servlet-name>
+    <url-pattern>/AdoptionList</url-pattern>
+  </servlet-mapping>
   
   <context-param>
     <param-name>javax.faces.PROJECT_STAGE</param-name>

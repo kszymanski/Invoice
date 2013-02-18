@@ -7,18 +7,22 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import com.invoice.beans.basic.ExternalAdoptionBean;
+import com.invoice.dbacces.ExternalAdoptionDAO;
 
 @ManagedBean(name="adoptionList")
 @ViewScoped
-public class adoptionListBean implements Serializable{
+public class AdoptionListBean implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private List <ExternalAdoptionBean> adoptions;
 	private List <ExternalAdoptionBean> filteredAdoptions;
 	private ExternalAdoptionBean selectedAdoption;
-	private ExternalAdoptionBean newAdoption;
 	
-	
+	public AdoptionListBean()
+	{
+		adoptions = ExternalAdoptionDAO.getExternalDeliveryList();
+		if(!adoptions.isEmpty())selectedAdoption = adoptions.get(0);
+	}
 	
 	public List <ExternalAdoptionBean> getAdoptions() {
 		return adoptions;
@@ -38,11 +42,6 @@ public class adoptionListBean implements Serializable{
 	public void setSelectedAdoption(ExternalAdoptionBean selectedAdoption) {
 		this.selectedAdoption = selectedAdoption;
 	}
-	public ExternalAdoptionBean getNewAdoption() {
-		return newAdoption;
-	}
-	public void setNewAdoption(ExternalAdoptionBean newAdoption) {
-		this.newAdoption = newAdoption;
-	}
+
 
 }
