@@ -39,9 +39,12 @@
   					<p:ajax event="rowSelect" update=":adoptionListForm"/>
     			</p:dataTable>
 			</h:form>
-			<p:dialog id="dialog" header="Dynamic Dialog" widgetVar="dlg" modal="true" dynamic="true">  
+			<p:dialog id="dialog" header="Dynamic Dialog" widgetVar="dlg" modal="false" dynamic="true">  
     			 <ui:include src="/faces/dialogs/addproduct.xhtml"/>
 			</p:dialog> 
+			<ui:insert name="addProduct">
+    				<ui:include src="/faces/dialogs/addstock.xhtml" />
+    		</ui:insert>
 			</ui:define>
 		</ui:composition>
 	</body>
