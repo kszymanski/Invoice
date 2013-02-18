@@ -18,29 +18,29 @@ public class AdoptionPositionDAO {
 		adoptionPos.setPrice(rs.getFloat("Price"));
 		return adoptionPos;
 	}
-	public static AdoptionPositionBean getAdoptionPositionBean(int idAdoptionPosition){
+	public static List<AdoptionPositionBean> getAdoptionPositionBean(int idExternalAdoption){
 		ResultSet rs;
-		AdoptionPositionBean adoptionposition = null;
-		String query="Select * From AdoptionPosition Where idAdoptionPosition=?";
+		List<AdoptionPositionBean> adoptionPositions = new ArrayList<AdoptionPositionBean>();
+		String query="Select * From AdoptionPosition Where idExternalAdoption=?";
 		try {
 			PreparedStatement stm= DBCon.getConnection().prepareStatement(query);
-			stm.setInt(1, idAdoptionPosition);
+			stm.setInt(1, idExternalAdoption);
 
 		// execute select SQL stetement
 		
 			rs = stm.executeQuery();
 			while (rs.next())
 			{
-				adoptionposition = getRs(rs);
+				AdoptionPositionBean pos = getRs(rs);
+				adoptionPositions.add(pos);
 
-				
 			}
 			stm.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		return adoptionposition;
+		return adoptionPositions;
 	}
 	public static List<AdoptionPositionBean> getAdoptionPositionList(int idProduct){
 		ResultSet rs;
