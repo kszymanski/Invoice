@@ -13,7 +13,7 @@
 			<h:form id="adoptionListForm">
 				<p:menubar id="menu">
 					<p:menuitem value="Szczegóły" icon="ui-icon-search" disabled="#{!loginUser.user.role.viewBuyInvoice}"/>
-					<p:menuitem value="Edytuj" icon="ui-icon-refresh" url="./Adoption?id=#{adoptionList.selectedAdoption.idExternalAdoption}" disabled="#{stockList.selectedStock == null || !loginUser.user.role.addBuyInvoice}"/>
+					<p:menuitem value="Edytuj" icon="ui-icon-refresh" url="./Adoption?id=#{adoptionList.selectedAdoption.idExternalAdoption}" disabled="#{adoptionList.selectedAdoption == null || !loginUser.user.role.addBuyInvoice}"/>
 					<p:menuitem value="Nowy" icon="ui-icon-document"  url="./Adoption" disabled="#{!loginUser.user.role.addBuyInvoice}" />
 					<p:menuitem value="Usuń" icon="ui-icon-closethick" disabled="#{!loginUser.user.role.addBuyInvoice}" type="button"/>
 				</p:menubar>
