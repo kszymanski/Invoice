@@ -38,7 +38,7 @@
             				</p:toolbar>
         			</f:facet>
         			
-  					<p:ajax event="rowSelect" update=":userListForm"/>
+  					<p:ajax event="rowSelect" update=":userListForm :editUserForm :detailUserForm"/>
         			
         			<p:column headerText="Username" filterBy="#{userView.idUser}">  
             			#{userView.idUser}  

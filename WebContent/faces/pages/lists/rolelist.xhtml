@@ -24,12 +24,13 @@
         			<f:setPropertyActionListener value="true" target="#{rolesList.edit}" />  
     			</p:remoteCommand>
 			</h:form>
-			<h:form id="form" style="width: 49%;">
+			<p:layoutUnit position="relative" visible="false" style="float: left; width: 49%;">
+			<h:form id="form" >
 				<p:contextMenu id="contextMenu" for="rolesDataTable">
         			<p:menuitem value="Usuń" icon="ui-icon-closethick" onclick="confirmation.show()" type="button" disabled="#{!loginUser.user.role.addRole}"/>  
     			</p:contextMenu>
 				<p:dataTable id="rolesDataTable" var="roleView" value="#{rolesList.roles}" rowKey="#{roleView.name}"  
-                 selection="#{rolesList.selectedRole}" selectionMode="single" style=" float: left;" 
+                 selection="#{rolesList.selectedRole}" selectionMode="single" style="width: 100%; float: left;" 
                   scrollRows="20" scrollable="true" liveScroll="true" scrollHeight="370" widgetVar="rolesTable" filteredValue="#{rolesList.filtered}"> 
        				<p:ajax event="rowSelect" update=":menuForm:menu :roleDetailForm"/>
        				<f:facet name="header">  
@@ -59,6 +60,7 @@
         			<p:commandButton id="decline" value="Nie" onclick="confirmation.hide()" type="button" />
 			</p:confirmDialog>
 			    </h:form>
+			    </p:layoutUnit>
 			    <h:form id="roleDetailForm">
 			    <p:panel  id="roleDetailPanel" header="Szczegóły Roli: #{rolesList.selectedRole.name}" style="width: 49%; float: left;" rendered="#{rolesList.selectedRole != null}">
 						  <h:panelGrid id="rolePanel" columns="2" style="margin-left: auto; margin-right: auto;">  
