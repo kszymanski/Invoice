@@ -106,32 +106,38 @@ public class AdoptionPositionList implements Serializable{
 	
 	public void insertExternalAdoption() throws IOException
 	{
-		int id = ExternalAdoptionDAO.insertExternalDeliveryList(adoption);
-		if(id == 0)
+		if(adoption.getIdExternalAdoption() == 0)
 		{
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("niestety nie uda³o siê"));
-			return;
+			int id = ExternalAdoptionDAO.insertExternalDeliveryList(adoption);
+			if(id == 0)
+			{
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("niestety nie uda³o siê"));
+				return;
+			}
+			else
+			{
+				for (AdoptionPositionBean position : positions) {
+					position.setIdExternalAdoption(id);
+					if(!AdoptionPositionDAO.insertAdoptionPosition(position))
+					{
+						FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("niestety nie uda³o siê"));
+						return;
+					}
+					else
+					{
+						StockBean stock = StockDAO.getStockBean(position.getProduct().getIdProduct(),1);
+						stock.setStock(stock.getStock()+position.getCount());
+						StockDAO.updateStock(stock);
+					}
+				}
+				adoption.setIdExternalAdoption(id);
+				FacesContext.getCurrentInstance().getExternalContext().redirect("./Adoption?id="+id);
+			}
 		}
 		else
 		{
-			for (AdoptionPositionBean position : positions) {
-				position.setIdExternalAdoption(id);
-				if(!AdoptionPositionDAO.insertAdoptionPosition(position))
-				{
-					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("niestety nie uda³o siê"));
-					return;
-				}
-				else
-				{
-					StockBean stock = StockDAO.getStockBean(position.getProduct().getIdProduct(),1);
-					stock.setStock(stock.getStock()+position.getCount());
-					StockDAO.updateStock(stock);
-				}
-			}
-			adoption.setIdExternalAdoption(id);
-			FacesContext.getCurrentInstance().getExternalContext().redirect("./Adoption?id="+id);
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("tu se bedzie update"));
 		}
-		
 	}
 
 }

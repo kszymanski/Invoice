@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class ExternalAdoptionBean implements Serializable{
 	private static final long serialVersionUID = 1L;
-	private int idExternalAdoption;
+	private int idExternalAdoption = 0;
 	private ContractorBean contractor;
 	private UserBean user;
 	private Date date;
