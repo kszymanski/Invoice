@@ -47,7 +47,7 @@
         			</h:panelGrid> 
         			
         				 <p:commandButton id="btn_add" value="Save" process="editContractorForm" update=":contractorListForm :msgs @parent"  
-                            			 oncomplete="contractorDataTable.clearFilters()">  
+                            			actionListener="#{contractorList.selectedContractor.updateContractor()}" oncomplete="contractorDataTable.clearFilters()" onclick="editContractorDialog.hide()">  
             		</p:commandButton> 
             		<p:commandButton value="Close" type="reset" onclick="editContractorDialog.hide()"/>
         			

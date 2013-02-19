@@ -1,12 +1,20 @@
 package com.invoice.beans.basic;
 
+
+import java.io.Serializable;
+
+
 import javax.faces.application.FacesMessage;
+
 import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 
 import com.invoice.dbacces.ContractorDAO;
 
-public class ContractorBean {
-	private int idContractor = 0;
+
+public class ContractorBean implements Serializable {
+	private static final long serialVersionUID = 1L;
+	private int idContractor=0;
 	private String name;
 	private String longName;
 	private int nip;
@@ -17,6 +25,13 @@ public class ContractorBean {
 	private String country;
 	private String region;
 	private String type;
+	
+	public ContractorBean ()
+	{
+
+		country = "Polska";
+		type = "Dostawca";
+	}
 	
 	public int getIdContractor() {
 		return idContractor;
@@ -98,5 +113,16 @@ public class ContractorBean {
 		return true;
 	}	
 	}
+	
+	public void updateContractor()throws ValidatorException
+	{
+		   if(ContractorDAO.updateContractor(this))FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Update done!"));
+		else 
+            new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR: ", "nie uda³o sie");
+	}
+	
+	
+	
+	
 	
 }
