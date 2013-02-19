@@ -4,11 +4,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.invoice.beans.basic.ContractorBean;
-import com.invoice.beans.basic.StockBean;
+
 
 public class ContractorDAO {
 	
@@ -80,21 +81,37 @@ public class ContractorDAO {
 	}
 	
 	
-	
-	// Do uzupe³nienia
-	
-	
 	public static boolean updateContractor(ContractorBean contractor)
 	{
 		
+		
 		try 
 		{
-			String query="UPDATE Contractor SET Contractor = ? WHERE idContractor = ?";
+			String query="UPDATE Contractor SET" + "Name = ?," +
+										" LongName = ?," +
+										" NIP = ?," +
+											" REGON = ?," +
+											" Street = ?," +
+											" City = ?," +
+											" PostCode = ? +" +
+											"Country = ?" +
+											"Region = ?" +
+											"Type = ?" + 
+											"WHERE idContractor = ?";    
 			Connection con=DBCon.getConnection();
 			con.setAutoCommit(false);
 			PreparedStatement stm= con.prepareStatement(query);
-			stm.setInt(1, contractor.getIdContractor());
-	
+			stm.setString(1, contractor.getName());
+			stm.setString(2, contractor.getLongName());
+			stm.setInt(3, contractor.getNip());
+			stm.setInt(4, contractor.getRegon());
+			stm.setString(5, contractor.getStreet());
+			stm.setString(6, contractor.getCity());
+			stm.setInt(7, contractor.getPostCode());
+			stm.setString(8, contractor.getCountry());
+			stm.setString(9, contractor.getRegion());
+			stm.setString(10, contractor.getType());
+			stm.setInt(11, contractor.getIdContractor());
 			
 			// execute select SQL stetement
 			int rs = stm.executeUpdate();
@@ -116,24 +133,26 @@ public class ContractorDAO {
 		return false;
 	}
 	
-	
-	public static int insertContractor(StockBean stock)
+
+	public static int insertContractor(ContractorBean contractor)
 	{
+
 		try 
 		{
-			String query="INSERT INTO Stock (`idProduct`, `idWarehause`, `Stock`) VALUES (?, ?, ?)";
+			String query="INSERT INTO Contractor (`name`, `longName`, `nip`, `regon`, `street`, `city`, `postCode`, `country`, `region`, `type`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			Connection con=DBCon.getConnection();
 			con.setAutoCommit(false);
-			PreparedStatement stm= con.prepareStatement(query);
-			int productId = 0;
-			if(ProductDAO.getProductBean(stock.getProduct().getIdProduct()) == null)
-			{
-				productId = ProductDAO.insertProduct(stock.getProduct());
-				if(productId == 0) return 0;
-			}
-			stm.setInt(1, productId);
-			stm.setInt(2, stock.getWarehause().getIdWarehause());
-			stm.setFloat(3, stock.getStock());
+			PreparedStatement stm= con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+			stm.setString(1, contractor.getName());
+			stm.setString(2, contractor.getLongName());
+			stm.setInt(3, contractor.getNip());
+			stm.setInt(4, contractor.getRegon());
+			stm.setString(5, contractor.getStreet());
+			stm.setString(6, contractor.getCity());
+			stm.setInt(7, contractor.getPostCode());
+			stm.setString(8, contractor.getCountry());
+			stm.setString(9, contractor.getRegion());
+			stm.setString(8, contractor.getType());
 			
 			// execute select SQL stetement
 			int rs = stm.executeUpdate();
@@ -141,9 +160,12 @@ public class ContractorDAO {
 			
 			if(rs == 1)
 				{
+					ResultSet rsId = stm.getGeneratedKeys();
+					rsId.next();
+					int auto_id = rsId.getInt(1);
 					con.commit();
 					stm.close();
-					return productId;
+					return auto_id;
 				}
 			con.rollback();
 			stm.close();
@@ -153,7 +175,6 @@ public class ContractorDAO {
 			e.printStackTrace();
 		}
 		return 0;
-	
 	}
 	public static boolean deleteContractor(ContractorBean contractor)
 	{
@@ -172,7 +193,6 @@ public class ContractorDAO {
 				{
 					con.commit();
 					stm.close();
-				//	if(!ContractorDAO.deleteContractor())return false;
 					return true;
 				}
 			con.rollback();
@@ -184,7 +204,6 @@ public class ContractorDAO {
 		}
 		return false;
 	}
-	
 	
 	
 	

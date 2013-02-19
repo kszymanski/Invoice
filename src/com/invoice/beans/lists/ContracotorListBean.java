@@ -42,7 +42,7 @@ public class ContracotorListBean implements Serializable {
 			}
 			session.removeAttribute("id");
 			if(selectedContractor == null)FacesContext.getCurrentInstance().getExternalContext().redirect("./faces/errors/notauth.xhtml");
-			Dialog dialog = (Dialog) FacesContext.getCurrentInstance().getViewRoot().findComponent("viewProduct");
+			Dialog dialog = (Dialog) FacesContext.getCurrentInstance().getViewRoot().findComponent("viewContractor");
 			dialog.setVisible(true);
 		}
 		if(!contractors.isEmpty() && selectedContractor == null)setSelectedContractor(contractors.get(0));
