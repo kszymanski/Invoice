@@ -3,6 +3,7 @@ package com.invoice.beans.basic;
 import java.io.Serializable;
 import java.util.Date;
 
+
 public class ExternalAdoptionBean implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private int idExternalAdoption;
@@ -13,6 +14,15 @@ public class ExternalAdoptionBean implements Serializable{
 	private Date buyDate;
 	private float amount;
 	
+	
+
+	public ExternalAdoptionBean()
+	{
+		contractor = new ContractorBean();
+		date = new Date();
+		payDate = new Date();
+		buyDate = new Date();
+	}
 	public int getIdExternalAdoption() {
 		return idExternalAdoption;
 	}

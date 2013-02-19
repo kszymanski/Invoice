@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -13,9 +14,12 @@ import javax.servlet.http.HttpSession;
 
 import com.invoice.beans.basic.AdoptionPositionBean;
 import com.invoice.beans.basic.ExternalAdoptionBean;
+import com.invoice.beans.basic.LoginBean;
 import com.invoice.beans.basic.ProductBean;
+import com.invoice.beans.basic.StockBean;
 import com.invoice.dbacces.AdoptionPositionDAO;
 import com.invoice.dbacces.ExternalAdoptionDAO;
+import com.invoice.dbacces.StockDAO;
 @ManagedBean(name="externalAdoption")
 @ViewScoped
 public class AdoptionPositionList implements Serializable{
@@ -30,6 +34,7 @@ public class AdoptionPositionList implements Serializable{
 		
 		HttpSession session=(HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
 		String id = (String) session.getAttribute("id");
+		LoginBean user = (session != null) ? (LoginBean)session.getAttribute("loginUser") : null;
 		if(id!=null)
 		{
 			session.removeAttribute("id");
@@ -46,6 +51,7 @@ public class AdoptionPositionList implements Serializable{
 		{
 			positions = new ArrayList<AdoptionPositionBean>();
 			adoption = new ExternalAdoptionBean();
+			adoption.setUser(user.getUser());
 		}
 		
 	}
@@ -97,4 +103,35 @@ public class AdoptionPositionList implements Serializable{
 		newAdoptionPosition.setProduct(product);
 		newAdoptionPosition.setPrice(newAdoptionPosition.getProduct().getDefaultPrice());
 	}
+	
+	public void insertExternalAdoption() throws IOException
+	{
+		int id = ExternalAdoptionDAO.insertExternalDeliveryList(adoption);
+		if(id == 0)
+		{
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("niestety nie uda³o siê"));
+			return;
+		}
+		else
+		{
+			for (AdoptionPositionBean position : positions) {
+				position.setIdExternalAdoption(id);
+				if(!AdoptionPositionDAO.insertAdoptionPosition(position))
+				{
+					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("niestety nie uda³o siê"));
+					return;
+				}
+				else
+				{
+					StockBean stock = StockDAO.getStockBean(position.getProduct().getIdProduct(),1);
+					stock.setStock(stock.getStock()+position.getCount());
+					StockDAO.updateStock(stock);
+				}
+			}
+			adoption.setIdExternalAdoption(id);
+			FacesContext.getCurrentInstance().getExternalContext().redirect("./Adoption?id="+id);
+		}
+		
+	}
+
 }

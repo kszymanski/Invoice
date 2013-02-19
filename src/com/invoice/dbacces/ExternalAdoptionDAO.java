@@ -1,8 +1,10 @@
 package com.invoice.dbacces;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,5 +68,67 @@ public class ExternalAdoptionDAO {
 				e.printStackTrace();
 			}
 		return externalAdoptionList;
+	}
+	
+	public static int insertExternalDeliveryList(ExternalAdoptionBean adoption){
+		try 
+		{
+			String query="";
+			if(adoption.getContractor().getIdContractor() != 0)
+				query="INSERT INTO ExternalAdoption (`idContractor`," +
+														" `idUser`," +
+														" `Date`," +
+														" `PayDate`," +
+														" `BuyDate`," +
+														" `Amount`) " +
+														"VALUES (?, ?, ?, ?, ?, ?)";
+			else
+				query="INSERT INTO ExternalAdoption (`idUser`," +
+													" `Date`," +
+													" `PayDate`," +
+													" `BuyDate`," +
+													" `Amount`) " +
+													"VALUES (?, ?, ?, ?, ?)";
+			Connection con=DBCon.getConnection();
+			con.setAutoCommit(false);
+			PreparedStatement stm= con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+			if(adoption.getContractor().getIdContractor() != 0)
+			{
+				stm.setInt(1, adoption.getContractor().getIdContractor());
+				stm.setString(2, adoption.getUser().getIdUser());
+				stm.setDate(3, new java.sql.Date(adoption.getDate().getTime()));
+				stm.setDate(4, new java.sql.Date(adoption.getPayDate().getTime()));
+				stm.setDate(5, new java.sql.Date(adoption.getBuyDate().getTime()));
+				stm.setFloat(6, adoption.getAmount());
+			}
+			else
+			{
+				stm.setString(1, adoption.getUser().getIdUser());
+				stm.setDate(2, new java.sql.Date(adoption.getDate().getTime()));
+				stm.setDate(3, new java.sql.Date(adoption.getPayDate().getTime()));
+				stm.setDate(4, new java.sql.Date(adoption.getBuyDate().getTime()));
+				stm.setFloat(5, adoption.getAmount());
+			}
+			// execute select SQL stetement
+			int rs = stm.executeUpdate();
+			
+			
+			if(rs == 1)
+				{
+					ResultSet rsId = stm.getGeneratedKeys();
+					rsId.next();
+					int auto_id = rsId.getInt(1);
+					con.commit();
+					stm.close();
+					return auto_id;
+				}
+			con.rollback();
+			stm.close();
+		} 
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		return 0;
 	}
 }

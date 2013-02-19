@@ -1,5 +1,6 @@
 package com.invoice.dbacces;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -87,5 +88,41 @@ public class AdoptionPositionDAO {
 				e.printStackTrace();
 			}
 		return adoptionPositions;
+	}
+	public static boolean insertAdoptionPosition(AdoptionPositionBean position)
+	{
+		try 
+		{
+			String query="INSERT INTO AdoptionPosition (`idExternalAdoption`," +
+											" `idProduct`," +
+											" `Count`," +
+											" `Price`) VALUES (?, ?, ?, ?)";
+			Connection con=DBCon.getConnection();
+			con.setAutoCommit(false);
+			PreparedStatement stm= con.prepareStatement(query);
+			stm.setInt(1, position.getIdExternalAdoption());
+			stm.setInt(2, position.getProduct().getIdProduct());
+			stm.setFloat(3, position.getCount());
+			stm.setFloat(4, position.getPrice());
+			
+			// execute select SQL stetement
+			int rs = stm.executeUpdate();
+			
+			
+			if(rs == 1)
+				{
+					con.commit();
+					stm.close();
+					return true;
+				}
+			con.rollback();
+			stm.close();
+		} 
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		return false;
+	
 	}
 }

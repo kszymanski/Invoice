@@ -30,9 +30,9 @@
 								</p:toolbarGroup>
 								<p:toolbarGroup align="right">
 				                	<h:outputLabel value="Data Wystawienia :" />
-				                	<p:calendar id="date" value="#{externalAdoption.adoption.date}" pattern="yyyy-mm-dd" showOn="button" style="width:25px;" />
+				                	<p:calendar id="date" value="#{externalAdoption.adoption.date}" pattern="yyyy-MM-dd" showOn="button" style="width:25px;" />
 				                	<h:outputLabel value="Data Kupna:" />
-			                		<p:calendar id="buyDate" value="#{externalAdoption.adoption.buyDate}" pattern="yyyy-mm-dd" showOn="button" style="width:25px;"/>
+			                		<p:calendar id="buyDate" value="#{externalAdoption.adoption.buyDate}" pattern="yyyy-MM-dd" showOn="button" style="width:25px;"/>
 		               			</p:toolbarGroup>
 	               			</p:toolbar>
 	        			</f:facet>  
@@ -64,13 +64,13 @@
 	  					<p:ajax event="cellEdit" listener="#{externalAdoption.calculate}" update=":adoptionForm"/>
 	    			</p:dataTable>
 	    			<p:menubar id="menuDown">
-						<p:menuitem value="#{msg.save}" icon="ui-icon-search"/>
+						<p:menuitem value="#{msg.save}" update=":msgs :adoptionForm" actionListener="#{externalAdoption.insertExternalAdoption}" icon="ui-icon-search"/>
 						<p:menuitem value="#{msg.cancel}" icon="ui-icon-refresh" url="/AdoptionList"/>
 						<f:facet name="options" >
 							<h:outputLabel value="Suma: " />
 				            <h:outputText id="contractot" value="#{externalAdoption.adoption.amount} PLN"/><pre/>
 							<h:outputLabel for="payDate" value="Data zapłaty:" />
-				            <p:calendar id="payDate" value="#{externalAdoption.adoption.buyDate}" pattern="yyyy-mm-dd" showOn="button" style="width:25px;"/>
+				            <p:calendar id="payDate" value="#{externalAdoption.adoption.buyDate}" pattern="yyyy-MM-dd" showOn="button" style="width:25px;"/>
 			            </f:facet>
 					</p:menubar>
 				</h:form>

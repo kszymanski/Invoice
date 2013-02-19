@@ -6,7 +6,7 @@ import javax.faces.context.FacesContext;
 import com.invoice.dbacces.ContractorDAO;
 
 public class ContractorBean {
-	private int idContractor;
+	private int idContractor = 0;
 	private String name;
 	private String longName;
 	private int nip;
