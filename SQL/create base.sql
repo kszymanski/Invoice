@@ -84,7 +84,7 @@ CREATE  TABLE IF NOT EXISTS `mydb`.`Contractor` (
   `PostCode` INT NOT NULL ,
   `Country` VARCHAR(50) NOT NULL DEFAULT 'Poland' ,
   `Region` VARCHAR(50) NULL ,
-  `Type` CHAR NOT NULL DEFAULT 'B' ,
+  `Type` VARCHAR(2) NOT NULL DEFAULT 'B' ,
   PRIMARY KEY (`idContractor`) )
 ENGINE = InnoDB;
 
