@@ -87,17 +87,16 @@ public class ContractorDAO {
 		
 		try 
 		{
-			String query="UPDATE Contractor SET" + "Name = ?," +
-										" LongName = ?," +
-										" NIP = ?," +
-											" REGON = ?," +
-											" Street = ?," +
-											" City = ?," +
-											" PostCode = ? +" +
-											"Country = ?" +
-											"Region = ?" +
-											"Type = ?" + 
-											"WHERE idContractor = ?";    
+			String query="UPDATE Contractor SET  `Name`=?," +
+												" `LongName`=?," +
+												" `NIP`=?," +
+												" `REGON`=?," +
+												" `Street`=?," +
+												" `City`=?," +
+												" `PostCode`=?," +
+												" `Country`=?," +
+												" `Region`=?," +
+												" `Type`=? WHERE `idContractor`=?";    
 			Connection con=DBCon.getConnection();
 			con.setAutoCommit(false);
 			PreparedStatement stm= con.prepareStatement(query);
