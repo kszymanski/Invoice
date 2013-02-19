@@ -7,16 +7,16 @@
 	<head><title>IGNORED</title></head>
 	<body>
 		<ui:composition>
-		<p:dialog id="countStock" header="Ile?" widgetVar="countStockDialog" modal="true" showEffect="explode" hideEffect="explode" closable="false">  
+		<p:dialog id="countStock" header="Ile?" dynamic="true" onShow="#{externalAdoption.reinit(stockList.selectedStock.product)}" widgetVar="countStockDialog" modal="true" showEffect="explode" hideEffect="explode" closable="false">  
 			<h:form id="countStockForm">
         			<h:panelGrid columns="2" id="countStockGrid">  
               			<h:outputLabel value="Krótka Nazwa Produktu:" ></h:outputLabel>
-              			<h:outputText id="productName" value="#{stockList.selectedStock.product.name}"/>
+              			<h:outputText id="productName" value="#{externalAdoption.newAdoptionPosition.product.name}"/>
               			<h:outputLabel value="Ilość : *" for="countStockInput"></h:outputLabel>
-              			<p:inputText id="countStockInput" value="#{stockList.selectedStock.stock}" converter="javax.faces.Float"/>
+              			<p:inputText id="countStockInput" value="#{externalAdoption.newAdoptionPosition.count}" converter="javax.faces.Float"/>
         			</h:panelGrid>
-    			 <p:commandButton id="btn_add" value="Add" update=":adoptionForm:adoptionDataTable :msgs @parent" onsuccess="countStockDialog.hide(); stockListDialog.show();">  
-          			<p:collector value="#{stockList.selectedStock}" addTo="#{externalAdoption.positions}" />  
+    			 <p:commandButton id="btn_add" value="Add" update=":adoptionForm:adoptionDataTable :msgs @parent" action="#{externalAdoption.calculate}" onsuccess="countStockDialog.hide(); stockListDialog.show();">  
+          			<p:collector value="#{externalAdoption.newAdoptionPosition}" addTo="#{externalAdoption.positions}" />  
             	</p:commandButton> 
 				<p:commandButton value="Close" type="reset" onclick="countStockDialog.hide(); stockListDialog.show();"/>  
 			</h:form>

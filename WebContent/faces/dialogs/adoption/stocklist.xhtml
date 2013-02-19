@@ -7,10 +7,10 @@
 	<head><title>IGNORED</title></head>
 	<body>
 		<ui:composition>
-			<p:dialog id="stockList" width="1050" dynamic="true" header="Lista produktów" widgetVar="stockListDialog" modal="true" showEffect="explode" hideEffect="explode" closable="false">
+			<p:dialog id="stockList" width="1050" header="Lista produktów" widgetVar="stockListDialog" modal="true" showEffect="explode" hideEffect="explode" closable="false">
 			<h:form id="stockListForm">
 				<p:menubar id="menu">
-					<p:menuitem value="Dodaj" onclick="stockListDialog.hide(); countStockDialog.show();" icon="ui-icon-document" />
+					<p:menuitem value="Dodaj" onsuccess="stockListDialog.hide(); countStockDialog.show();" icon="ui-icon-document" />
 					<p:menuitem value="Nowy" onclick="stockListDialog.hide(); addProductDialog.show();" icon="ui-icon-document" disabled="#{!loginUser.user.role.addProduct}" />
 					<p:menuitem value="#{msg.cancel}" icon="ui-icon-closethick" type="reset" onclick="stockListDialog.hide()" />
 				</p:menubar>
@@ -50,7 +50,7 @@
   					<p:column headerText="Jedn." filterBy="#{stock.product.unit}" sortBy="#{stock.product.unit}">
   						  <h:outputText value="#{stock.product.unit}" /> 
   					</p:column>
-  					<p:ajax event="rowSelect" update=":stockListForm :countStock"/>
+  					<p:ajax event="rowSelect"  update=":stockListForm :countStock"/>
     			</p:dataTable>
     		</h:form>
     		</p:dialog>

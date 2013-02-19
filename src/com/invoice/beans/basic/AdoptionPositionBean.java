@@ -8,10 +8,10 @@ public class AdoptionPositionBean implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	private int idExternalAdoption;
-	private int idProduct;
+	private ProductBean product;
 	private float count;
 	private float price;
-	private String unit;
+	private float value;
 	
 	public int getIdExternalAdoption() {
 		return idExternalAdoption;
@@ -21,12 +21,12 @@ public class AdoptionPositionBean implements Serializable{
 		this.idExternalAdoption = idExternalAdoption;
 	}
 	
-	public int getIdProduct() {
-		return idProduct;
+	public ProductBean getProduct() {
+		return product;
 	}
 	
-	public void setIdProduct(int idProduct) {
-		this.idProduct = idProduct;
+	public void setProduct(ProductBean product) {
+		this.product = product;
 	}
 
 	public float getCount() {
@@ -45,12 +45,12 @@ public class AdoptionPositionBean implements Serializable{
 		this.price = price;
 	}
 
-	public String getUnit() {
-		return unit;
+	public float getValue() {
+		return value;
 	}
 
-	public void setUnit(String unit) {
-		this.unit = unit;
+	public void setValue(float value) {
+		this.value = value;
 	}
 	
 }

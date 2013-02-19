@@ -18,7 +18,8 @@
 					</p:menubar>
 					<p:dataTable id="adoptionDataTable" var="position" value="#{externalAdoption.positions}" rowKey="#{position.product.idProduct}"
                  				selection="#{externalAdoption.selectedPosition}" selectionMode="single" scrollRows="20" scrollable="true" 
-                 				liveScroll="true" scrollHeight="390" sortMode="multiple" resizableColumns="true" widgetVar="adoptionDataTable" emptyMessage=" "> 
+                 				liveScroll="true" scrollHeight="390" sortMode="multiple" resizableColumns="true" widgetVar="adoptionDataTable" emptyMessage=" "
+                 				editable="true" editMode="cell"> 
 	       				<f:facet name="header">
 	           				<p:toolbar>
 	           				   	<p:toolbarGroup align="left">
@@ -38,10 +39,29 @@
 	  					<p:column headerText="Nazwa">
 	  						<h:outputText value="#{position.product.name}" />
 	  					</p:column>
-	  					<p:column headerText="Ilość">
-	  						<h:outputText value="#{position.stock}" />
+	  					<p:column headerText="Jdn." style="width: 30px;">
+	  						<h:outputText value="#{position.product.unit}" />
+	  					</p:column>
+	  					<p:column headerText="Cena" style="width: 70px;">
+	  						<p:cellEditor>  
+                				<f:facet name="output"><h:outputText value="#{position.price}" /></f:facet>  
+                				<f:facet name="input"><p:inputText value="#{position.price}" style="width:96%" label="Ilość"/></f:facet>
+            				</p:cellEditor>
+	  					</p:column>
+	  					<p:column headerText="VAT" style="width: 30px;">
+	  						<h:outputText value="#{position.product.defaultTax}%" />
+	  					</p:column>
+	  					<p:column headerText="Ilość" style="width: 70px;">
+	  						<p:cellEditor>  
+                				<f:facet name="output"><h:outputText value="#{position.count}" /></f:facet>  
+                				<f:facet name="input"><p:inputText value="#{position.count}" style="width:96%" label="Ilość"/></f:facet>
+            				</p:cellEditor>
+	  					</p:column>
+	  					<p:column headerText="Warość" style="width: 100px;">
+	  						<h:outputText value="#{position.value}" />
 	  					</p:column>
 	  					<p:ajax event="rowSelect" update=":adoptionForm"/>
+	  					<p:ajax event="cellEdit" listener="#{externalAdoption.calculate}" update=":adoptionForm"/>
 	    			</p:dataTable>
 	    			<p:menubar id="menuDown">
 						<p:menuitem value="#{msg.save}" icon="ui-icon-search"/>

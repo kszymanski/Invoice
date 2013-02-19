@@ -11,6 +11,7 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
 import org.primefaces.component.dialog.Dialog;
+
 import com.invoice.beans.basic.StockBean;
 import com.invoice.dbacces.StockDAO;
 @ManagedBean(name="stockList")
@@ -108,4 +109,5 @@ public class StockListBean implements Serializable {
 		}
 		
 	}
+	
 }

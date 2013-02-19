@@ -28,7 +28,7 @@ public class ProductBean implements Serializable {
 	private String LongName;
 	private String Descryption;
 	private float DefaultPrice = (float) 0;
-	private float DefaultTax = (float) 0;
+	private int DefaultTax =0;
 	private int Code;
 	private String Picture;
 	private String unit;
@@ -78,11 +78,11 @@ public class ProductBean implements Serializable {
 		return DefaultPrice;
 	}
 	
-	public void setDefaultTax (float DefaultTax){
+	public void setDefaultTax (int DefaultTax){
 		this.DefaultTax = DefaultTax;
 	}
 	
-	public float getDefaultTax(){
+	public int getDefaultTax(){
 		return DefaultTax;
 	}
 	

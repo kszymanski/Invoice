@@ -21,7 +21,7 @@ public class ProductDAO {
 		product.setLongName(rs.getString("LongName"));
 		product.setDescryption(rs.getString("Descryption"));
 		product.setDefaultPrice(rs.getFloat("DefaultPrice"));
-		product.setDefaultTax(rs.getFloat("DefaultTax"));
+		product.setDefaultTax(rs.getInt("DefaultTax"));
 		product.setCode(rs.getInt("Code"));
 		product.setPicture(rs.getString("Picture"));
 		product.setUnit(rs.getString("Unit"));

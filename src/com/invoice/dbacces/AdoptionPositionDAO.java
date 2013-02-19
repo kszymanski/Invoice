@@ -13,7 +13,7 @@ public class AdoptionPositionDAO {
 	{
 		AdoptionPositionBean adoptionPos =new AdoptionPositionBean();
 		adoptionPos.setIdExternalAdoption(rs.getInt("idExternalAdoption"));
-		adoptionPos.setIdProduct(rs.getInt("idProduct"));
+		adoptionPos.setProduct(ProductDAO.getProductBean(rs.getInt("idProduct")));
 		adoptionPos.setCount(rs.getFloat("Count"));
 		adoptionPos.setPrice(rs.getFloat("Price"));
 		return adoptionPos;
@@ -42,7 +42,7 @@ public class AdoptionPositionDAO {
 			}
 		return adoptionPositions;
 	}
-	public static List<AdoptionPositionBean> getAdoptionPositionList(int idProduct){
+	public static List<AdoptionPositionBean> getAdoptionPositionListForProduct(int idProduct){
 		ResultSet rs;
 		List<AdoptionPositionBean> adoptionPositions = new ArrayList<AdoptionPositionBean>();
 		String query="Select * From AdoptionPosition Where idProduct=?";
@@ -64,6 +64,28 @@ public class AdoptionPositionDAO {
 				e.printStackTrace();
 			}
 		return adoptionPositions;
+	}
+	public static List<AdoptionPositionBean> getAdoptionPositionList(int idExternalAdoption){
+		ResultSet rs;
+		List<AdoptionPositionBean> adoptionPositions = new ArrayList<AdoptionPositionBean>();
+		String query="Select * From AdoptionPosition Where idExternalAdoption=?";
+		try {
+			PreparedStatement stm= DBCon.getConnection().prepareStatement(query);
+			stm.setInt(1, idExternalAdoption);
+
+		// execute select SQL stetement
 		
+			rs = stm.executeQuery();
+			while (rs.next())
+			{
+				AdoptionPositionBean pos = getRs(rs);
+				adoptionPositions.add(pos);
+			}
+			stm.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		return adoptionPositions;
 	}
 }
