@@ -131,4 +131,58 @@ public class ExternalAdoptionDAO {
 		}
 		return 0;
 	}
+	public static boolean updateExternalDeliveryList(ExternalAdoptionBean adoption){
+		try 
+		{
+			String query="";
+			if(adoption.getContractor() != null && adoption.getContractor().getIdContractor() != 0)
+				query="UPDATE `ExternalAdoption` SET `idContractor`=?," +
+													" `Date`=?," +
+													" `PayDate`=?," +
+													" `BuyDate`=?," +
+													" `Amount`=? WHERE `idExternalAdoption`=?";
+			else
+				query="UPDATE `ExternalAdoption` SET `Date`=?," +
+													" `PayDate`=?," +
+													" `BuyDate`=?," +
+													" `Amount`=? WHERE `idExternalAdoption`=?";
+			Connection con=DBCon.getConnection();
+			con.setAutoCommit(false);
+			PreparedStatement stm= con.prepareStatement(query);
+			if(adoption.getContractor() != null && adoption.getContractor().getIdContractor() != 0)
+			{
+				stm.setInt(1, adoption.getContractor().getIdContractor());
+				stm.setDate(2, new java.sql.Date(adoption.getDate().getTime()));
+				stm.setDate(3, new java.sql.Date(adoption.getPayDate().getTime()));
+				stm.setDate(4, new java.sql.Date(adoption.getBuyDate().getTime()));
+				stm.setFloat(5, adoption.getAmount());
+				stm.setInt(6, adoption.getIdExternalAdoption());
+			}
+			else
+			{
+				stm.setDate(1, new java.sql.Date(adoption.getDate().getTime()));
+				stm.setDate(2, new java.sql.Date(adoption.getPayDate().getTime()));
+				stm.setDate(3, new java.sql.Date(adoption.getBuyDate().getTime()));
+				stm.setFloat(4, adoption.getAmount());
+				stm.setInt(5, adoption.getIdExternalAdoption());
+			}
+			// execute select SQL statement
+			int rs = stm.executeUpdate();
+			
+			
+			if(rs == 1)
+				{
+					con.commit();
+					stm.close();
+					return true;
+				}
+			con.rollback();
+			stm.close();
+		} 
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		return false;
+	}
 }

@@ -13,8 +13,7 @@
 				<h:form id="adoptionForm">
 					<p:menubar id="menu">
 						<p:menuitem value="Dodaj" icon="ui-icon-search" onclick="stockListDialog.show()"/>
-						<p:menuitem value="Edytuj" icon="ui-icon-refresh" url="#" disabled="#{externalAdoption.selectedPosition == null}"/>
-						<p:menuitem value="Usuń" icon="ui-icon-closethick" disabled="#{!loginUser.user.role.addBuyInvoice}" type="button"/>
+						<p:menuitem value="Usuń" icon="ui-icon-closethick" actionListener="#{externalAdoption.deletePosition}" update=":msgs :adoptionForm" disabled="#{!loginUser.user.role.addBuyInvoice}" type="button"/>
 					</p:menubar>
 					<p:dataTable id="adoptionDataTable" var="position" value="#{externalAdoption.positions}" rowKey="#{position.product.idProduct}"
                  				selection="#{externalAdoption.selectedPosition}" selectionMode="single" scrollRows="20" scrollable="true" 

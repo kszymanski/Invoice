@@ -28,10 +28,12 @@ public class AdoptionPositionList implements Serializable{
 	private AdoptionPositionBean selectedPosition;
 	private ExternalAdoptionBean adoption;
 	private AdoptionPositionBean newAdoptionPosition;
+	private List<AdoptionPositionBean> deletedPositions;
 	
 	public AdoptionPositionList() throws IOException
 	{
 		
+		deletedPositions = new ArrayList<AdoptionPositionBean>();
 		HttpSession session=(HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
 		String id = (String) session.getAttribute("id");
 		LoginBean user = (session != null) ? (LoginBean)session.getAttribute("loginUser") : null;
@@ -45,6 +47,7 @@ public class AdoptionPositionList implements Serializable{
 				return;
 			}
 			positions= AdoptionPositionDAO.getAdoptionPositionList(adoption.getIdExternalAdoption());
+			calculate();
 			
 		}
 		else
@@ -136,8 +139,71 @@ public class AdoptionPositionList implements Serializable{
 		}
 		else
 		{
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("tu se bedzie update"));
+			if(!ExternalAdoptionDAO.updateExternalDeliveryList(adoption))
+			{
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("fail"));
+				return;
+			}
+			else
+			{
+				for (AdoptionPositionBean position : positions)
+				{
+					position.setIdExternalAdoption(adoption.getIdExternalAdoption());
+					AdoptionPositionBean oldPos = AdoptionPositionDAO.getAdoptionPositionBean(position);
+					if(oldPos != null)
+					{
+						if(!AdoptionPositionDAO.updateAdoptionPosition(position))
+						{
+							FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("niestety nie uda³o siê"));
+							return;
+						}
+						else
+						{
+							float newStock = position.getCount() - oldPos.getCount();
+							StockBean stock = StockDAO.getStockBean(position.getProduct().getIdProduct(),1);
+							stock.setStock( stock.getStock()+ newStock );
+							StockDAO.updateStock(stock);
+						}
+					}
+					else
+					{
+						if(!AdoptionPositionDAO.insertAdoptionPosition(position))
+						{
+							FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("niestety nie uda³o siê"));
+							return;
+						}
+						else
+						{
+							StockBean stock = StockDAO.getStockBean(position.getProduct().getIdProduct(),1);
+							stock.setStock(stock.getStock()+position.getCount());
+							StockDAO.updateStock(stock);
+						}
+					}
+				}
+				if(!deletedPositions.isEmpty())
+				{
+					for (AdoptionPositionBean position : deletedPositions) 
+					{
+						AdoptionPositionBean oldPos = AdoptionPositionDAO.getAdoptionPositionBean(position);
+						if(oldPos != null)
+						{
+							StockBean stock = StockDAO.getStockBean(oldPos.getProduct().getIdProduct(),1);
+							stock.setStock(stock.getStock() - oldPos.getCount());
+							StockDAO.updateStock(stock);
+						}
+						AdoptionPositionDAO.deleteAdoptionPosition(position);
+					}
+				}
+			}
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("zapisano"));
 		}
 	}
-
+	public void deletePosition()
+	{
+		deletedPositions.add(selectedPosition);
+		positions.remove(selectedPosition);
+		calculate();
+	}
 }
+
+
