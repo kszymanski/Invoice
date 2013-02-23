@@ -57,13 +57,31 @@
     <url-pattern>/AdoptionList</url-pattern>
   </servlet-mapping>
   
-     <servlet>
+  <servlet>
     <servlet-name>Adoption</servlet-name>
     <servlet-class>com.invoice.control.Adoption</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>Adoption</servlet-name>
     <url-pattern>/Adoption</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>Buy Invoice List</servlet-name>
+    <servlet-class>com.invoice.control.BuyInvoiceList</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Buy Invoice List</servlet-name>
+    <url-pattern>/BuyInvoiceList</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>Buy Invoice</servlet-name>
+    <servlet-class>com.invoice.control.BuyInvoice</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Buy Invoice</servlet-name>
+    <url-pattern>/BuyInvoice</url-pattern>
   </servlet-mapping>
   
   <context-param>
