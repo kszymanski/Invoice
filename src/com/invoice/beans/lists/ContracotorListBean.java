@@ -4,6 +4,7 @@ import java.util.List;
 import java.io.Serializable;
 import java.io.IOException;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -90,6 +91,14 @@ public class ContracotorListBean implements Serializable {
 		this.newContractor = newContractor;
 	}
 		
+	public void addContractor() {
+		int contractorId = ContractorDAO.insertContractor(newContractor);
+         if(contractorId != 0){
+        	 newContractor.setIdContractor(contractorId);
+        	 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Dodano!"));
+         }
+         else FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Nie dodano!"));
+    }
 	
 	
 }

@@ -61,8 +61,16 @@
 				  </p:column>  
 				  
 				  	<p:ajax event="rowSelect" update=":contractorListForm :editContractorForm :viewContractorForm"/>
+    			</p:dataTable>
+    			<p:confirmDialog id="confirmDialog" message="Na pewno usunąć kontrahenta"  
+                				header="Usuwanie..." severity="alert" widgetVar="confirmation">  
+        			<p:commandButton id="confirm" value="Tak" update=":msgs :contractorListForm" oncomplete="confirmation.hide()"  
+						                    actionListener="#{contractorList.deleteContractor()}" />  
+        			<p:commandButton id="decline" value="Nie" onclick="confirmation.hide()" type="button" />
+				</p:confirmDialog>
 				
-				</p:dataTable>
+				
+				
 				</h:form>
 				
 				<ui:insert name="addContractor">
