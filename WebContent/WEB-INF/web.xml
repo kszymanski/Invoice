@@ -66,6 +66,15 @@
     <url-pattern>/Adoption</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+    <servlet-name>Receipt List</servlet-name>
+    <servlet-class>com.invoice.control.ReceiptList</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Receipt List</servlet-name>
+    <url-pattern>/ReceiptList</url-pattern>
+  </servlet-mapping>
+  
   <context-param>
     <param-name>javax.faces.PROJECT_STAGE</param-name>
     <param-value>Development</param-value>

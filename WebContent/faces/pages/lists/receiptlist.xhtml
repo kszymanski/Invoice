@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+	<head><title>IGNORED</title></head>
+	<body>
+		<ui:composition template="/faces/templates/masterLayout.xhtml">
+			<ui:define name="windowTitle">Contractors</ui:define>
+			<ui:define name="content">
+			<p:growl id="msgs" showDetail="true"/>
+			<h:form id="receiptListForm">
+				<p:menubar id="menu">
+					<p:menuitem value="Edytuj" icon="ui-icon-refresh" url="#" disabled="#{adoptionList.selectedAdoption == null || !loginUser.user.role.addReciept}"/>
+					<p:menuitem value="Nowy" icon="ui-icon-document"  url="#" />
+					<p:menuitem value="Usuń" icon="ui-icon-closethick" disabled="#{!loginUser.user.role.addReciept}"/>
+				</p:menubar>
+				<p:dataTable id="receiptListDataTable" var="receipt" value="#{receiptList.receipts}" rowKey="#{receipt.idReceipt}"
+                 selection="#{receiptList.selectedReceipt}" selectionMode="single" scrollRows="20" scrollable="true" liveScroll="true" scrollHeight="390" 
+                 filteredValue="#{receiptList.filteredReceipts}" sortMode="multiple" resizableColumns="true" widgetVar="receiptListDataTable"> 
+       				<f:facet name="header">
+           				<p:toolbar>
+           				   	<p:toolbarGroup align="left">
+           				   		<h:outputText value="Paragony" /> 
+           				   	</p:toolbarGroup>
+                			<p:toolbarGroup align="right"> 
+                				<p:outputLabel for="globalFilter" value="Search:"/>  
+                				<p:inputText id="globalFilter" onkeyup="receiptListDataTable.filter()" style="width:150px;"/> 
+                				<p:commandButton value="Clear" process="globalFilter" type="reset" onclick="$('#receiptListForm\\:receiptListDataTable\\:globalFilter').val('').keyup(); return false;"/>
+                			</p:toolbarGroup> 
+            			</p:toolbar>
+        			</f:facet>  
+  					<p:column headerText="Numer" filterBy="#{receipt.idReceipt}" sortBy="#{receipt.idReceipt}">
+  						  <h:outputText value="#{receipt.idReceipt}" /> 
+  					</p:column>
+  					
+  					<p:column headerText="Wystawił" filterBy="#{receipt.user.name}" sortBy="#{receipt.user.name}">
+  						  <h:outputText value="#{receipt.user.name} #{receipt.user.surname}" /> 
+  					</p:column>
+  					<p:column headerText="Kwota" filterBy="#{receipt.amount}" sortBy="#{receipt.amount}">
+  						  <h:outputText value="#{receipt.amount}"/> 
+  					</p:column>
+  					<p:column headerText="Data" filterBy="#{receipt.date}" sortBy="#{receipt.date}">
+  						  <h:outputText value="#{receipt.date}" /> 
+  					</p:column>
+  					<p:column headerText="Data płatności" filterBy="#{receipt.payDate}" sortBy="#{receipt.payDate}">
+  						  <h:outputText value="#{receipt.payDate}"/> 
+  					</p:column>
+  					<p:column headerText="Data Sprzedaży" filterBy="#{receipt.sellDate}" sortBy="#{receipt.sellDate}">
+  						  <h:outputText value="#{receipt.sellDate}"/> 
+  					</p:column>
+  					<p:ajax event="rowSelect" update=":receiptListForm"/>
+    			</p:dataTable>
+			</h:form>
+			</ui:define>
+		</ui:composition>
+	</body>
+</html>

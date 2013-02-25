@@ -8,6 +8,7 @@ public class ReceiptBean {
 	private Date date;
 	private Date payDate;
 	private Date sellDate;
+	private float amount;
 	
 	public void setIdReceipt (int idReceipt){
 		this.idReceipt = idReceipt;
@@ -49,5 +50,13 @@ public class ReceiptBean {
 	
 	public Date getSellDate(){
 		return sellDate;
+	}
+
+	public float getAmount() {
+		return amount;
+	}
+
+	public void setAmount(float amount) {
+		this.amount = amount;
 	}
 }
