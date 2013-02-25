@@ -46,7 +46,7 @@ public class ReceiptDAO {
 	public static List<ReceiptBean> getReceiptList(){
 		ResultSet rs;
 		List<ReceiptBean> receipts = new ArrayList<>();
-		String query="Select * From Receipt Where idReceipt=?";
+		String query="Select * From Receipt";
 		try {
 			PreparedStatement stm= DBCon.getConnection().prepareStatement(query);
 
