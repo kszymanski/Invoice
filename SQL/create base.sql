@@ -17,7 +17,7 @@ CREATE  TABLE IF NOT EXISTS `mydb`.`Product` (
   `LongName` VARCHAR(75) NOT NULL ,
   `Descryption` VARCHAR(200) NULL ,
   `DefaultPrice` FLOAT NULL ,
-  `DefaultTax` FLOAT NULL ,
+  `DefaultTax` INT NULL DEFAULT 0 ,
   `Code` INT NULL ,
   `Picture` VARCHAR(50) NULL DEFAULT 'default_product.png' ,
   `Unit` VARCHAR(5) NOT NULL DEFAULT 'szt.' ,

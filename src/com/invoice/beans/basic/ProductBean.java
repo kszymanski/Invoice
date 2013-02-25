@@ -163,7 +163,7 @@ public class ProductBean implements Serializable {
 		if(value == null)
 			throw new ValidatorException(
                     new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR: ", "Podatek Towaru nie mo¿e byæ pusty"));
-		if((float)value < 0 || (float)value > 100 )
+		if((int)value < 0 || (int)value > 100 )
 			throw new ValidatorException(
                     new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR: ", "Podatek Towaru nie mo¿e byæ ujemny ani wiêkszy od 100"));
 		
