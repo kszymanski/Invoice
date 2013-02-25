@@ -133,7 +133,7 @@ CREATE  TABLE IF NOT EXISTS `mydb`.`User` (
   `Admin` TINYINT(1) NOT NULL DEFAULT false ,
   PRIMARY KEY (`idUser`) ,
   INDEX `fk_User_Roles1_idx` (`idRole` ASC) ,
-  CONSTRAINT `fk_User_Roles1`
+  CONSTRAINT `idRole`
     FOREIGN KEY (`idRole` )
     REFERENCES `mydb`.`Role` (`idRole` )
     ON DELETE NO ACTION
