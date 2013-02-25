@@ -13,7 +13,7 @@ public class ReceiptPositionDAO {
 	private ReceiptPosition getRs(ResultSet rs) throws SQLException
 	{
 		ReceiptPosition pos = new ReceiptPosition();
-		pos.setIdReciept(rs.getInt("idReceipt"));
+		pos.setIdReceipt(rs.getInt("idReceipt"));
 		pos.setProduct(ProductDAO.getProductBean(rs.getInt("idProduct")));
 		pos.setCount(rs.getFloat("Count"));
 		pos.setPrice(rs.getFloat("Price"));
@@ -24,7 +24,7 @@ public class ReceiptPositionDAO {
 	{
 		ResultSet rs;
 		ReceiptPosition pos = null;
-		String query="Select * From RecieptPosition Where idReceipt=? AND idProduct=?";
+		String query="Select * From ReceiptPosition Where idReceipt=? AND idProduct=?";
 		try {
 			PreparedStatement stm= DBCon.getConnection().prepareStatement(query);
 			stm.setInt(1,idReceipt);
@@ -48,7 +48,7 @@ public class ReceiptPositionDAO {
 	{
 		ResultSet rs;
 		List<ReceiptPosition> positions = new ArrayList<>();
-		String query="Select * From RecieptPosition Where idReceipt=?";
+		String query="Select * From ReceiptPosition Where idReceipt=?";
 		try {
 			PreparedStatement stm= DBCon.getConnection().prepareStatement(query);
 			stm.setInt(1,idReceipt);
@@ -73,7 +73,7 @@ public class ReceiptPositionDAO {
 	{
 		ResultSet rs;
 		List<ReceiptPosition> positions = new ArrayList<>();
-		String query="Select * From RecieptPosition Where idProduct=?";
+		String query="Select * From ReceiptPosition Where idProduct=?";
 		try {
 			PreparedStatement stm= DBCon.getConnection().prepareStatement(query);
 			stm.setInt(1,idProduct);
@@ -98,19 +98,19 @@ public class ReceiptPositionDAO {
 	{
 		try 
 		{
-			String query="INSERT INTO RecieptPosition (`idReceipt`," +
+			String query="INSERT INTO ReceiptPosition (`idReceipt`," +
 											" `idProduct`," +
 											" `Count`," +
 											" `Price`) VALUES (?, ?, ?, ?)";
 			Connection con=DBCon.getConnection();
 			con.setAutoCommit(false);
 			PreparedStatement stm= con.prepareStatement(query);
-			stm.setInt(1, position.getIdReciept());
+			stm.setInt(1, position.getIdReceipt());
 			stm.setInt(2, position.getProduct().getIdProduct());
 			stm.setFloat(3, position.getCount());
 			stm.setFloat(4, position.getPrice());
 			
-			// execute select SQL stetement
+			// execute select SQL statement
 			int rs = stm.executeUpdate();
 			
 			
@@ -134,14 +134,14 @@ public class ReceiptPositionDAO {
 	{
 		try 
 		{
-			String query="UPDATE `RecieptPosition` SET `Count`=?," +
+			String query="UPDATE `ReceiptPosition` SET `Count`=?," +
 														" `Price`=? WHERE `idReceipt`=? and`idProduct`=?";
 			Connection con=DBCon.getConnection();
 			con.setAutoCommit(false);
 			PreparedStatement stm= con.prepareStatement(query);
 			stm.setFloat(1, position.getCount());
 			stm.setFloat(2, position.getPrice());
-			stm.setInt(3, position.getIdReciept());
+			stm.setInt(3, position.getIdReceipt());
 			stm.setInt(4, position.getProduct().getIdProduct());
 			
 			// execute select SQL statement
@@ -163,15 +163,15 @@ public class ReceiptPositionDAO {
 		}
 		return false;
 	}
-	public static boolean deleteRecieptPosition(ReceiptPosition position)
+	public static boolean deleteReceiptPosition(ReceiptPosition position)
 	{
 		try 
 		{
-			String query="DELETE FROM `RecieptPosition` WHERE `idReceipt` = ? AND `idProduct`=?";
+			String query="DELETE FROM `ReceiptPosition` WHERE `idReceipt` = ? AND `idProduct`=?";
 			Connection con=DBCon.getConnection();
 			con.setAutoCommit(false);
 			PreparedStatement stm= con.prepareStatement(query);
-			stm.setInt(1, position.getIdReciept());
+			stm.setInt(1, position.getIdReceipt());
 			stm.setInt(2, position.getProduct().getIdProduct());
 			
 			

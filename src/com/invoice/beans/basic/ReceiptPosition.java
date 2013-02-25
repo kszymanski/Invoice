@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class ReceiptPosition implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private ProductBean product;
-	private int idReciept;
+	private int idReceipt;
 	private float count;
 	private float price;
 	public ProductBean getProduct() {
@@ -14,11 +14,11 @@ public class ReceiptPosition implements Serializable {
 	public void setProduct(ProductBean product) {
 		this.product = product;
 	}
-	public int getIdReciept() {
-		return idReciept;
+	public int getIdReceipt() {
+		return idReceipt;
 	}
-	public void setIdReciept(int idReciept) {
-		this.idReciept = idReciept;
+	public void setIdReceipt(int idReciept) {
+		this.idReceipt = idReciept;
 	}
 	public float getCount() {
 		return count;

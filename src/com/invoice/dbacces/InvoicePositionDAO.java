@@ -48,7 +48,7 @@ public class InvoicePositionDAO {
 	{
 		ResultSet rs;
 		List<InvoicePosition> positions = new ArrayList<>();
-		String query="Select * From RecieptPosition Where idInvoice=?";
+		String query="Select * From InvoicePosition Where idInvoice=?";
 		try {
 			PreparedStatement stm= DBCon.getConnection().prepareStatement(query);
 			stm.setInt(1,idInvoice);
@@ -73,7 +73,7 @@ public class InvoicePositionDAO {
 	{
 		ResultSet rs;
 		List<InvoicePosition> positions = new ArrayList<>();
-		String query="Select * From RecieptPosition Where idProduct=?";
+		String query="Select * From InvoicePosition Where idProduct=?";
 		try {
 			PreparedStatement stm= DBCon.getConnection().prepareStatement(query);
 			stm.setInt(1,idProduct);
@@ -98,7 +98,7 @@ public class InvoicePositionDAO {
 	{
 		try 
 		{
-			String query="INSERT INTO RecieptPosition (`idInvoice`," +
+			String query="INSERT INTO InvoicePosition (`idInvoice`," +
 											" `idProduct`," +
 											" `Count`," +
 											" `Price`) VALUES (?, ?, ?, ?)";
@@ -134,7 +134,7 @@ public class InvoicePositionDAO {
 	{
 		try 
 		{
-			String query="UPDATE `RecieptPosition` SET `Count`=?," +
+			String query="UPDATE `InvoicePosition` SET `Count`=?," +
 														" `Price`=? WHERE `idInvoice`=? and`idProduct`=?";
 			Connection con=DBCon.getConnection();
 			con.setAutoCommit(false);
@@ -163,11 +163,11 @@ public class InvoicePositionDAO {
 		}
 		return false;
 	}
-	public static boolean deleteRecieptPosition(InvoicePosition position)
+	public static boolean deleteInvoicePosition(InvoicePosition position)
 	{
 		try 
 		{
-			String query="DELETE FROM `RecieptPosition` WHERE `idInvoice` = ? AND `idProduct`=?";
+			String query="DELETE FROM `InvoicePosition` WHERE `idInvoice` = ? AND `idProduct`=?";
 			Connection con=DBCon.getConnection();
 			con.setAutoCommit(false);
 			PreparedStatement stm= con.prepareStatement(query);

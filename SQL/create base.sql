@@ -149,21 +149,21 @@ DROP TABLE IF EXISTS `mydb`.`Invoice` ;
 CREATE  TABLE IF NOT EXISTS `mydb`.`Invoice` (
   `idInvoice` INT NOT NULL ,
   `idContractor` INT NULL ,
-  `User_idUser` VARCHAR(15) NOT NULL ,
+  `idUser` VARCHAR(15) NOT NULL ,
   `Amount` FLOAT NOT NULL DEFAULT 0 ,
   `PayDay` DATE NULL ,
   `Date` DATE NOT NULL ,
   `SellDate` DATE NOT NULL ,
   PRIMARY KEY (`idInvoice`) ,
   INDEX `fk_Invoice_Contractor1_idx` (`idContractor` ASC) ,
-  INDEX `fk_Invoice_User1_idx` (`User_idUser` ASC) ,
+  INDEX `fk_Invoice_User1_idx` (`idUser` ASC) ,
   CONSTRAINT `fk_Invoice_Contractor1`
     FOREIGN KEY (`idContractor` )
     REFERENCES `mydb`.`Contractor` (`idContractor` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Invoice_User1`
-    FOREIGN KEY (`User_idUser` )
+    FOREIGN KEY (`idUser` )
     REFERENCES `mydb`.`User` (`idUser` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -239,9 +239,9 @@ CREATE  TABLE IF NOT EXISTS `mydb`.`Receipt` (
   `idReceipt` INT NOT NULL AUTO_INCREMENT ,
   `idUser` VARCHAR(15) NOT NULL ,
   `Date` DATE NOT NULL ,
-  `PayDate` DATE NOT NULL ,
+  `PayDate` DATE NULL ,
   `SellDate` DATE NOT NULL ,
-  `Amount` FLOAT NULL ,
+  `Amount` FLOAT NOT NULL DEFAULT 0 ,
   PRIMARY KEY (`idReceipt`) ,
   INDEX `fk_Receipt_User1_idx` (`idUser` ASC) ,
   CONSTRAINT `fk_Receipt_User1`
@@ -292,9 +292,9 @@ CREATE  TABLE IF NOT EXISTS `mydb`.`ExternalAdoption` (
   `idContractor` INT NULL ,
   `idUser` VARCHAR(15) NOT NULL ,
   `Date` DATE NOT NULL ,
-  `PayDate` DATE NOT NULL ,
+  `PayDate` DATE NULL ,
   `BuyDate` DATE NOT NULL ,
-  `Amount` FLOAT NULL ,
+  `Amount` FLOAT NOT NULL DEFAULT 0 ,
   PRIMARY KEY (`idExternalAdoption`) ,
   INDEX `fk_InternalAdoption_Contractor1_idx` (`idContractor` ASC) ,
   INDEX `fk_ExternalAdoption_User1_idx` (`idUser` ASC) ,
@@ -355,11 +355,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`RecieptPosition`
+-- Table `mydb`.`ReceiptPosition`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`RecieptPosition` ;
+DROP TABLE IF EXISTS `mydb`.`ReceiptPosition` ;
 
-CREATE  TABLE IF NOT EXISTS `mydb`.`RecieptPosition` (
+CREATE  TABLE IF NOT EXISTS `mydb`.`ReceiptPosition` (
   `idReceipt` INT NOT NULL ,
   `idProduct` INT NOT NULL ,
   `Count` FLOAT NOT NULL ,
