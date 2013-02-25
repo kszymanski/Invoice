@@ -20,9 +20,9 @@ import com.invoice.beans.basic.StockBean;
 import com.invoice.dbacces.AdoptionPositionDAO;
 import com.invoice.dbacces.ExternalAdoptionDAO;
 import com.invoice.dbacces.StockDAO;
-@ManagedBean(name="externalAdoption")
+@ManagedBean(name="buyInvoicePositions")
 @ViewScoped
-public class AdoptionPositionList implements Serializable{
+public class BuyInvoicePositionsBean implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private List<AdoptionPositionBean> positions;
 	private AdoptionPositionBean selectedPosition;
@@ -30,7 +30,7 @@ public class AdoptionPositionList implements Serializable{
 	private AdoptionPositionBean newAdoptionPosition;
 	private List<AdoptionPositionBean> deletedPositions;
 	
-	public AdoptionPositionList() throws IOException
+	public BuyInvoicePositionsBean() throws IOException
 	{
 		
 		deletedPositions = new ArrayList<AdoptionPositionBean>();

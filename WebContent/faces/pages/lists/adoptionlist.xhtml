@@ -12,10 +12,9 @@
 			<p:growl id="msgsAdoption" showDetail="true"/>
 			<h:form id="adoptionListForm">
 				<p:menubar id="menu">
-					<p:menuitem value="Szczegóły" icon="ui-icon-search" disabled="#{!loginUser.user.role.viewBuyInvoice}"/>
 					<p:menuitem value="Edytuj" icon="ui-icon-refresh" url="./Adoption?id=#{adoptionList.selectedAdoption.idExternalAdoption}" disabled="#{adoptionList.selectedAdoption == null || !loginUser.user.role.addBuyInvoice}"/>
 					<p:menuitem value="Nowy" icon="ui-icon-document"  url="./Adoption" disabled="#{!loginUser.user.role.addBuyInvoice}" />
-					<p:menuitem value="Usuń" icon="ui-icon-closethick" disabled="#{!loginUser.user.role.addBuyInvoice}" type="button"/>
+					<p:menuitem value="Usuń" icon="ui-icon-closethick" actionListener="#{adoptionList.deleteAdoption}" disabled="#{!loginUser.user.role.addBuyInvoice}" update=":msgsAdoption"/>
 				</p:menubar>
 				<p:dataTable id="adoptionDataTable" var="adoption" value="#{adoptionList.adoptions}" rowKey="#{adoption.idExternalAdoption}"
                  selection="#{adoptionList.selectedAdoption}" selectionMode="single" scrollRows="20" scrollable="true" liveScroll="true" scrollHeight="390" 

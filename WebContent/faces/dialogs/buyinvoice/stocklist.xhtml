@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+	<head><title>IGNORED</title></head>
+	<body>
+		<ui:composition>
+			<p:dialog id="stockList" width="1050" header="Lista produktów" widgetVar="stockListDialog" modal="true" showEffect="explode" hideEffect="explode" closable="false">
+			<h:form id="stockListForm">
+				<p:menubar id="menu">
+					<p:menuitem value="Dodaj" onsuccess="stockListDialog.hide(); countStockDialog.show();" icon="ui-icon-document" />
+					<p:menuitem value="Nowy" onclick="stockListDialog.hide(); addProductDialog.show();" icon="ui-icon-document" disabled="#{!loginUser.user.role.addProduct}" />
+					<p:menuitem value="#{msg.cancel}" icon="ui-icon-closethick" type="reset" onclick="stockListDialog.hide()" />
+				</p:menubar>
+				
+				<p:dataTable id="stockDataTable" var="stock" value="#{stockList.stocks}" rowKey="#{stock.product.idProduct}"
+                 selection="#{stockList.selectedStock}" selectionMode="single" scrollRows="20" scrollable="true" liveScroll="true" scrollHeight="390" 
+                 filteredValue="#{stockList.filtredStocks}" sortMode="multiple" resizableColumns="true" widgetVar="stockDataTable"> 
+       				<f:facet name="header">
+           				<p:toolbar>
+           				   	<p:toolbarGroup align="left">
+           				   		<h:outputText value="Produkty:" /> 
+           				   	</p:toolbarGroup>
+                			<p:toolbarGroup align="right"> 
+                				<p:outputLabel for="globalFilter" value="Search:"/>  
+                				<p:inputText id="globalFilter" onkeyup="stockDataTable.filter()" style="width:150px;"/> 
+                				<p:commandButton value="Clear" process="globalFilter" type="reset" onclick="$('#stockListForm\\:stockDataTable\\:globalFilter').val('').keyup(); return false;"/>
+                			</p:toolbarGroup> 
+            			</p:toolbar>
+        			</f:facet>  
+  					<p:column headerText="Kod" filterBy="#{stock.product.idProduct}" sortBy="#{stock.product.idProduct}">
+  						  <h:outputText value="#{stock.product.idProduct}" /> 
+  					</p:column>
+  					<p:column  headerText="Name" filterBy="#{stock.product.name}" sortBy="#{stock.product.name}">
+  						  <h:outputText id="stockName" value="#{stock.product.name}" />
+  						  <p:tooltip for="stockName" value="#{stock.product.longName}" showEffect="slide" hideEffect="slide" /> 
+  					</p:column>
+  					
+  					<p:column headerText="Cena" filterBy="#{stock.product.defaultPrice}" sortBy="#{stock.product.defaultPrice}">
+  						  <h:outputText value="#{stock.product.defaultPrice}" /> 
+  					</p:column>
+  					<p:column headerText="VAT" filterBy="#{stock.product.defaultTax}" sortBy="#{stock.product.defaultTax}">
+  						  <h:outputText value="#{stock.product.defaultTax}" /> 
+  					</p:column>
+  					<p:column headerText="Stan" filterBy="#{stock.stock}" sortBy="#{stock.stock}">
+  						  <h:outputText value="#{stock.stock}" /> 
+  					</p:column>
+  					<p:column headerText="Jedn." filterBy="#{stock.product.unit}" sortBy="#{stock.product.unit}">
+  						  <h:outputText value="#{stock.product.unit}" /> 
+  					</p:column>
+  					<p:ajax event="rowSelect"  update=":stockListForm :countStock"/>
+    			</p:dataTable>
+    		</h:form>
+    		</p:dialog>
+		</ui:composition>
+	</body>
+</html>

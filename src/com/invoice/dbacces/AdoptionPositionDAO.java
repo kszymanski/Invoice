@@ -19,6 +19,29 @@ public class AdoptionPositionDAO {
 		adoptionPos.setPrice(rs.getFloat("Price"));
 		return adoptionPos;
 	}
+	public static AdoptionPositionBean getAdoptionPositionBean(AdoptionPositionBean position){
+		ResultSet rs;
+		AdoptionPositionBean adoptionPosition=null;
+		String query="Select * From AdoptionPosition Where idExternalAdoption=? AND idProduct=?";
+		try {
+			PreparedStatement stm= DBCon.getConnection().prepareStatement(query);
+			stm.setInt(1,position.getIdExternalAdoption());
+			stm.setInt(2,position.getProduct().getIdProduct());
+
+		// execute select SQL statement
+		
+			rs = stm.executeQuery();
+			while (rs.next())
+			{
+				adoptionPosition = getRs(rs);
+			}
+			stm.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		return adoptionPosition;
+	}
 	public static List<AdoptionPositionBean> getAdoptionPositionBean(int idExternalAdoption){
 		ResultSet rs;
 		List<AdoptionPositionBean> adoptionPositions = new ArrayList<AdoptionPositionBean>();
@@ -27,7 +50,7 @@ public class AdoptionPositionDAO {
 			PreparedStatement stm= DBCon.getConnection().prepareStatement(query);
 			stm.setInt(1, idExternalAdoption);
 
-		// execute select SQL stetement
+		// execute select SQL statement
 		
 			rs = stm.executeQuery();
 			while (rs.next())
@@ -74,7 +97,7 @@ public class AdoptionPositionDAO {
 			PreparedStatement stm= DBCon.getConnection().prepareStatement(query);
 			stm.setInt(1, idExternalAdoption);
 
-		// execute select SQL stetement
+		// execute select SQL statement
 		
 			rs = stm.executeQuery();
 			while (rs.next())
@@ -124,5 +147,67 @@ public class AdoptionPositionDAO {
 		}
 		return false;
 	
+	}
+	public static boolean updateAdoptionPosition(AdoptionPositionBean position)
+	{
+		try 
+		{
+			String query="UPDATE `AdoptionPosition` SET `Count`=?," +
+														" `Price`=? WHERE `idExternalAdoption`=? and`idProduct`=?";
+			Connection con=DBCon.getConnection();
+			con.setAutoCommit(false);
+			PreparedStatement stm= con.prepareStatement(query);
+			stm.setFloat(1, position.getCount());
+			stm.setFloat(2, position.getPrice());
+			stm.setInt(3, position.getIdExternalAdoption());
+			stm.setInt(4, position.getProduct().getIdProduct());
+			
+			// execute select SQL statement
+			int rs = stm.executeUpdate();
+			
+			
+			if(rs == 1)
+				{
+					con.commit();
+					stm.close();
+					return true;
+				}
+			con.rollback();
+			stm.close();
+		} 
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		return false;
+	}
+	public static boolean deleteAdoptionPosition(AdoptionPositionBean position)
+	{
+		try 
+		{
+			String query="DELETE FROM `AdoptionPosition` WHERE `idExternalAdoption` = ? AND `idProduct`=?";
+			Connection con=DBCon.getConnection();
+			con.setAutoCommit(false);
+			PreparedStatement stm= con.prepareStatement(query);
+			stm.setInt(1, position.getIdExternalAdoption());
+			stm.setInt(2, position.getProduct().getIdProduct());
+			
+			
+			// execute select SQL stetement
+			int rs = stm.executeUpdate();
+			if(rs == 1)
+				{
+					con.commit();
+					stm.close();
+					return true;
+				}
+			con.rollback();
+			stm.close();
+		} 
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		return false;
 	}
 }

@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+	<head><title>IGNORED</title></head>
+	<body>
+		<ui:composition template="/faces/templates/masterLayout.xhtml">
+			<ui:define name="windowTitle">Contractors</ui:define>
+			<ui:define name="content">
+			<p:growl id="msgs" showDetail="true"/>
+			<h:form id="buyInvoiceListForm">
+				<p:menubar id="menu">
+					<p:menuitem value="Edytuj" icon="ui-icon-refresh" url="./BuyInvoice?id=#{buyInvoiceList.selectedInvoice.idBuyInvoice}" disabled="#{uyInvoiceList.selectedInvoice == null || !loginUser.user.role.addBuyInvoice}"/>
+					<p:menuitem value="Nowy" icon="ui-icon-document"  url="./BuyInvoice" disabled="#{!loginUser.user.role.addBuyInvoice}" />
+					<p:menuitem value="Usuń" icon="ui-icon-closethick" actionListener="#{buyInvoiceList.deleteBuyInvoice}" disabled="#{!loginUser.user.role.addBuyInvoice}" update=":msgs"/>
+				</p:menubar>
+				<p:dataTable id="buyInvoiceListDataTable" var="invoice" value="#{buyInvoiceList.invoices}" rowKey="#{invoice.idBuyInvoice}"
+                 selection="#{buyInvoiceList.selectedInvoice}" selectionMode="single" scrollRows="20" scrollable="true" liveScroll="true" scrollHeight="390" 
+                 filteredValue="#{buyInvoiceList.filteredInvoices}" sortMode="multiple" resizableColumns="true" widgetVar="buyInvoiceListDataTable"> 
+       				<f:facet name="header">
+           				<p:toolbar>
+           				   	<p:toolbarGroup align="left">
+           				   		<h:outputText value="Faktury Zakupu:" /> 
+           				   	</p:toolbarGroup>
+                			<p:toolbarGroup align="right"> 
+                				<p:outputLabel for="globalFilter" value="Search:"/>  
+                				<p:inputText id="globalFilter" onkeyup="buyInvoiceListDataTable.filter()" style="width:150px;"/> 
+                				<p:commandButton value="Clear" process="globalFilter" type="reset" onclick="$('#buyInvoiceListForm\\:buyInvoiceListDataTable\\:globalFilter').val('').keyup(); return false;"/>
+                			</p:toolbarGroup> 
+            			</p:toolbar>
+        			</f:facet>  
+  					<p:column headerText="Numer" filterBy="#{invoice.idBuyInvoice}" sortBy="#{invoice.idBuyInvoice}">
+  						  <h:outputText value="#{invoice.idBuyInvoice}" /> 
+  					</p:column>
+  					<p:column headerText="Kontrahent" filterBy="#{invoice.externalAdoption.contractor.name}" sortBy="#{invoice.externalAdoption.contractor.name}">
+  						  <h:outputText value="#{invoice.externalAdoption.contractor.name}" /> 
+  					</p:column>
+  					<p:column headerText="Wystawił" filterBy="#{invoice.externalAdoption.user.name}" sortBy="#{invoice.externalAdoption.user.name}">
+  						  <h:outputText value="#{invoice.externalAdoption.user.name} #{invoice.externalAdoption.user.surname}" /> 
+  					</p:column>
+  					<p:column headerText="Kwota" filterBy="#{invoice.externalAdoption.amount}" sortBy="#{invoice.externalAdoption.amount}">
+  						  <h:outputText value="#{invoice.externalAdoption.amount}"/> 
+  					</p:column>
+  					<p:column headerText="Data" filterBy="#{invoice.externalAdoption.date}" sortBy="#{invoice.externalAdoption.date}">
+  						  <h:outputText value="#{invoice.externalAdoption.date}" /> 
+  					</p:column>
+  					<p:column headerText="Data płatności" filterBy="#{invoice.externalAdoption.payDate}" sortBy="#{invoice.externalAdoption.payDate}">
+  						  <h:outputText value="#{invoice.externalAdoption.payDate}"/> 
+  					</p:column>
+  					<p:column headerText="Data zakupu" filterBy="#{invoice.externalAdoption.buyDate}" sortBy="#{invoice.externalAdoption.buyDate}">
+  						  <h:outputText value="#{invoice.externalAdoption.buyDate}"/> 
+  					</p:column>
+  					<p:ajax event="rowSelect" update=":buyInvoiceListForm"/>
+    			</p:dataTable>
+			</h:form>
+			</ui:define>
+		</ui:composition>
+	</body>
+</html>

@@ -3,8 +3,10 @@ package com.invoice.beans.lists;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 import com.invoice.beans.basic.ExternalAdoptionBean;
 import com.invoice.dbacces.ExternalAdoptionDAO;
@@ -43,5 +45,8 @@ public class AdoptionListBean implements Serializable{
 		this.selectedAdoption = selectedAdoption;
 	}
 
-
+	public void deleteAdoption()
+	{
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Niestety","to nie zosta³o zaimplementowane"));
+	}
 }
