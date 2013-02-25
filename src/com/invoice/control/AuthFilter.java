@@ -27,7 +27,7 @@ public class AuthFilter implements Filter{
 		FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest request=(HttpServletRequest)req;
 		HttpServletResponse response=(HttpServletResponse)res;
-		HttpSession session=request.getSession(false);
+		HttpSession session=request.getSession(true);
 		String uri = request.getRequestURI();
 		String loginUri = request.getContextPath() + "/login.xhtml";
 		int tologin = uri.compareToIgnoreCase(loginUri);
