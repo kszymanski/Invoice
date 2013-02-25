@@ -56,11 +56,7 @@
 				 	 <h:outputText value="#{contractor.city}" />
 				 </p:column>  
 				  
-				  <p:column headerText="Typ" filterBy="#{contractor.type}" sortBy="#{contractor.type}">
-				  	<h:outputText value="#{contractor.type}" />
-				  </p:column>  
-				  
-				  	<p:ajax event="rowSelect" update=":contractorListForm :editContractorForm :viewContractorForm"/>
+				  	<p:ajax event="rowSelect" update=":contractorListForm :editContractorForm :viewContractorForm :addContractorForm"/>
     			</p:dataTable>
     			<p:confirmDialog id="confirmDialog" message="Na pewno usunąć kontrahenta"  
                 				header="Usuwanie..." severity="alert" widgetVar="confirmation">  

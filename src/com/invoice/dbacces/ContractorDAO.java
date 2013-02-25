@@ -26,7 +26,6 @@ public class ContractorDAO {
 		contractor.setPostCode(rs.getInt("PostCode"));
 		contractor.setRegion(rs.getString("Region"));
 		contractor.setCountry(rs.getString("Country"));
-		contractor.setType(rs.getString("Type"));
 		
 		return contractor;
 	}
@@ -95,8 +94,7 @@ public class ContractorDAO {
 												" `City`=?," +
 												" `PostCode`=?," +
 												" `Country`=?," +
-												" `Region`=?," +
-												" `Type`=? WHERE `idContractor`=?";    
+												" `Region`=? WHERE `idContractor`=?";    
 			Connection con=DBCon.getConnection();
 			con.setAutoCommit(false);
 			PreparedStatement stm= con.prepareStatement(query);
@@ -109,8 +107,7 @@ public class ContractorDAO {
 			stm.setInt(7, contractor.getPostCode());
 			stm.setString(8, contractor.getCountry());
 			stm.setString(9, contractor.getRegion());
-			stm.setString(10, contractor.getType());
-			stm.setInt(11, contractor.getIdContractor());
+			stm.setInt(10, contractor.getIdContractor());
 			
 			// execute select SQL stetement
 			int rs = stm.executeUpdate();
@@ -138,7 +135,7 @@ public class ContractorDAO {
 
 		try 
 		{
-			String query="INSERT INTO Contractor (`Name`, `LongName`, `NIP`, `REGON`, `Street`, `City`, `PostCode`, `Country`, `Region`, `Type`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			String query="INSERT INTO Contractor (`Name`, `LongName`, `NIP`, `REGON`, `Street`, `City`, `PostCode`, `Country`, `Region`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			Connection con=DBCon.getConnection();
 			con.setAutoCommit(false);
 			PreparedStatement stm= con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
@@ -151,7 +148,6 @@ public class ContractorDAO {
 			stm.setInt(7, contractor.getPostCode());
 			stm.setString(8, contractor.getCountry());
 			stm.setString(9, contractor.getRegion());
-			stm.setString(10, contractor.getType());
 			
 			// execute select SQL stetement
 			int rs = stm.executeUpdate();
