@@ -2,7 +2,7 @@ package com.invoice.beans.basic;
 
 import java.io.Serializable;
 
-public class RecieptPosition implements Serializable {
+public class ReceiptPosition implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private ProductBean product;
 	private int idReciept;

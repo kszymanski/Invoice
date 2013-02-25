@@ -7,12 +7,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.invoice.beans.basic.RecieptPosition;
+import com.invoice.beans.basic.ReceiptPosition;
 
-public class RecieptPositionDAO {
-	private RecieptPosition getRs(ResultSet rs) throws SQLException
+public class ReceiptPositionDAO {
+	private ReceiptPosition getRs(ResultSet rs) throws SQLException
 	{
-		RecieptPosition pos = new RecieptPosition();
+		ReceiptPosition pos = new ReceiptPosition();
 		pos.setIdReciept(rs.getInt("idReceipt"));
 		pos.setProduct(ProductDAO.getProductBean(rs.getInt("idProduct")));
 		pos.setCount(rs.getFloat("Count"));
@@ -20,10 +20,10 @@ public class RecieptPositionDAO {
 		return pos;
 	}
 	
-	public RecieptPosition getReceiptPosition(int idReceipt,int idProduct)
+	public ReceiptPosition getReceiptPosition(int idReceipt,int idProduct)
 	{
 		ResultSet rs;
-		RecieptPosition pos = null;
+		ReceiptPosition pos = null;
 		String query="Select * From RecieptPosition Where idReceipt=? AND idProduct=?";
 		try {
 			PreparedStatement stm= DBCon.getConnection().prepareStatement(query);
@@ -44,10 +44,10 @@ public class RecieptPositionDAO {
 			}
 		return pos;
 	}
-	public List<RecieptPosition> getReceiptPositionsByReceipt(int idReceipt)
+	public List<ReceiptPosition> getReceiptPositionsByReceipt(int idReceipt)
 	{
 		ResultSet rs;
-		List<RecieptPosition> positions = new ArrayList<>();
+		List<ReceiptPosition> positions = new ArrayList<>();
 		String query="Select * From RecieptPosition Where idReceipt=?";
 		try {
 			PreparedStatement stm= DBCon.getConnection().prepareStatement(query);
@@ -59,7 +59,7 @@ public class RecieptPositionDAO {
 			rs = stm.executeQuery();
 			while (rs.next())
 			{
-				RecieptPosition pos = getRs(rs);
+				ReceiptPosition pos = getRs(rs);
 				positions.add(pos);
 			}
 			stm.close();
@@ -69,10 +69,10 @@ public class RecieptPositionDAO {
 			}
 		return positions;
 	}
-	public List<RecieptPosition> getReceiptPositionsByProduct(int idProduct)
+	public List<ReceiptPosition> getReceiptPositionsByProduct(int idProduct)
 	{
 		ResultSet rs;
-		List<RecieptPosition> positions = new ArrayList<>();
+		List<ReceiptPosition> positions = new ArrayList<>();
 		String query="Select * From RecieptPosition Where idProduct=?";
 		try {
 			PreparedStatement stm= DBCon.getConnection().prepareStatement(query);
@@ -84,7 +84,7 @@ public class RecieptPositionDAO {
 			rs = stm.executeQuery();
 			while (rs.next())
 			{
-				RecieptPosition pos = getRs(rs);
+				ReceiptPosition pos = getRs(rs);
 				positions.add(pos);
 			}
 			stm.close();
@@ -94,7 +94,7 @@ public class RecieptPositionDAO {
 			}
 		return positions;
 	}
-	public static boolean insertReceiptPositions(RecieptPosition position)
+	public static boolean insertReceiptPositions(ReceiptPosition position)
 	{
 		try 
 		{
@@ -130,7 +130,7 @@ public class RecieptPositionDAO {
 		return false;
 	
 	}
-	public static boolean updateReceiptPositions(RecieptPosition position)
+	public static boolean updateReceiptPositions(ReceiptPosition position)
 	{
 		try 
 		{
@@ -163,7 +163,7 @@ public class RecieptPositionDAO {
 		}
 		return false;
 	}
-	public static boolean deleteRecieptPosition(RecieptPosition position)
+	public static boolean deleteRecieptPosition(ReceiptPosition position)
 	{
 		try 
 		{
