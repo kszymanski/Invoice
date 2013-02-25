@@ -6,7 +6,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 import com.invoice.dbacces.AdoptionPositionDAO;
-import com.invoice.dbacces.DeliveryPositionDAO;
 import com.invoice.dbacces.StockDAO;
 import com.invoice.dbacces.WarehauseDAO;
 
@@ -49,7 +48,7 @@ public class StockBean implements Serializable{
 	
 	public boolean deleteStock()
 	{
-		if(AdoptionPositionDAO.getAdoptionPositionList(product.getIdProduct()).size()==0 && DeliveryPositionDAO.getDeliveryPositionList(product.getIdProduct()).size()== 0)
+		if(AdoptionPositionDAO.getAdoptionPositionList(product.getIdProduct()).size()==0)
 		{
 			if(!StockDAO.deleteStock(this))
 				{

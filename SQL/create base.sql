@@ -3,7 +3,7 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 DROP SCHEMA IF EXISTS `mydb` ;
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 COLLATE utf8_polish_ci;
+CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
 USE `mydb` ;
 
 -- -----------------------------------------------------
@@ -84,7 +84,6 @@ CREATE  TABLE IF NOT EXISTS `mydb`.`Contractor` (
   `PostCode` INT NOT NULL ,
   `Country` VARCHAR(50) NOT NULL DEFAULT 'Poland' ,
   `Region` VARCHAR(50) NULL ,
-  `Type` VARCHAR(2) NOT NULL DEFAULT 'B' ,
   PRIMARY KEY (`idContractor`) )
 ENGINE = InnoDB;
 
@@ -143,6 +142,35 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
+-- Table `mydb`.`Invoice`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `mydb`.`Invoice` ;
+
+CREATE  TABLE IF NOT EXISTS `mydb`.`Invoice` (
+  `idInvoice` INT NOT NULL ,
+  `idContractor` INT NULL ,
+  `User_idUser` VARCHAR(15) NOT NULL ,
+  `Amount` FLOAT NOT NULL DEFAULT 0 ,
+  `PayDay` DATE NULL ,
+  `Date` DATE NOT NULL ,
+  `SellDate` DATE NOT NULL ,
+  PRIMARY KEY (`idInvoice`) ,
+  INDEX `fk_Invoice_Contractor1_idx` (`idContractor` ASC) ,
+  INDEX `fk_Invoice_User1_idx` (`User_idUser` ASC) ,
+  CONSTRAINT `fk_Invoice_Contractor1`
+    FOREIGN KEY (`idContractor` )
+    REFERENCES `mydb`.`Contractor` (`idContractor` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Invoice_User1`
+    FOREIGN KEY (`User_idUser` )
+    REFERENCES `mydb`.`User` (`idUser` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `mydb`.`ExternalDelivery`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `mydb`.`ExternalDelivery` ;
@@ -170,42 +198,6 @@ CREATE  TABLE IF NOT EXISTS `mydb`.`ExternalDelivery` (
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_ExternalDelivery_User1`
     FOREIGN KEY (`idUser` )
-    REFERENCES `mydb`.`User` (`idUser` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `mydb`.`Invoice`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`Invoice` ;
-
-CREATE  TABLE IF NOT EXISTS `mydb`.`Invoice` (
-  `idInvoice` INT NOT NULL ,
-  `idExternalDelivery` INT NULL ,
-  `idContractor` INT NULL ,
-  `User_idUser` VARCHAR(15) NOT NULL ,
-  `Amount` FLOAT NOT NULL DEFAULT 0 ,
-  `PayDay` DATE NULL ,
-  `Date` DATE NOT NULL ,
-  `SellDate` DATE NOT NULL ,
-  PRIMARY KEY (`idInvoice`) ,
-  INDEX `fk_Invoice_ExternalDelivery1_idx` (`idExternalDelivery` ASC) ,
-  INDEX `fk_Invoice_Contractor1_idx` (`idContractor` ASC) ,
-  INDEX `fk_Invoice_User1_idx` (`User_idUser` ASC) ,
-  CONSTRAINT `fk_Invoice_ExternalDelivery1`
-    FOREIGN KEY (`idExternalDelivery` )
-    REFERENCES `mydb`.`ExternalDelivery` (`idExternalDelivery` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Invoice_Contractor1`
-    FOREIGN KEY (`idContractor` )
-    REFERENCES `mydb`.`Contractor` (`idContractor` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Invoice_User1`
-    FOREIGN KEY (`User_idUser` )
     REFERENCES `mydb`.`User` (`idUser` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -245,19 +237,13 @@ DROP TABLE IF EXISTS `mydb`.`Receipt` ;
 
 CREATE  TABLE IF NOT EXISTS `mydb`.`Receipt` (
   `idReceipt` INT NOT NULL AUTO_INCREMENT ,
-  `idExternalDelivery` INT NULL ,
   `idUser` VARCHAR(15) NOT NULL ,
   `Date` DATE NOT NULL ,
   `PayDate` DATE NOT NULL ,
   `SellDate` DATE NOT NULL ,
+  `Amount` FLOAT NULL ,
   PRIMARY KEY (`idReceipt`) ,
-  INDEX `fk_Receipt_ExternalDelivery1_idx` (`idExternalDelivery` ASC) ,
   INDEX `fk_Receipt_User1_idx` (`idUser` ASC) ,
-  CONSTRAINT `fk_Receipt_ExternalDelivery1`
-    FOREIGN KEY (`idExternalDelivery` )
-    REFERENCES `mydb`.`ExternalDelivery` (`idExternalDelivery` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
   CONSTRAINT `fk_Receipt_User1`
     FOREIGN KEY (`idUser` )
     REFERENCES `mydb`.`User` (`idUser` )
@@ -363,6 +349,56 @@ CREATE  TABLE IF NOT EXISTS `mydb`.`BuyInvoice` (
   CONSTRAINT `fk_BuyInvoice_ExternalAdoption1`
     FOREIGN KEY (`idExternalAdoption` )
     REFERENCES `mydb`.`ExternalAdoption` (`idExternalAdoption` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`RecieptPosition`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `mydb`.`RecieptPosition` ;
+
+CREATE  TABLE IF NOT EXISTS `mydb`.`RecieptPosition` (
+  `idReceipt` INT NOT NULL ,
+  `idProduct` INT NOT NULL ,
+  `Count` FLOAT NOT NULL ,
+  `Price` FLOAT NOT NULL ,
+  PRIMARY KEY (`idReceipt`, `idProduct`) ,
+  INDEX `fk_table1_Product1_idx` (`idProduct` ASC) ,
+  CONSTRAINT `fk_table1_Receipt1`
+    FOREIGN KEY (`idReceipt` )
+    REFERENCES `mydb`.`Receipt` (`idReceipt` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_table1_Product1`
+    FOREIGN KEY (`idProduct` )
+    REFERENCES `mydb`.`Product` (`idProduct` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`InvoicePosition`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `mydb`.`InvoicePosition` ;
+
+CREATE  TABLE IF NOT EXISTS `mydb`.`InvoicePosition` (
+  `idInvoice` INT NOT NULL ,
+  `idProduct` INT NOT NULL ,
+  `Count` FLOAT NOT NULL ,
+  `Price` FLOAT NOT NULL ,
+  PRIMARY KEY (`idInvoice`, `idProduct`) ,
+  INDEX `fk_table1_Product2_idx` (`idProduct` ASC) ,
+  CONSTRAINT `fk_table1_Invoice1`
+    FOREIGN KEY (`idInvoice` )
+    REFERENCES `mydb`.`Invoice` (`idInvoice` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_table1_Product2`
+    FOREIGN KEY (`idProduct` )
+    REFERENCES `mydb`.`Product` (`idProduct` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

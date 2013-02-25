@@ -4,7 +4,6 @@ import java.util.Date;
 
 public class ReceiptBean {
 	private int idReceipt;
-	private ExternalDeliveryBean externalDelivery;
 	private UserBean user;
 	private Date date;
 	private Date payDate;
@@ -19,13 +18,6 @@ public class ReceiptBean {
 	}
 	
 	
-	public ExternalDeliveryBean getExternalDelivery() {
-		return externalDelivery;
-	}
-
-	public void setExternalDelivery(ExternalDeliveryBean externalDelivery) {
-		this.externalDelivery = externalDelivery;
-	}
 
 	public UserBean getUser() {
 		return user;

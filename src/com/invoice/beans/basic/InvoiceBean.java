@@ -4,7 +4,6 @@ import java.util.Date;
 
 public class InvoiceBean {
 	private int idInvoice;
-	private ExternalDeliveryBean externaldelivery;
 	private ContractorBean contractor;
 	private UserBean user;
 	private float amount;
@@ -17,12 +16,6 @@ public class InvoiceBean {
 	}
 	public void setIdInvoice(int idInvoice) {
 		this.idInvoice = idInvoice;
-	}
-	public ExternalDeliveryBean getExternaldelivery() {
-		return externaldelivery;
-	}
-	public void setExternaldelivery(ExternalDeliveryBean externaldelivery) {
-		this.externaldelivery = externaldelivery;
 	}
 	public ContractorBean getContractor() {
 		return contractor;
