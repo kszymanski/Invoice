@@ -29,7 +29,7 @@ public class ContractorBean implements Serializable {
 	{
 
 		country = "Polska";
-		type = "Dostawca";
+		type = "D";
 	}
 	
 	public int getIdContractor() {
