@@ -7,100 +7,105 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.invoice.beans.basic.AdoptionPositionBean;
+import com.invoice.beans.basic.RecieptPosition;
 
-public class AdoptionPositionDAO {
-	private static AdoptionPositionBean getRs(ResultSet rs) throws SQLException
+public class RecieptPositionDAO {
+	private RecieptPosition getRs(ResultSet rs) throws SQLException
 	{
-		AdoptionPositionBean adoptionPos =new AdoptionPositionBean();
-		adoptionPos.setIdExternalAdoption(rs.getInt("idExternalAdoption"));
-		adoptionPos.setProduct(ProductDAO.getProductBean(rs.getInt("idProduct")));
-		adoptionPos.setCount(rs.getFloat("Count"));
-		adoptionPos.setPrice(rs.getFloat("Price"));
-		return adoptionPos;
+		RecieptPosition pos = new RecieptPosition();
+		pos.setIdReciept(rs.getInt("idReceipt"));
+		pos.setProduct(ProductDAO.getProductBean(rs.getInt("idProduct")));
+		pos.setCount(rs.getFloat("Count"));
+		pos.setPrice(rs.getFloat("Price"));
+		return pos;
 	}
-	public static AdoptionPositionBean getAdoptionPositionBean(AdoptionPositionBean position){
+	
+	public RecieptPosition getReceiptPosition(int idReceipt,int idProduct)
+	{
 		ResultSet rs;
-		AdoptionPositionBean adoptionPosition=null;
-		String query="Select * From AdoptionPosition Where idExternalAdoption=? AND idProduct=?";
+		RecieptPosition pos = null;
+		String query="Select * From RecieptPosition Where idReceipt=? AND idProduct=?";
 		try {
 			PreparedStatement stm= DBCon.getConnection().prepareStatement(query);
-			stm.setInt(1,position.getIdExternalAdoption());
-			stm.setInt(2,position.getProduct().getIdProduct());
+			stm.setInt(1,idReceipt);
+			stm.setInt(2,idProduct);
 
 		// execute select SQL statement
 		
 			rs = stm.executeQuery();
 			while (rs.next())
 			{
-				adoptionPosition = getRs(rs);
+				pos = getRs(rs);
 			}
 			stm.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		return adoptionPosition;
+		return pos;
 	}
-
-	public static List<AdoptionPositionBean> getAdoptionPositionListForProduct(int idProduct){
+	public List<RecieptPosition> getReceiptPositionsByReceipt(int idReceipt)
+	{
 		ResultSet rs;
-		List<AdoptionPositionBean> adoptionPositions = new ArrayList<AdoptionPositionBean>();
-		String query="Select * From AdoptionPosition Where idProduct=?";
+		List<RecieptPosition> positions = new ArrayList<>();
+		String query="Select * From RecieptPosition Where idReceipt=?";
 		try {
 			PreparedStatement stm= DBCon.getConnection().prepareStatement(query);
-			stm.setInt(1, idProduct);
-
-		// execute select SQL stetement
-		
-			rs = stm.executeQuery();
-			while (rs.next())
-			{
-				AdoptionPositionBean pos = getRs(rs);
-				adoptionPositions.add(pos);
-			}
-			stm.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		return adoptionPositions;
-	}
-	public static List<AdoptionPositionBean> getAdoptionPositionList(int idExternalAdoption){
-		ResultSet rs;
-		List<AdoptionPositionBean> adoptionPositions = new ArrayList<AdoptionPositionBean>();
-		String query="Select * From AdoptionPosition Where idExternalAdoption=?";
-		try {
-			PreparedStatement stm= DBCon.getConnection().prepareStatement(query);
-			stm.setInt(1, idExternalAdoption);
+			stm.setInt(1,idReceipt);
+			
 
 		// execute select SQL statement
 		
 			rs = stm.executeQuery();
 			while (rs.next())
 			{
-				AdoptionPositionBean pos = getRs(rs);
-				adoptionPositions.add(pos);
+				RecieptPosition pos = getRs(rs);
+				positions.add(pos);
 			}
 			stm.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		return adoptionPositions;
+		return positions;
 	}
-	public static boolean insertAdoptionPosition(AdoptionPositionBean position)
+	public List<RecieptPosition> getReceiptPositionsByProduct(int idProduct)
+	{
+		ResultSet rs;
+		List<RecieptPosition> positions = new ArrayList<>();
+		String query="Select * From RecieptPosition Where idProduct=?";
+		try {
+			PreparedStatement stm= DBCon.getConnection().prepareStatement(query);
+			stm.setInt(1,idProduct);
+			
+
+		// execute select SQL statement
+		
+			rs = stm.executeQuery();
+			while (rs.next())
+			{
+				RecieptPosition pos = getRs(rs);
+				positions.add(pos);
+			}
+			stm.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		return positions;
+	}
+	public static boolean insertReceiptPositions(RecieptPosition position)
 	{
 		try 
 		{
-			String query="INSERT INTO AdoptionPosition (`idExternalAdoption`," +
+			String query="INSERT INTO RecieptPosition (`idReceipt`," +
 											" `idProduct`," +
 											" `Count`," +
 											" `Price`) VALUES (?, ?, ?, ?)";
 			Connection con=DBCon.getConnection();
 			con.setAutoCommit(false);
 			PreparedStatement stm= con.prepareStatement(query);
-			stm.setInt(1, position.getIdExternalAdoption());
+			stm.setInt(1, position.getIdReciept());
 			stm.setInt(2, position.getProduct().getIdProduct());
 			stm.setFloat(3, position.getCount());
 			stm.setFloat(4, position.getPrice());
@@ -125,18 +130,18 @@ public class AdoptionPositionDAO {
 		return false;
 	
 	}
-	public static boolean updateAdoptionPosition(AdoptionPositionBean position)
+	public static boolean updateReceiptPositions(RecieptPosition position)
 	{
 		try 
 		{
-			String query="UPDATE `AdoptionPosition` SET `Count`=?," +
-														" `Price`=? WHERE `idExternalAdoption`=? and`idProduct`=?";
+			String query="UPDATE `RecieptPosition` SET `Count`=?," +
+														" `Price`=? WHERE `idReceipt`=? and`idProduct`=?";
 			Connection con=DBCon.getConnection();
 			con.setAutoCommit(false);
 			PreparedStatement stm= con.prepareStatement(query);
 			stm.setFloat(1, position.getCount());
 			stm.setFloat(2, position.getPrice());
-			stm.setInt(3, position.getIdExternalAdoption());
+			stm.setInt(3, position.getIdReciept());
 			stm.setInt(4, position.getProduct().getIdProduct());
 			
 			// execute select SQL statement
@@ -158,15 +163,15 @@ public class AdoptionPositionDAO {
 		}
 		return false;
 	}
-	public static boolean deleteAdoptionPosition(AdoptionPositionBean position)
+	public static boolean deleteRecieptPosition(RecieptPosition position)
 	{
 		try 
 		{
-			String query="DELETE FROM `AdoptionPosition` WHERE `idExternalAdoption` = ? AND `idProduct`=?";
+			String query="DELETE FROM `RecieptPosition` WHERE `idReceipt` = ? AND `idProduct`=?";
 			Connection con=DBCon.getConnection();
 			con.setAutoCommit(false);
 			PreparedStatement stm= con.prepareStatement(query);
-			stm.setInt(1, position.getIdExternalAdoption());
+			stm.setInt(1, position.getIdReciept());
 			stm.setInt(2, position.getProduct().getIdProduct());
 			
 			
