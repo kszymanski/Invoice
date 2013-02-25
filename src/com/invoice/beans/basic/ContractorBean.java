@@ -23,13 +23,11 @@ public class ContractorBean implements Serializable {
 	private int postCode;
 	private String country;
 	private String region;
-	private String type;
 	
 	public ContractorBean ()
 	{
 
 		country = "Polska";
-		type = "D";
 	}
 	
 	public int getIdContractor() {
@@ -92,12 +90,7 @@ public class ContractorBean implements Serializable {
 	public void setRegion(String region) {
 		this.region = region;
 	}
-	public String getType() {
-		return type;
-	}
-	public void setType(String type) {
-		this.type = type;
-	}
+
 	
 	public boolean deleteContractor(){
 		
