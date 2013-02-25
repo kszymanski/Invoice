@@ -46,9 +46,9 @@
         			</h:panelGrid>
     			 </h:panelGrid>
     			
-    			<p:commandButton id="btn_add" value="Add" update=":contractorListForm :msgs @parent" />
+    			<p:commandButton id="btn_add" value="Add" update=":contractorListForm :msgs @parent" actionListener="#{contractorList.addContractor()}" onclick="addContractorDialog.hide(); dlg.show(); "/>
 				<p:commandButton value="Close" type="reset" onclick="addContractorDialog.hide(); dlg.show();"/>  
-    			
+    		
     			
 			</h:form>
 		</p:dialog>

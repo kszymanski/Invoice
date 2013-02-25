@@ -151,7 +151,7 @@ public class ContractorDAO {
 			stm.setInt(7, contractor.getPostCode());
 			stm.setString(8, contractor.getCountry());
 			stm.setString(9, contractor.getRegion());
-			stm.setString(8, contractor.getType());
+			stm.setString(10, contractor.getType());
 			
 			// execute select SQL stetement
 			int rs = stm.executeUpdate();
@@ -175,6 +175,7 @@ public class ContractorDAO {
 		}
 		return 0;
 	}
+	
 	public static boolean deleteContractor(ContractorBean contractor)
 	{
 		try 

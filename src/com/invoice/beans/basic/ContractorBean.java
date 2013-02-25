@@ -11,7 +11,6 @@ import javax.faces.validator.ValidatorException;
 
 import com.invoice.dbacces.ContractorDAO;
 
-
 public class ContractorBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private int idContractor=0;
@@ -121,6 +120,21 @@ public class ContractorBean implements Serializable {
             new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR: ", "nie uda³o sie");
 	}
 	
+	public void insertContractor() throws Exception
+	{
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.getExternalContext().getFlash().setKeepMessages(true);
+		if(ContractorDAO.insertContractor(this)==0)
+		{
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sukces", "Zmiany zosta³y zapisane.");
+			context.addMessage(null, message);
+		}
+		else
+		{
+			context.addMessage("Test-Error", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error-Summary", "Error-Detail"));
+		      
+		}
+	}
 	
 	
 	
