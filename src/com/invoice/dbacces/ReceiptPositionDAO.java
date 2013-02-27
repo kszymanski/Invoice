@@ -10,7 +10,7 @@ import java.util.List;
 import com.invoice.beans.basic.ReceiptPosition;
 
 public class ReceiptPositionDAO {
-	private ReceiptPosition getRs(ResultSet rs) throws SQLException
+	private static ReceiptPosition getRs(ResultSet rs) throws SQLException
 	{
 		ReceiptPosition pos = new ReceiptPosition();
 		pos.setIdReceipt(rs.getInt("idReceipt"));
@@ -20,7 +20,7 @@ public class ReceiptPositionDAO {
 		return pos;
 	}
 	
-	public ReceiptPosition getReceiptPosition(int idReceipt,int idProduct)
+	public static ReceiptPosition getReceiptPosition(int idReceipt,int idProduct)
 	{
 		ResultSet rs;
 		ReceiptPosition pos = null;
@@ -44,7 +44,7 @@ public class ReceiptPositionDAO {
 			}
 		return pos;
 	}
-	public List<ReceiptPosition> getReceiptPositionsByReceipt(int idReceipt)
+	public static List<ReceiptPosition> getReceiptPositionsByReceipt(int idReceipt)
 	{
 		ResultSet rs;
 		List<ReceiptPosition> positions = new ArrayList<>();

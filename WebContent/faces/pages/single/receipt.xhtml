@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+	<head><title>IGNORED</title></head>
+	<body>
+		<ui:composition template="/faces/templates/masterLayout.xhtml">
+			<ui:define name="windowTitle">Home</ui:define>
+			<ui:define name="content">
+			<p:growl id="msgs" showDetail="true"/>
+				<h:form id="receiptForm">
+					<p:menubar id="menu">
+						<p:menuitem value="Dodaj" icon="ui-icon-search" onclick="stockListDialog.show()"/>
+						<p:menuitem value="Usuń" icon="ui-icon-closethick" actionListener="#{receiptPositions.deletePosition}" update=":msgs :receiptForm" type="button"/>
+					</p:menubar>
+					<p:dataTable id="receiptDataTable" var="position" value="#{receiptPositions.positions}" rowKey="#{position.product.idProduct}"
+                 				selection="#{receiptPositions.selectedPosition}" selectionMode="single" scrollRows="20" scrollable="true" 
+                 				liveScroll="true" scrollHeight="390" sortMode="multiple" resizableColumns="true" widgetVar="receiptDataTable" emptyMessage=" "
+                 				editable="true" editMode="cell"> 
+	       				<f:facet name="header">
+	           				<p:toolbar>
+								<p:toolbarGroup align="right">
+				                	<h:outputLabel value="Data Wystawienia :" />
+				                	<p:calendar id="date" value="#{receiptPositions.receipt.date}" pattern="yyyy-MM-dd" showOn="button" style="width:25px;" />
+				                	<h:outputLabel value="Data Sprzedaży: " />
+			                		<p:calendar id="sellDate" value="#{receiptPositions.receipt.sellDate}" pattern="yyyy-MM-dd" showOn="button" style="width:25px;"/>
+		               			</p:toolbarGroup>
+	               			</p:toolbar>
+	        			</f:facet>  
+	  					<p:column headerText="Nazwa">
+	  						<h:outputText value="#{position.product.name}" />
+	  					</p:column>
+	  					<p:column headerText="Jdn." style="width: 30px;">
+	  						<h:outputText value="#{position.product.unit}" />
+	  					</p:column>
+	  					<p:column headerText="Cena" style="width: 70px;">
+	  						<p:cellEditor>  
+                				<f:facet name="output"><h:outputText value="#{position.price}" /></f:facet>  
+                				<f:facet name="input"><p:inputText value="#{position.price}" style="width:96%" label="Ilość"/></f:facet>
+            				</p:cellEditor>
+	  					</p:column>
+	  					<p:column headerText="VAT" style="width: 30px;">
+	  						<h:outputText value="#{position.product.defaultTax}%" />
+	  					</p:column>
+	  					<p:column headerText="Ilość" style="width: 70px;">
+	  						<p:cellEditor>  
+                				<f:facet name="output"><h:outputText value="#{position.count}" /></f:facet>  
+                				<f:facet name="input"><p:inputText value="#{position.count}" style="width:96%" label="Ilość"/></f:facet>
+            				</p:cellEditor>
+	  					</p:column>
+	  					<p:column headerText="Warość" style="width: 100px;">
+	  						<h:outputText value="#{position.value}" />
+	  					</p:column>
+	  					<p:ajax event="rowSelect" update=":receiptForm"/>
+	  					<p:ajax event="cellEdit" listener="#{receiptPositions.calculate}" update=":receiptForm"/>
+	    			</p:dataTable>
+	    			<p:menubar id="menuDown">
+						<p:menuitem value="#{msg.save}" update=":msgs :receiptForm" actionListener="#{receiptPositions.insertReceipt}" icon="ui-icon-search"/>
+						<p:menuitem value="#{msg.cancel}" icon="ui-icon-refresh" url="/ReceiptList"/>
+						<f:facet name="options" >
+							<h:outputLabel value="Suma: " />
+				            <h:outputText id="contractot" value="#{receiptPositions.receipt.amount} PLN"/><pre/>
+							<h:outputLabel for="payDate" value="Data zapłaty:" />
+				            <p:calendar id="payDate" value="#{receiptPositions.receipt.payDate}" pattern="yyyy-MM-dd" showOn="button" style="width:25px;"/>
+			            </f:facet>
+					</p:menubar>
+				</h:form>
+				<ui:insert name="stockList">
+    				<ui:include src="/faces/dialogs/receipt/stocklist.xhtml" />
+    			</ui:insert>
+    			<ui:insert name="addProduct">
+    				<ui:include src="/faces/dialogs/receipt/addstock.xhtml" />
+    			</ui:insert>
+    			<ui:insert name="countProduct">
+    				<ui:include src="/faces/dialogs/receipt/countstock.xhtml" />
+    			</ui:insert>
+			</ui:define>
+		</ui:composition>
+	</body>
+</html>

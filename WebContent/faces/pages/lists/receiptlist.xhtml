@@ -12,8 +12,8 @@
 			<p:growl id="msgs" showDetail="true"/>
 			<h:form id="receiptListForm">
 				<p:menubar id="menu">
-					<p:menuitem value="Edytuj" icon="ui-icon-refresh" url="#" disabled="#{adoptionList.selectedAdoption == null || !loginUser.user.role.addReciept}"/>
-					<p:menuitem value="Nowy" icon="ui-icon-document"  url="#" />
+					<p:menuitem value="Edytuj" icon="ui-icon-refresh" url="./Receipt?id=#{receiptList.selectedReceipt.idReceipt}" disabled="#{receiptList.selectedReceipt == null || !loginUser.user.role.addReciept}"/>
+					<p:menuitem value="Nowy" icon="ui-icon-document"  url="./Receipt" />
 					<p:menuitem value="Usuń" icon="ui-icon-closethick" disabled="#{!loginUser.user.role.addReciept}"/>
 				</p:menubar>
 				<p:dataTable id="receiptListDataTable" var="receipt" value="#{receiptList.receipts}" rowKey="#{receipt.idReceipt}"
