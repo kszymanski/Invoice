@@ -24,8 +24,8 @@
 	           				   	<p:toolbarGroup align="left">
 			           				<h:outputLabel value="Kontrahent:"/>
 			           				<h:outputText id="contractot" value="#{externalAdoption.adoption.contractor.longName}" />
-			           				<p:commandButton value="Select" icon="ui-icon-folder-open" rendered="#{externalAdoption.adoption.contractor.idContractor == 0}"/> 
-			           				<p:commandButton value="Change" icon="ui-icon-refresh" rendered="#{externalAdoption.adoption.contractor.idContractor != 0}"/>
+			           				<p:commandButton value="Select" icon="ui-icon-folder-open" onclick="contractorListDialog.show()" rendered="#{externalAdoption.adoption.contractor.idContractor == 0}"/> 
+			           				<p:commandButton value="Change" icon="ui-icon-refresh" onclick="contractorListDialog.show()" rendered="#{externalAdoption.adoption.contractor.idContractor != 0}"/>
 								</p:toolbarGroup>
 								<p:toolbarGroup align="right">
 				                	<h:outputLabel value="Data Wystawienia :" />
@@ -81,6 +81,9 @@
     			</ui:insert>
     			<ui:insert name="addProduct">
     				<ui:include src="/faces/dialogs/adoption/countstock.xhtml" />
+    			</ui:insert>
+    			<ui:insert name="contractorList">
+    				<ui:include src="/faces/dialogs/adoption/contractorlist.xhtml" />
     			</ui:insert>
 			</ui:define>
 		</ui:composition>

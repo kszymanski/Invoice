@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+	<head><title>IGNORED</title></head>
+	<body>
+		<ui:composition>
+		<p:dialog id="contractorList" width="1050" header="Lista kontrachentów" widgetVar="contractorListDialog" modal="true" showEffect="explode" hideEffect="explode" closable="false">
+			<h:form id="contractorListForm">
+			<p:menubar id="menu">
+					<p:menuitem value="Dodaj" onclick="contractorListDialog.hide()" actionListener="#{externalAdoption.addContractor(contractorList.selectedContractor.idContractor)}" icon="ui-icon-search" update=":adoptionForm" disabled="#{contractorList.selectedContractor == null}"/>
+					<p:menuitem value="Zamknij" icon="ui-icon-closethick" type="button"  onclick="contractorListDialog.hide()"/>
+				</p:menubar>
+				<p:dataTable id="contractorDataTable" var="contractor" value="#{contractorList.contractors}" rowKey="#{contractor.idContractor}" selection="#{contractorList.selectedContractor}" selectionMode="single"
+				scrollRows="20" scrollable="true" liveScroll="true" scrollHeight="390" 
+                 filteredValue="#{contractorList.filtredContractors}" sortMode="multiple" resizableColumns="true" widgetVar="contractorDataTable"> 		
+				<f:facet name="header">
+           				<p:toolbar>
+           				   	<p:toolbarGroup align="left">
+           				   		<h:outputText value="Kontrahenci:" /> 
+           				   	</p:toolbarGroup>
+                			<p:toolbarGroup align="right"> 
+                				<p:outputLabel for="globalFilter" value="Search:"/>  
+                				<p:inputText id="globalFilter" onkeyup="contractorDataTable.filter()" style="width:150px;"/> 
+                				<p:commandButton value="Clear" process="globalFilter" type="reset" onclick="$('#contractorListForm\\:contractorDataTable\\:globalFilter').val('').keyup(); return false;"/>
+                			</p:toolbarGroup> 
+            			</p:toolbar>
+        			</f:facet>  
+				 <p:column headerText="Kod"  filterBy="#{contractor.idContractor}" sortBy="#{contractor.idContractor}">
+				 	<h:outputText value="#{contractor.idContractor}" /> 
+				 </p:column>  
+				 
+				 <p:column headerText="Name" filterBy="#{contractor.name}" sortBy="#{contractor.name}">
+				 	 <h:outputText value="#{contractor.name}" /> 
+				 </p:column>  
+				  
+				 <p:column headerText="NIP" filterBy="#{contractor.nip}" sortBy="#{contractor.nip}">
+					 <h:outputText value="#{contractor.nip}" />
+				 </p:column>  
+				  
+				 <p:column headerText="REGON" filterBy="#{contractor.regon}" sortBy="#{contractor.regon}">
+					 <h:outputText value="#{contractor.regon}" /> 
+				 </p:column>  
+				  
+				 <p:column headerText="Ulica" filterBy="#{contractor.street}" sortBy="#{contractor.street}">
+				 	 <h:outputText value="#{contractor.street}" />
+				 </p:column>  
+				  
+				  <p:column headerText="Miasto" filterBy="#{contractor.city}" sortBy="#{contractor.city}">
+				 	 <h:outputText value="#{contractor.city}" />
+				 </p:column>  
+				  
+				  	<p:ajax event="rowSelect" update=":contractorListForm"/>
+    			</p:dataTable>		
+				</h:form>		
+				</p:dialog>    
+		</ui:composition>			
+	</body>
+</html>

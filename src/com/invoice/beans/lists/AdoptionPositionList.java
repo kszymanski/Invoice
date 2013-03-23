@@ -18,6 +18,7 @@ import com.invoice.beans.basic.LoginBean;
 import com.invoice.beans.basic.ProductBean;
 import com.invoice.beans.basic.StockBean;
 import com.invoice.dbacces.AdoptionPositionDAO;
+import com.invoice.dbacces.ContractorDAO;
 import com.invoice.dbacces.ExternalAdoptionDAO;
 import com.invoice.dbacces.StockDAO;
 @ManagedBean(name="externalAdoption")
@@ -197,6 +198,9 @@ public class AdoptionPositionList implements Serializable{
 			}
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("zapisano"));
 		}
+	}
+	public void addContractor(int id) {
+		adoption.setContractor(ContractorDAO.getContractorBean(id));
 	}
 	public void deletePosition()
 	{
