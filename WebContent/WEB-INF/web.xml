@@ -96,6 +96,11 @@
     <servlet-name>Faces Servlet</servlet-name>
     <servlet-name>User List</servlet-name>
     <servlet-name>Product List</servlet-name>
+    <servlet-name>Receipt List</servlet-name>
+    <servlet-name>Receipt</servlet-name>
+    <servlet-name>Adoption</servlet-name>
+    <servlet-name>Adoption List</servlet-name>
+    <servlet-name>Contractor List</servlet-name>
   </filter-mapping>
 	<filter>
   		<filter-name>PrimeFaces FileUpload Filter</filter-name>

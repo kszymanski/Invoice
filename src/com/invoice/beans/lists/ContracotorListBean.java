@@ -99,6 +99,10 @@ public class ContracotorListBean implements Serializable {
          }
          else FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Nie dodano!"));
     }
-	
+	public String reinit() {  
+        selectedContractor = contractors.get(contractors.indexOf(newContractor));
+		newContractor = new ContractorBean();  
+        return null;  
+	} 
 	
 }
